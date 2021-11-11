@@ -6,25 +6,37 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
+  <style>
+    div {
+      border: 1px solid green;
+    }
+  </style>
 </head>
 
 <body>
+  <div>1</div>
+  <div>2</div>
+  <div>3</div>
   <script>
-    let t = new Date(1990, 2, 22);
-    console.log(t);
-    let arr = [1998, 12, 5, 20, 21, 13]
-    let p = new Date(...arr)
-    console.log(p);
-    console.log(...arr);
-    console.log(p.getTime());
-    console.log(p.valueOf());
-    let date = new Date(p.valueOf())
-    console.log(date);
+    let arr1 = [91, 14, 54, 1]
+    console.log(Array.isArray(arr1));
+    let h = arr1.join(",");
+    console.log(h);
+    let str = 'mcl'
+    console.log(str.split(""));
+    console.log(Array.from(str));
     let obj = {
-      age: 19,
-      name: 'mcl'
+      0: 154,
+      1: 'asdf',
+      length: 2
     }
-    console.log(obj.age);
+    console.log(Array.from(obj));
+
+    let divs = document.querySelectorAll('div')
+    console.log(divs);
+    console.log(Array.from(divs, function (ww) {
+      console.log(ww.innerHTML);
+    }));
   </script>
 </body>
 
