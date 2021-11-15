@@ -6,28 +6,116 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
+  <style>
+    div {
+      width: 100px;
+      height: 100px;
+      background-color: #acf;
+    }
+  </style>
 </head>
 
 <body>
+  <div></div>
   <script>
-    let str = '123.asd sdffasSDFASas'
-    console.log(str.length);
-    console.log(str.toUpperCase());
-    console.log(str.toLowerCase());
-    console.log(str.trim());
-    console.log(str[3]);
-    console.log(str.charAt(2));
-    console.log(str.slice(4, 6));
-    console.log(str.substring(4, 6));
-    console.log(str.substr(4, 6));
-    console.log(str.indexOf("a", 9));
-    console.log(str.lastIndexOf('a'));
-    console.log(str.includes('a', 9));
-    console.log(str.replace('a', 'o'));
-    console.log('asdf'.repeat(3));
 
+    // function readNumber() {
+    //   let num;
 
+    //   do {
+    //     num = prompt("Enter a number please?", 0);
+    //     alert(num)
+    //   } while (!isFinite(num));
 
+    //   if (num === null || num === '') return null;
+
+    //   return +num;
+    // }
+
+    // alert(`Read: ${readNumber()}`);
+    // function randomInteger(min, max) {
+    //   let rand = min + Math.random() * (max - min);
+    //   return Math.round(rand);
+    // }
+
+    // console.log(randomInteger(1, 3));
+    // function Star(name, age) {
+    //   this.name = name;
+    //   this.age = age;
+    //   this.sing = function () {
+    //     console.log('sing')
+    //   }
+    // }
+    // 实例成员就是构造函数内部通过 this 添加的成员 name age sing 就是实例成员。实例成员只能通过实例化的对象来访问
+    // let ldh = new Star('刘德华', 18);
+    // ldh.sing();
+
+    // // 静态成员 在构造函数本身上添加的成员 gender 就是静态成员
+    // Star.gender = 'male';
+    // console.log(Star.gender); // 静态成员只能通过构造函数来访问
+    // console.log(Star);
+    // console.log(Star.gender); // 静态成员只能通过构造函数来访问
+    // let n = new Star('mcl', 14)
+    // console.log(n); // 不能通过对象来访问
+    // let user = {}
+    // user.name = 'John';
+    // user.surname = 'Smith';
+    // // console.log(user);
+    // // user.name = 'sl'
+    // // console.log(user);
+    // function hasKey(obj, key) {
+    //   if (key in obj) {
+    //     return true
+    //   } else {
+    //     return false
+    //   }
+    // }
+    // console.log(hasKey(user, 'a'));
+    // let salaries = {
+    //   John: 100,
+    //   Ann: 160,
+    //   Pete: 130
+    // }
+    // let sum = 0;
+    // for (let key in salaries) {
+    //   sum += salaries[key]
+    // }
+    // console.log(sum);
+    // function Calculator() {
+    //   this.read = function () {
+    //     this.num1 = prompt('请输入第一个值');
+    //     this.num2 = prompt('请输入第个值');
+    //   },
+    //     this.sum = function () {
+    //       return +this.num1 + +this.num2
+    //     }
+    // }
+    // let calculator = new Calculator();
+    // calculator.read();
+
+    // alert("Sum=" + calculator.sum());
+    // console.log(calculator);
+    // // console.log(calculator);
+    // function Accumulator(startingValue) {
+    //   this.value = startingValue;
+
+    //   this.read = function () {
+    //     this.value += +prompt('How much to add?', 0);
+    //   };
+
+    // }
+
+    // let accumulator = new Accumulator(1);
+    // // accumulator.read();
+    // // accumulator.read();
+    // // alert(accumulator.value);
+    // // console.log(accumulator);
+    // alert(accumulator)
+    // let str = "Hello";
+
+    // str.test = 5;
+
+    // alert(str.test);
   </script>
 </body>
 

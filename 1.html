@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+
+  <script>
+    // let arr = [
+    //   { name: 'mcl', age: 15, page: 99 },
+    //   { name: 'qwe', age: 17, page: 98 },
+    //   { name: 'asd', age: 13, page: 47 }
+    // ]
+    // let arr = [1, 2, 3, 4, 44, , 14, 5, 6]
+    // let arr = [1, 2, 3, 1, 5, 6, 8, 1, 3, 1]
+    // function getNum(array) {
+    //   return array.reduce(function (pre, val) {
+    //     if (pre.includes(val) === false) {
+    //       pre.push(val)
+    //     }
+    //     return pre
+    //   }, [])
+    // }
+    // console.log(getNum(arr));
+    // let arr1 = arr.map(function (value) {
+    //   value = `haha1${value}`
+    //   return value
+    // })
+    // console.log(arr);
+    // console.log(arr1);
+    // let arr1 = arr.reduce(function (pre, value, index, arr) {
+    //   console.log(pre, value);
+    //   return 99
+    // }, 0)
+    //求数组最大值
+    // function arrMax(array) {
+    //   return array.reduce(function (pre, value) {
+    //     return pre > value ? pre : value
+    //   })
+    // }
+    // console.log(arrMax(arr));
+
+    // //计数
+    // function arrCount(array, target) {
+    //   return array.reduce(function (total, value) {
+    //     return total += value == 1 ? 1 : 0
+    //   }, 0)
+    // }
+    // console.log(arrCount(arr, 1));
+
+    let cart = [
+      { title: 'js', price: 14000 },
+      { title: 'html', price: 2000 },
+      { title: 'html', price: 2000 },
+      { title: 'js', price: 14000 },
+      { title: 'java', price: 15000 },
+      { title: 'js', price: 14000 },
+      { title: 'css', price: 6000 },
+      { title: 'html', price: 2000 }
+    ]
+    //选出超过1w的商品名称
+    // function getNameByPrice(goods, price) {
+    //   return goods.reduce(function (arr, cur) {
+    //     if (cur.price > price) arr.push(cur)
+    //     return arr
+    //   }, []).map(function (val) {
+    //     return val.title
+    //   })
+    // }
+    // console.table(getNameByPrice(cart, 10000));
+    //去除重复商品
+    function filterGoods(goods) {
+      return goods.reduce(function (arr, val) {
+        let finds = arr.find(function (item) {
+          return item.title == val.title
+        })
+        console.log(finds);
+        if (!finds) arr.push(val);
+        return arr
+      }, [])
+    }
+    console.table(cart);
+    console.log(filterGoods(cart));
+    // function sumPrice(array) {
+    //   return array.reduce(function (total, target) {
+    //     return total += target.price
+    //   }, 0)
+    // }
+    // console.log(sumPrice(cart));
+
+    // function maxPrice(array) {
+    //   return array.reduce(function (pre, value) {
+    //     return pre.price > value.price ? pre : value
+    //   })
+    // }
+    // console.log(maxPrice(cart));
+  </script>
+</body>
+
+</html>

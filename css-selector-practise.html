@@ -9,13 +9,14 @@
       color: red;
     }
 
-    [tabindex]:hover {
-      color: red;
-    }
 
 
     [tabindex]:focus {
       color: blue;
+    }
+
+    [tabindex]:hover {
+      color: red;
     }
 
     [tabindex]:active {
@@ -60,7 +61,7 @@
       color: orange;
     }
 
-    a[href*='@'] {
+    a[href^='mailto:'i] {
       color: blue;
     }
 
@@ -68,7 +69,7 @@
       color: yellow;
     }
 
-    a[href$='pdf'i] {
+    a[href$='.pdf'i] {
       font-size: 30px;
     }
   </style>
@@ -122,13 +123,10 @@
       color: red;
     }
 
-    .b ul :nth-child(n+35) {
+    .b ul :nth-child(n+35):nth-child(-n+50) {
       color: green;
     }
 
-    .b ul :nth-child(n+50) {
-      color: #000;
-    }
 
     .b ul :nth-child(n+65) {
       color: blue;
@@ -243,14 +241,18 @@
   </div>
 
   <hr>
+
   <style>
-    .prime ul :nth-child(2n) {
+    .prime ul :nth-child(2n+4),
+    .prime ul :nth-child(3n+6),
+    .prime ul :nth-child(5n+10),
+    .prime ul :nth-child(7n+14) {
       color: #acf;
     }
 
-    .prime ul :nth-child(2n+1) {
+    /* .prime ul :nth-child(odd) {
       color: red;
-    }
+    } */
   </style>
   <div class="prime">
     <p>让所有的质/素数(prime)（2，3，5，7，11，13……）跟合数（4，6，8，9，10……）为不同的颜色</p>
@@ -357,6 +359,29 @@
       <li>100</li>
     </ul>
   </div>
+  <script>
+    let arr = [];
+    function getPrimeNum(start, end) {
+      if (start < 2) {
+        start = 2
+      }
+
+      loop: for (let i = start; i <= end; i++) {
+
+        for (let j = 2; j < i; j++) {
+          if (i % j == 0) {
+            continue loop;
+          }
+        }
+        arr.push(i)
+      }
+    }
+    getPrimeNum(-10, 100)
+    console.log(arr);
+    let div = document.querySelector('.prime')
+    let pri = div.querySelectorAll('li')
+    console.log(pri);
+  </script>
 </body>
 
 </html>
