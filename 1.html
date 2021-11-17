@@ -190,19 +190,67 @@
 
     // messages.shift();
     // 现在 readMessages 有一个元素（技术上来讲，内存可能稍后才会被清理）
-    let salaries = {
-      "John": 100,
-      "Pete": 300,
-      "Mary": 250
-    };
-    function sumSalaries(salaries) {
-      let sum = 0;
-      for (let value of Object.values(salaries)) {
-        sum += value;
-      }
-      return sum
-    }
-    alert(sumSalaries(salaries));
+    // let salaries = {
+    //   "John": 100,
+    //   "Pete": 300,
+    //   "Mary": 250
+    // };
+    // function sumSalaries(salaries) {
+    //   let sum = 0;
+    //   for (let value of Object.values(salaries)) {
+    //     sum += value;
+    //   }
+    //   return sum
+    // }
+    // alert(sumSalaries(salaries));
+    // let obj = {
+    //   name: 'mcl',
+    //   age: 14,
+    //   title: 'jb'
+    // }
+    // let options = {
+    //   title: "Menu",
+    //   width: 100,
+    //   height: 200
+    // };
+
+    // // { sourceProperty: targetVariable }
+    // let { width: w, h, t } = options;
+    // console.log(w, h, t);
+    // let user = {
+    //   name: "John",
+    //   years: 30
+    // };
+    // let { name, years: age, isAdmin = false } = user
+    // alert(name); // John
+    // alert(age); // 30
+    // alert(isAdmin); // false
+    // let salaries = {
+
+    //   "John": 100,
+    //   "Pete": 300,
+    //   "Mary": 250
+    // };
+    // function topSalary(salaries) {
+    //   let max = 0;
+    //   let maxName = null;
+    //   for (let [key, value] of Object.entries(salaries)) {
+    //     if (max < value) {
+    //       max = value;
+    //       maxName = key;
+    //     }
+    //   }
+    //   return maxName
+    // }
+    // console.log(topSalary(salaries));
+    let arr = [['qq', 'ww'], ['aa', 'ss'], ['zz', 'xx']]
+    let map = new Map(arr);
+    //只保留值为ww的
+    console.log(map);
+    let newArr = [...map].filter(function (item) {
+      return item[1] == 'ww'
+    })
+    console.log(newArr);
   </script>
 </body>
 
