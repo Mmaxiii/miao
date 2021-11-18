@@ -13,8 +13,11 @@
       margin: 0;
       box-sizing: border-box;
     }
-
+    html {
+      height: 100%;
+    }
     body {
+      height: 100%;
       font-size: 0;
       white-space: nowrap;
     }
@@ -52,7 +55,7 @@
     .vocabulary,
     .history {
       width: 330px;
-      height: 100vh;
+      height:100%;
       vertical-align: top;
       background-color: #EAEEF3;
     }
@@ -84,7 +87,7 @@
     }
 
     .oald ul {
-      height: calc(100vh - 116px);
+      height: calc(100% - 116px);
       overflow: auto;
     }
 
@@ -112,7 +115,7 @@
     .main {
       width: calc(100% - 990px);
       min-width: 400px;
-      height: 100vh;
+      height: 100%;
     }
 
     p {
