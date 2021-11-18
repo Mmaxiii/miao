@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    /* 侧面滚动条 */
+    * {
+      padding: 0;
+      margin: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-size: 0;
+      white-space: nowrap;
+    }
+
+    .oald,
+    .main,
+    .vocabulary,
+    .history {
+      display: inline-block;
+    }
+
+    h1 {
+      height: 76px;
+      line-height: 76px;
+      text-align: right;
+      padding-right: 10px;
+    }
+
+    .main h1 {
+      text-align: left;
+      padding-left: 20px;
+      border-bottom: 1px solid;
+    }
+
+    .oald,
+    .vocabulary,
+    .history,
+    .main {
+      font-size: 16px;
+      border-right: 1px solid;
+
+    }
+
+    .oald,
+    .vocabulary,
+    .history {
+      width: 330px;
+      height: 100vh;
+      vertical-align: top;
+      background-color: #EAEEF3;
+    }
+
+    .search {
+      font-size: 0;
+      padding: 0 20px;
+    }
+
+
+
+    .oald .search input {
+      width: 85%;
+      height: 40px;
+      overflow: hidden;
+      /* font-size: 0; */
+
+    }
+
+    .oald .search button {
+      /* padding-left: 25%; */
+      width: 50px;
+      height: 40px;
+      border-radius: 0 20px 20px 0;
+      vertical-align: bottom;
+      /* overflow: hidden; */
+      /* font-size: 0; */
+
+    }
+
+    .oald ul {
+      height: calc(100vh - 116px);
+      overflow: auto;
+    }
+
+    a {
+
+      display: block;
+      width: 100%;
+      padding: 10px 0 10px 30px;
+      text-decoration: none;
+      color: #686DC9;
+    }
+
+
+
+    a:visited {
+
+      color: #686DC9;
+    }
+
+    .oald ul a:hover {
+      background-color: #BBCEE9;
+      color: #000;
+    }
+
+    .main {
+      width: calc(100% - 990px);
+      min-width: 400px;
+      height: 100vh;
+    }
+
+    p {
+      width: 100%;
+      height: calc(100% - 76px);
+      padding: 10px;
+      white-space: normal;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="oald">
+    <h1>OALD Se7en</h1>
+    <div class="search">
+      <input type="text">
+      <button>搜索</button>
+    </div>
+    <ul>
+      <li><a href="#">haha</a></li>
+      <li><a href="#">haha</a></li>
+      <li><a href="#">haha</a></li>
+      <li><a href="#">haha</a></li>
+      <li><a href="#">haha</a></li>
+      <li><a href="#">haha</a></li>
+      <li><a href="#">haha</a></li>
+      <li><a href="#">haha</a></li>
+      <li><a href="#">haha</a></li>
+      <li><a href="#">haha</a></li>
+      <li><a href="#">haha</a></li>
+      <li><a href="#">haha</a></li>
+      <li><a href="#">haha</a></li>
+      <li><a href="#">haha</a></li>
+      <li><a href="#">haha</a></li>
+      <li><a href="#">haha</a></li>
+      <li><a href="#">haha</a></li>
+      <li><a href="#">haha</a></li>
+      <li><a href="#">haha</a></li>
+
+
+    </ul>
+  </div>
+  <div class="main">
+    <h1>fantasy</h1>
+    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolore porro officiis accusamus voluptates eligendi
+      nisi doloribus amet quos ipsam veritatis laboriosam suscipit voluptatem, esse illo ullam, mollitia excepturi velit
+      corporis.</p>
+  </div>
+  <div class="vocabulary">
+    <h1>Vocabulary
+    </h1>
+  </div>
+  <div class="history">
+    <h1>History</h1>
+  </div>
+
+</body>
+
+</html>

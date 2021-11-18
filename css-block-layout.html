@@ -28,8 +28,10 @@
       margin: 20px 0;
     }
 
-    main ul li {
 
+    main .product li,
+    .pro2 li {
+      font-size: 30px;
       list-style: none;
       width: 180px;
       height: 40px;
@@ -40,26 +42,42 @@
       background-color: pink;
     }
 
-    main ul li:nth-child(2) {
-      margin-top: -55px;
+    main .product li:nth-child(n+5) {
       margin-left: 210px;
     }
 
-    main ul li:nth-child(3) {
-      margin-top: -55px;
+    main .product li:nth-child(n+9) {
       margin-left: 420px;
     }
 
-    main ul li:hover {
+    main .product li:nth-child(4n+5) {
+      margin-top: -220px;
+    }
+
+    main .product li:hover {
       background-color: red;
     }
 
-    main .p2 {
-      border-bottom: 1px solid #ccc;
+    ul.links {
+      list-style: none;
+      overflow: hidden;
     }
 
-    main .p2:last-child {
-      border: none;
+    ul.links li {
+      border-bottom: 1px dotted;
+      margin-bottom: -1px;
+      padding-top: 1px;
+      margin-top: -1px;
+    }
+
+    ul.pro2 li {
+      display: inline-block;
+      margin-right: 0px;
+      margin-left: 30px;
+    }
+
+    ul.pro2 li:nth-child(3n+1) {
+      margin-left: 0px;
     }
 
     footer {
@@ -86,37 +104,48 @@
       宽度600px 页面主体 宽度600px 页面主体 宽度600px 页面主体 宽度600px 页面主体 宽度600px 页面主体 宽度600px 页面主体 宽度600px 页面主体 宽度600px 页面主体 宽度600px
       页面主体 宽度600px
     </p>
-    <ul>
+    <ul class="product">
+      <li>产品</li>
+      <li>产品</li>
+      <li>产品</li>
+      <li>产品</li>
+      <li>产品</li>
+      <li>产品</li>
+      <li>产品</li>
+      <li>产品</li>
+      <li>产品</li>
       <li>产品</li>
       <li>产品</li>
       <li>产品</li>
     </ul>
-    <ul>
+    <ul class='pro2'>
       <li>产品</li>
       <li>产品</li>
       <li>产品</li>
-
-    </ul>
-    <ul>
       <li>产品</li>
       <li>产品</li>
       <li>产品</li>
-    </ul>
-    <ul>
+      <li>产品</li>
+      <li>产品</li>
+      <li>产品</li>
       <li>产品</li>
       <li>产品</li>
       <li>产品</li>
     </ul>
-    <p class="p2">link</p>
-    <p class="p2">link</p>
-    <p class="p2">link</p>
-    <p class="p2">link</p>
-    <p class="p2">link</p>
+    
+    <ul class="links">
+      <li>link</li>
+      <li>link</li>
+      <li>link</li>
+      <li>link</li>
+      <li>link</li>
+    </ul>
   </main>
   <footer>
     <p>©版权所有</p>
     <p>本页所有布局均使用块元素</p>
   </footer>
+  <p></p>
 </body>
 
 </html>
