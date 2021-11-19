@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <button>点击</button>
+  <button>点点</button>
+  <script>
+    function Request() {
+      this.get = function (params) {
+        let str = Object.keys(params).map(
+          k => `${k}=${params[k]}`
+        ).join(
+          '&'
+        )
+        let url = `https://mcl.com?${this.url}${str}`
+        console.log(url);
+      }
+    }
+    function Article() {
+      this.url = "article/lists"
+      Request.call(this)
+      console.log(this);
+    }
+    let a = new Article()
+    console.log(a.get({ id: 1, cat: 'js' }));
+  </script>
+</body>
+
+</html>
