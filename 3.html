@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    dt {
+      width: 300px;
+      height: 50px;
+      background-color: #acf;
+    }
+
+    dd {
+      width: 300px;
+      height: 300px;
+      margin: 0;
+      background-color: #ccc;
+    }
+  </style>
+</head>
+
+<body>
+  <dl>
+    <dt>mcl</dt>
+    <dd>1</dd>
+    <dt>as;kdf</dt>
+    <dd hidden>2</dd>
+  </dl>
+</body>
+<script>
+  function hd() {
+    let n = 1;
+    return function sum() {
+      // console.log(++n);
+      let m = 1
+      function show() {
+        console.log(++m);
+      }
+      show()
+    }
+
+  }
+  let a = hd();
+  a();
+  a();
+  a();
+
+  // function Color(elem) {
+  //   this.elem = elem;
+  //   this.color = ['#1abc9c', '#9b59b6', '#e74c3c', '#2c3e50'];
+  //   this.run = function () {
+  //     setInterval(function () {
+
+  //       let i = Math.floor(Math.random() * this.color.length);
+  //       this.elem.style.backgroundColor = this.color[i];
+  //       console.log(i);
+  //     }.bind(obj), 1000);
+  //   }
+
+  // }
+  // let obj = new Color(document.body)
+  // obj.run()
+  // function panel(i) {
+  //   let dds = document.querySelectorAll('dd');
+  //   dds.forEach(dd => { dd.setAttribute('hidden', 'hidden') });
+  //   dds[i].removeAttribute('hidden');
+  // }
+  // document.querySelectorAll('dt').forEach((dt, i) => {
+
+  //   dt.addEventListener('click', () => panel.call(null, i))
+  // })
+</script>
+
+</html>

@@ -14,22 +14,29 @@
   <script>
     function Request() {
       this.get = function (params) {
-        let str = Object.keys(params).map(
-          k => `${k}=${params[k]}`
-        ).join(
-          '&'
-        )
-        let url = `https://mcl.com?${this.url}${str}`
-        console.log(url);
+        let str = Object.keys(params).map(k => `${k}=${params[k]}`).join('&')
+        let url = `https://mcl.com/${this.url}?${str}`
+        document.write(url);
+        // console.log(this);
       }
+      console.log(this);
     }
+    Request()
     function Article() {
       this.url = "article/lists"
       Request.call(this)
-      console.log(this);
+      document.write(this);
     }
-    let a = new Article()
-    console.log(a.get({ id: 1, cat: 'js' }));
+    function User() {
+      this.url = "user/lists"
+      Request.call(this)
+      document.write(this);
+    }
+
+    let user = new User();
+    let a = new Article();
+    a.get({ id: 1, cat: 'js' });
+    user.get({ name: 'mcl', cat: 'js' });
   </script>
 </body>
 
