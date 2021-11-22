@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <input type="text" v-model="jjj">
+  <input type="text" v-model="title">
+  <input type="text" v-model="title">
+  <div v-bind="title">这里也会更改</div>
+</body>
+<script>
+  function View() {
+    let p = new Proxy({}, {
+      get(obj, property) {
+        return obj[property]
+      },
+      set(obj, property, value) {
+        console.log(obj[property]);
+        document.querySelectorAll(`[v-model="${property}"]`).forEach(item => {
+          item.value = value;
+        });
+        document.querySelectorAll(`[v-bind="${property}"]`).forEach(item => {
+          item.innerHTML = value;
+        })
+      },
+
+    })
+    this.init = function () {
+      const els = document.querySelectorAll('[v-model]');
+      els.forEach(item => {
+        item.addEventListener('keyup', function () {
+          p[this.getAttribute('v-model')] = this.value;
+        })
+      })
+    }
+  }
+  let q = new View();
+  q.init()
+  console.log(q.title);
+
+  // function factorial(num) {
+  //   return num == 1 ? 1 : num * factorial(num - 1);
+  // }
+  // let p = new Proxy(factorial, {
+  //   apply(func, obj, args) {
+  //     console.log(args);
+  //     console.log(func.apply(args));
+  //   }
+  // })
+  // console.log(p.apply([3]));
+  // 'use strict'
+  // const mcl = { name: '马成龙' }
+  // const p = new Proxy(mcl, {
+  //   get(obj, property) {
+  //     return obj[property];
+  //   },
+  //   set(obj, property, value) {
+  //     obj[property] = value;
+  //     return true;
+  //   }
+  // })
+  // console.log(p.name);
+
+  // p.name = 'xixi';
+  // console.log(p.name);
+
+  // function User(name) {
+  //   // this.name = name;
+  //   let data = { name };
+  //   Object.defineProperty(this, 'name', {
+  //     get() {
+  //       return data.name
+  //     },
+  //     set(value) {
+  //       if (value.trim() == "" || value.length > 20) {
+  //         throw new Error('用户名不合法')
+  //       }
+  //       data.name = value;
+  //     }
+  //   })
+  // }
+
+  // let mcl = new User('马成龙')
+  // mcl.name = ''
+  // console.log(mcl.name);
+  // console.log(mcl);
+</script>
+
+</html>

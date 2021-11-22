@@ -7,7 +7,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
   <style>
-    dt {
+    /* dt {
       width: 300px;
       height: 50px;
       background-color: #acf;
@@ -19,34 +19,95 @@
       margin: 0;
       background-color: #ccc;
     }
+
+    button {
+      position: absolute;
+      top: 0;
+      left: 0;
+    } */
   </style>
 </head>
 
 <body>
-  <dl>
+  <!-- <dl>
     <dt>mcl</dt>
     <dd>1</dd>
     <dt>as;kdf</dt>
     <dd hidden>2</dd>
-  </dl>
+  </dl> -->
+  <!-- <button>乌龟 乌龟</button>
+  <button>兔子</button> -->
 </body>
 <script>
-  function hd() {
-    let n = 1;
-    return function sum() {
-      // console.log(++n);
-      let m = 1
-      function show() {
-        console.log(++m);
-      }
-      show()
+  let lessons = [
+    {
+      title: 'js',
+      click: 123,
+      price: 110
+    }, {
+      title: 'cs',
+      click: 43,
+      price: 90
+    }, {
+      title: 'html',
+      click: 202,
+      price: 50
     }
-
+  ]
+  // console.log(lessons);
+  function between(item) {
+    return function (a, b) {
+      return a[item] > b[item] ? 1 : -1;
+    };
   }
-  let a = hd();
-  a();
-  a();
-  a();
+  let hd = lessons.sort(between('price'))
+  console.table(hd);
+  let a = lessons.sort(between('click'))
+  console.table(a);
+
+  console.table(hd);
+  // let btns = document.querySelectorAll('button')
+  // btns.forEach(function (elem) {
+  //   elem.addEventListener('click', function () {
+  //     let left = 1;
+  //     setInterval(() => {
+  //       this.style.left = left++ + 'px';
+
+  //     }, 10);
+  //   })
+
+  // })
+  // let arr = [1, 23, 4, 5, 6, 7, 8];
+  // function between(a, b) {
+  //   return function (v) {
+  //     return v > a && v < b;
+  //   }
+  // }
+  // console.log(arr.filter(between(0, 9)));
+  // for (let i = 1; i <= 3; i++) {
+  //   setTimeout(function () {
+  //     console.log(i);
+
+  //   }, 1000)
+  // }
+  // console.log(i);  
+  // console.log(i);
+  // function hd() {
+  //   let n = 1;
+  //   return function sum() {
+  //     // console.log(++n);
+  //     let m = 1
+  //     function show() {
+  //       console.log(++m);
+  //     }
+  //     show()
+  //   }
+
+  // }
+  // let a = hd();
+  // a();
+  // a();
+  // a();
 
   // function Color(elem) {
   //   this.elem = elem;
