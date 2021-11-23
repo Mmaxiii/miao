@@ -7,26 +7,22 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
   <style>
-    ul {
-      width: 40px;
-      height: 30px;
-      overflow: hidden;
-    }
 
-    ul:hover {
-      overflow: visible;
-    }
   </style>
 </head>
 
 <body>
-  <ul>
-    <li>12312</li>
-    <li>3123</li>
-    <li>123</li>
-    <li>123</li>
-    <li>123</li>
-  </ul>
+
 </body>
+<script>
+  function User() { }
+  console.dir(User);  //可以看到2个原型
+
+  User.prototype.show = function () { console.log('haha') }; //给prototype原型添加show方法
+  let hd = new User();  //hd会会获得User的prototype原型
+  console.log(User.prototype == hd.__proto__)  //true   (对象调取原型时要用__proto__)
+  hd.show();  //haha  构造出的hd有show方法
+</script>
+
 
 </html>

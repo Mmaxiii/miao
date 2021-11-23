@@ -21,43 +21,40 @@
       height: 1000px;
     }
 
-    .mune {
+    .menu {
       position: relative;
       /* height: 100%; */
       /* background-color: #ccc; */
     }
 
-    .file,
-    .edit,
-    .view {
+    .menu .file,
+    .menu .edit,
+    .menu .view {
       width: 80px;
       height: 30px;
       position: absolute;
+      overflow: hidden;
+
       /* border: 1px solid; */
       line-height: 28px;
       background-color: rgb(235, 229, 229);
 
     }
 
-    .edit {
+    .menu .edit {
       top: 0;
       left: 80px;
     }
 
-    .view {
+    .menu .view {
       top: 0;
       left: 160px;
     }
 
-    .edit,
-    .file,
-    .view {
-      overflow: hidden;
-    }
 
-    .file:hover,
-    .edit:hover,
-    .view:hover {
+    .menu .file:hover,
+    .menu .edit:hover,
+    .menu .view:hover {
       overflow: visible;
       background-color: #acf;
 
@@ -65,7 +62,7 @@
 
 
 
-    ul {
+    .menu ul {
       position: absolute;
       top: 30px;
       left: 0px;
@@ -73,7 +70,7 @@
       background-color: rgb(235, 229, 229);
     }
 
-    ul li {
+    .menu ul li {
       position: relative;
       width: 300px;
       height: 30px;
@@ -85,18 +82,18 @@
       /* border: 1px solid; */
     }
 
-    ul li:hover {
+    .menu ul li:hover {
       background-color: #acf;
       overflow: visible;
 
     }
 
-    ul li em {
+    .menu ul li em {
       position: absolute;
       right: 20px;
     }
 
-    .new em {
+    .menu .new em {
       display: inline-block;
       top: 8px;
       height: 10px;
@@ -107,16 +104,16 @@
       transform: rotate(45deg);
     }
 
-    .newlist {
+    .menu .newlist {
       left: 300px;
       top: -5px;
     }
 
 
 
-    hr {
+    .menu hr {
       margin: 10px;
-      color: #ccc;
+      /* color: #ccc; */
     }
   </style>
 </head>
@@ -124,7 +121,7 @@
 <body>
 
 
-  <div class="mune">
+  <div class="menu">
     <div class="file">文件
       <ul>
         <li class="new">新建文件 <em></em>
