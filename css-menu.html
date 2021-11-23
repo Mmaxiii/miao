@@ -7,11 +7,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
   <style>
-    * {
+    /* * {
       padding: 0;
       margin: 0;
       box-sizing: border-box;
-      /* box-shadow: inset 0 0 1px red; */
     }
 
 
@@ -33,20 +32,27 @@
 
     .main-menu li {
       position: relative;
-
     }
 
     .main-menu ul {
-      display: none;
       position: absolute;
-      left: 0px;
+      left: 0;
+    }
+
+    .main-menu>li>ul {
+      display: none;
+    }
+
+    .main-menu ul ul>li {
+      display: none;
     }
 
     .main-menu ul li {
       width: 300px;
       height: 40px;
-      padding: 0px 10px;
       line-height: 40px;
+      padding: 0 20px;
+
     }
 
     .main-menu ul li em {
@@ -58,11 +64,20 @@
       display: block;
     }
 
+    .main-menu li:hover>ul>li {
+      display: block;
+    }
+
     .main-menu ul ul {
       top: 0;
       left: 100%;
     }
 
+    .main-menu ul ul::before {
+      content: '>';
+      position: absolute;
+      left: -30px;
+    }
 
     .main-menu .left-arrow {
       top: 13px;
@@ -76,7 +91,69 @@
 
     .main-menu hr {
       margin: 10px;
+    } */
+  </style>
+  <style type="text/less">
+    ul {
+  margin:0;
+  padding:0;
+  list-style:none;
+  background-color: rgb(235, 229, 229);
+}
+.main-menu {
+  li{ 
+      position:relative;  
+      height: 30px;
+      line-height: 30px;
+      padding:0 10px;
+
+    &:hover{
+     >ul {
+        display:block;
+       >li {
+         display:block;
+       }
+       ul {
+         top:0;
+        left:100%;
+         &::before{
+          content:'';
+          position:absolute;
+          left:-30px;
+          top: 10px;
+          height: 5px;
+          width: 5px;
+          border: 2px solid transparent;
+          border-top: 2px solid #000;
+          border-right: 2px solid #000;
+          transform: rotate(45deg);
+         }
+       }
+      }
     }
+  }
+  >li {
+    display: inline-block;
+    >ul {
+      display:none;
+    }
+  }
+  ul {  
+    position:absolute;
+    left:0;
+    /* background-color: rgb(235, 229, 229); */
+    li {
+      display:none;
+      width:200px;
+
+    }
+  }
+  em {
+    position:absolute;
+    right:10px;
+  }
+}
+
   </style>
 </head>
 
@@ -85,18 +162,18 @@
   <ul class="main-menu">
     <li>文件
       <ul>
-        <li class="new">新建文件 <em class="left-arrow"></em>
+        <li class="new">新建文件
           <ul>
             <li>新建html<em>Ctrl +?</em></li>
             <li>新建css<em>Ctrl +?</em></li>
-            <li>新建js<em class="left-arrow"></em>
+            <li>新建js
               <ul>
                 <li>命令面板 <em>Ctrl +?</em></li>
                 <li>打开视图<em>Ctrl +?</em></li>
-                <hr>
+                <!-- <hr> -->
                 <li>外观<em>Ctrl +?</em></li>
                 <li>编辑器布局<em>Ctrl +?</em></li>
-                <hr>
+                <!-- <hr> -->
                 <li>问题<em>Ctrl +?</em></li>
                 <li>输出<em>Ctrl +?</em></li>
               </ul>
@@ -139,7 +216,7 @@
     </li>
   </ul>
 
-
 </body>
+<script src="less.min.js"></script>
 
 </html>
