@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style type="text/less">
+    * {
+      paddin:0;
+      margin:0;
+    }
+    .table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+      line-height: 1.5;
+      thead {
+        border-bottom: 2px solid;
+      }
+      th,td {
+        padding: 8px;
+      }
+      tr {
+        border-bottom: 1px solid #DEE2E6;
+      }
+      &.table-sm{
+        th,td {
+          padding:4px;
+        }
+      }
+      &.table-bordered {
+        td,th {
+          border: 1px solid #DEE2E6;
+        }
+      }
+      &.table-borderless {
+        th,td {
+          border:hidden;
+        }
+      }
+      &.table-hover {
+        tbody tr:hover {
+          background-color: #ECECEC;
+        }
+      }
+      &.table-striped {
+        tbody tr:nth-child(odd) {
+          background-color: #F2F2F2;
+        }
+        &.table-hover  tbody tr:hover {
+          background-color: #ECECEC;
+        }
+      }
+      &.table-dark {
+          background-color: #212529;
+          color: #fff;
+          tr {
+            border-bottom: 1px solid #373B3E;
+          }
+          &.table-bordered {
+            td,th {
+              border: 1px solid #373B3E;
+            }
+          }
+          &.table-striped{
+            table {
+              background-color: #212529;
+            }
+            tbody tr:nth-child(odd) {
+            background-color: #2C3034;
+            }
+            tbody tr:hover {
+              background-color: #323539;
+            }
+          }
+          &.table-hover {
+            tbody tr:hover {
+              background-color: #323539;
+            }
+          }
+        }
+      }
+  </style>
+</head>
+
+<body>
+  <table class="table table-hover table-striped table-dark">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">First</th>
+        <th scope="col">Last</th>
+        <th scope="col">Handle</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <th scope="row">1</th>
+        <td>Mark</td>
+        <td>Otto</td>
+        <td>@mdo</td>
+      </tr>
+      <tr>
+        <th scope="row">2</th>
+        <td>Jacob</td>
+        <td>Thornton</td>
+        <td>@fat</td>
+      </tr>
+      <tr>
+        <th scope="row">3</th>
+        <td>Larry</td>
+        <td>the Bird</td>
+        <td>@twitter</td>
+      </tr>
+    </tbody>
+  </table>
+</body>
+<script src="less.min.js"></script>
+
+</html>

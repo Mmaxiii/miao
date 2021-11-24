@@ -15,8 +15,27 @@
 
 </body>
 <script>
-  let age = prompt('nianling')
-  alert("你的年龄" + age + "/n${age}asdjhfkasjhd")
+  let hd = {
+    data: [1, 2, 3, 55, 0, 6, 7]
+  }
+  Object.setPrototypeOf(hd, {
+    max(data) {
+      console.log(data);
+      return data.sort((a, b) => b - a)[0]
+    }
+  })
+  console.log(hd.max(hd.data));
+  // console.log(hd.__proto__);
+  let xj = {
+    lessons: { js: 99, php: 33, node: 88, linux: 90 },
+    //   get data() {
+    //     return Object.values(this.lessons)
+
+    //   }
+  }
+  let a = Object.values(xj.lessons)
+  console.log(hd.max.call(null, Object.values(xj.lessons)));
+  console.log(a);
 
 </script>
 

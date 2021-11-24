@@ -7,14 +7,15 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
   <style>
-    div {
+    label {
+      display: inline-block;
       width: 100px;
       height: 100px;
+      border: 1px solid;
       background-image: url(web_heart_animation.png);
-
     }
 
-    div:hover {
+    input:checked+label {
       background-position: -2800px 0;
       transition: 1s steps(28, start);
     }
@@ -22,7 +23,8 @@
 </head>
 
 <body>
-  <div></div>
+  <input type="checkbox" name="" id="foo" hidden>
+  <label for="foo"></label>
 </body>
 
 </html>
