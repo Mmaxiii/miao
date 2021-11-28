@@ -6,7 +6,12 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
-  <style>
+  <!-- <style>
+    /* 浮动布局 */
+    dl {
+      padding-left: 60px;
+    }
+
     dt,
     dd {
       float: left;
@@ -14,17 +19,38 @@
 
     dt {
       clear: both;
+      width: 40px;
       padding: 10px;
+      margin-left: -60px;
+      text-align: center;
+      background-color: #acf;
     }
 
     dd {
       margin: 0;
       padding: 10px;
     }
+  </style> -->
+  <style>
+    /* 行内布局 */
 
-    main {
-      /* 闭合浮动 */
-      overflow: hidden;
+    dl {
+      padding-left: 80px;
+      font-size: 20px;
+      /* margin-left: -80px; */
+    }
+
+    dt {
+      height: 40px;
+      margin-bottom: -40px;
+      margin-top: 10px;
+      margin-left: -80px;
+      /* background-color: #acf; */
+    }
+
+    dd {
+      display: inline;
+      margin: 0;
     }
   </style>
 </head>
@@ -33,35 +59,35 @@
   <dl>
 
     <dt>导演</dt>
-    <main>
-      <dd>张艺谋</dd>
-      <dd>张艺谋</dd>
-    </main>
+
+    <dd>张艺谋</dd>
+    <dd>张艺谋</dd>
+
 
     <dt>主演</dt>
-    <main>
-      <dd>黄渤</dd>
-      <dd>沈腾</dd>
-      <dd>李诞</dd>
-      <dd>黄渤</dd>
-      <dd>沈腾</dd>
-      <dd>李诞</dd>
-      <dd>沈腾</dd>
-      <dd>李诞</dd>
-      <dd>黄渤</dd>
-      <dd>沈腾</dd>
-      <dd>李诞</dd>
-      <dd>黄渤</dd>
-      <dd>沈腾</dd>
-      <dd>李诞</dd>
-    </main>
+
+    <dd>黄渤</dd>
+    <dd>沈腾</dd>
+    <dd>李诞</dd>
+    <dd>黄渤</dd>
+    <dd>沈腾</dd>
+    <dd>李诞</dd>
+    <dd>沈腾</dd>
+    <dd>李诞</dd>
+    <dd>黄渤</dd>
+    <dd>沈腾</dd>
+    <dd>李诞</dd>
+    <dd>黄渤</dd>
+    <dd>沈腾</dd>
+    <dd>李诞</dd>
+
 
     <dt>编剧</dt>
-    <main>
-      <dd>你</dd>
-      <dd>我</dd>
-      <dd>他</dd>
-    </main>
+
+    <dd>你</dd>
+    <dd>我</dd>
+    <dd>他</dd>
+
 
   </dl>
 </body>

@@ -1,0 +1,617 @@
+* {
+  box-sizing         : border-box;
+  padding            : 0;
+  margin             : 0;
+  /* background-color: rgba(0, 0, 0, 0.08); */
+  /* box-shadow      : inset 0 0 1px red; */
+}
+
+html,
+body {
+  width    : 100%;
+  font-size: 14px;
+}
+
+a {
+  text-decoration: none;
+  color          : #000;
+}
+
+
+
+h1,
+h2,
+h3,
+h4 {
+  font-weight: normal;
+
+}
+
+ul {
+  padding   : 0;
+  margin    : 0;
+  list-style: none;
+}
+
+.center {
+  display: flow-root;
+  width  : 1226px;
+  margin : 0 auto;
+}
+
+/* 顶栏 */
+header {
+  height          : 40px;
+  font-size       : 12px;
+  color           : #B0B0B0;
+  background-color: #333;
+
+}
+
+header li {
+  /* display: inline; */
+  float: left;
+}
+
+header .sep {
+  margin: 0 0.6em;
+  color : #423C37;
+}
+
+header a {
+  display    : inline-block;
+  height     : 40px;
+  line-height: 40px;
+  color      : #B0B0B0;
+}
+
+header a:hover {
+  color: #fff;
+}
+
+header .app:hover::before {
+  content               : "";
+  position              : absolute;
+  display               : inline-block;
+  top                   : 25px;
+  left                  : 15px;
+  /* background-color   : #acf; */
+  border                : 8px solid transparent;
+  border-bottom-color   : #fff;
+}
+
+header .app {
+  position: relative;
+}
+
+header .download {
+  position        : absolute;
+  overflow        : hidden;
+  top             : 40px;
+  left            : -38px;
+  width           : 125px;
+  height          : 0px;
+  text-align      : center;
+  background-color: #fff;
+  box-shadow      : 0 0 3px rgb(184, 183, 183);
+  transition      : .3s;
+  z-index         : 2;
+}
+
+header .app:hover .download {
+  height: 150px;
+}
+
+header .download img {
+  width         : 86px;
+  margin-top    : 1em;
+  vertical-align: bottom;
+}
+
+header .download::after {
+  content    : "小米商城APP";
+  display    : inline-block;
+  height     : 30px;
+  padding-top: 5px;
+  font-size  : 14px;
+  color      : #000;
+}
+
+
+
+header .cart {
+  position        : relative;
+  float           : right;
+  width           : 120px;
+  height          : 40px;
+  text-align      : center;
+  line-height     : 40px;
+  background-color: #424242;
+}
+
+header .cart::after {
+  content         : "";
+  position        : absolute;
+  left            : -196px;
+  display         : block;
+  width           : 316px;
+  height          : 0;
+  background-color: #fff;
+  box-shadow      : 0 3px 3px rgb(219, 217, 217);
+  z-index         : 1;
+}
+
+header .cart:hover::after {
+  width     : 316px;
+  height    : 100px;
+  transition: .3s;
+
+}
+
+header .cart:hover {
+  color           : #FF6700;
+  background-color: #fff;
+}
+
+header .right {
+  float: right;
+  width: 160px;
+  color: #B0B0B0;
+}
+
+
+/* 导航栏 */
+.nav .logo {
+  float              : left;
+  position           : relative;
+  z-index            : 2;
+  width              : 56px;
+  height             : 56px;
+  /* background-color: #acf; */
+  margin-top         : 21px;
+}
+
+.nav .logo a {
+  display   : block;
+  width     : 100%;
+  height    : 100%;
+  background: url(https://s02.mifile.cn/assets/static/image/logo-mi2.png) center/contain no-repeat;
+}
+
+.nav {
+  height     : 100px;
+  /* overflow: hidden; */
+}
+
+.nav ul {
+  float        : left;
+  padding-left : 178px;
+  /* margin-top: 56px; */
+}
+
+.nav ul li {
+  float: left;
+}
+
+.nav ul li a {
+  display: inline-block;
+  padding: 38px 10px;
+  color  : #000;
+}
+
+.nav ul li:hover a {
+  color: #FF6700;
+}
+
+.nav .sreach {
+  box-sizing: border-box;
+  position  : relative;
+  z-index   : 2;
+  float     : right;
+  width     : 296px;
+  height    : 50px;
+  margin-top: 25px;
+}
+
+.nav .sreach input {
+  box-sizing    : border-box;
+  float         : left;
+  outline       : none;
+  width         : 242px;
+  height        : 50px;
+  padding       : 0;
+  padding-left  : 10px;
+  border        : none;
+  font-size     : 16px;
+  vertical-align: top;
+  border        : 1px solid #E0E0E0;
+  border-right  : none;
+  color         : #E0E0E0;
+}
+
+.nav .sreach .button {
+  box-sizing      : border-box;
+  overflow        : auto;
+  height          : 50px;
+  border          : 1px solid #E0E0E0;
+  background-color: yellow;
+}
+
+.nav .sreach:hover input,
+.nav .sreach:hover .button {
+  border-color: #B0B0B0;
+}
+
+.nav .sreach input:focus,
+.nav .sreach input:focus+.button {
+  border-color: #FF6700
+}
+
+.nav .drop {
+  position        : absolute;
+  box-sizing      : border-box;
+  top             : 96px;
+  left            : 0;
+  width           : 100%;
+  height          : 0px;
+  padding-top     : 44px;
+  background-color: #fff;
+  z-index         : -1;
+  transition      : .3s;
+  overflow        : hidden;
+}
+
+.nav ul .jump:hover .drop {
+  /* border-top: 1px solid #E0E0E0; */
+  box-shadow: 0 2px 2px rgb(219, 217, 217);
+  height    : 274px;
+  z-index   : 1;
+}
+
+.nav ul .jump:hover .drop::before {
+  content         : "";
+  display         : inline-block;
+  width           : 100%;
+  height          : 1px;
+  background-color: #E0E0E0;
+}
+
+.nav .drop ul {
+  float  : none;
+  padding: 30px 0 30px 20px;
+}
+
+.nav .drop a {
+  display            : inline-block;
+  width              : 160px;
+  height             : 170px;
+  padding            : 0;
+  /* background-color: yellow; */
+}
+
+.nav .drop img {
+  vertical-align: top;
+}
+
+.nav .drop .title {
+  margin-top: 25px;
+  color     : #000;
+}
+
+.title,
+.price {
+  font-size : 12px;
+  text-align: center;
+}
+
+.price {
+  margin-top: 5px;
+  color     : #FF6700;
+
+}
+
+.nav .drop .sep {
+  display         : inline-block;
+  height          : 100px;
+  width           : 1px;
+  margin          : 0 20px;
+  background-color: #ccc;
+  vertical-align  : top;
+}
+
+/* 主轮播图 */
+
+
+
+main {
+  position: relative;
+  width   : 1226px;
+  height  : 460px;
+}
+
+main input:nth-child(1):checked~.images img:nth-child(1),
+main input:nth-child(2):checked~.images img:nth-child(2),
+main input:nth-child(3):checked~.images img:nth-child(3) {
+  opacity: 1;
+}
+
+main input:nth-child(1):checked~.dots label:nth-child(1),
+main input:nth-child(2):checked~.dots label:nth-child(2),
+main input:nth-child(3):checked~.dots label:nth-child(3) {
+  background-color: #9B9D9F;
+  border-color    : #748397;
+}
+
+main .dots {
+  position: absolute;
+  right   : 30px;
+  bottom  : 26px;
+  z-index : 1;
+}
+
+main label {
+  float           : left;
+  width           : 10px;
+  height          : 10px;
+  margin          : 0 5px;
+  border-radius   : 999px;
+  border          : 2px solid #8C9CB2;
+  background-color: #353638;
+  transition      : .5s;
+}
+
+
+main img {
+  position  : absolute;
+  top       : 0;
+  width     : 100%;
+  opacity   : 0;
+  transition: .5s;
+}
+
+main ul {
+  position        : absolute;
+  width           : 234px;
+  top             : 0;
+  left            : 0;
+  padding         : 20px 0;
+  background-color: rgb(0, 0, 0, .5);
+}
+
+main ul a {
+  position    : relative;
+  box-sizing  : border-box;
+  display     : block;
+  width       : 100%;
+  height      : 42px;
+  padding-left: 30px;
+  line-height : 42px;
+  font-size   : 14px;
+  color       : white;
+}
+
+main ul li {
+  /* position: relative; */
+
+}
+
+main ul a::after {
+  content            : "";
+  position           : absolute;
+  right              : 15px;
+  top                : 16px;
+  height             : 5px;
+  width              : 5px;
+  /* background-color: #acf; */
+  border             : 2px solid #E0E0E0;
+  border-bottom      : none;
+  border-left        : none;
+  transform          : rotate(45deg);
+}
+
+main ul a:hover {
+  background-color: #FF6700;
+}
+
+main ul li .menu {
+  box-sizing: border-box;
+  position  : absolute;
+  display   : none;
+  left      : 234px;
+  top       : 0;
+
+}
+
+main ul li:hover .menu {
+  display         : block;
+  height          : 460px;
+  max-width       : 992px;
+  padding         : 0 20px;
+  background-color: #fff;
+  box-shadow      : 0 0 5px #E0E0E0;
+}
+
+/* sub */
+.sub {
+  height    : 170px;
+  /* border : 1px solid; */
+  margin-top: 14px;
+}
+
+.sub ul {
+  float           : left;
+  width           : 234px;
+  height          : 170px;
+  background-color: #5F5750;
+}
+
+.sub ul li {
+  box-sizing : border-box;
+  float      : left;
+  position   : relative;
+  width      : 78px;
+  height     : 85px;
+  text-align : center;
+  padding-top: 5px;
+}
+
+.sub ul li::before {
+  content         : "";
+  position        : absolute;
+  width           : 64px;
+  height          : 1px;
+  top             : 3px;
+  left            : 7px;
+  background-color: #665E57;
+}
+
+.sub ul li::after {
+  content         : "";
+  position        : absolute;
+  width           : 1px;
+  height          : 70px;
+  left            : 0;
+  top             : 10px;
+  background-color: #665E57;
+}
+
+.sub ul li a {
+  display  : inline-block;
+  width    : 60px;
+  height   : 74px;
+  font-size: 12px;
+  color    : #E0E0E0;
+}
+
+.sub ul li a img {
+  width : 24px;
+  margin: 15px 18px 0;
+}
+
+.sub div {
+  float              : left;
+  width              : 316px;
+  height             : 170px;
+  margin-left        : 14px;
+  /* background-color: #fff; */
+}
+
+.sub div a {
+  display: inline-block;
+}
+
+.sub div img {
+  width         : 100%;
+  vertical-align: top;
+}
+
+/* home */
+.home {
+  width           : 100%;
+  height          : 4000px;
+  margin-top      : 26px;
+  padding-top     : 26px;
+  background-color: #F5F5F5;
+}
+
+.banner img {
+  width         : 100%;
+  vertical-align: top;
+}
+
+.public {
+  margin-top: 22px;
+}
+
+.public .big-card {
+  float   : left;
+  position: relative;
+  top     : 0;
+}
+
+.public ul {
+  float        : left;
+  width        : 992px;
+  margin-bottom: -14px;
+  display      : flow-root;
+}
+
+.public h2 {
+  float      : left;
+  height     : 58px;
+  line-height: 58px;
+  margin     : 0;
+  font-weight: normal;
+  font-size  : 22px;
+}
+
+.public .more {
+  float      : right;
+  height     : 58px;
+  line-height: 58px;
+}
+
+.public ul li {
+  float        : left;
+  position     : relative;
+  top          : 0;
+  width        : 234px;
+  height       : 300px;
+  margin-left  : 14px;
+  margin-bottom: 14px;
+  text-align   : center;
+  transition   : .5s;
+
+}
+
+.public ul li:hover,
+.public .big-card:hover {
+  top       : -2px;
+  box-shadow: 0 5px 10px #ccc;
+
+}
+
+.public ul li a {
+  display         : inline-block;
+  width           : 100%;
+  height          : 100%;
+  padding         : 20px 0;
+  background-color: #fff;
+}
+
+.public ul a img {
+  width: 70%;
+}
+
+.public a h3 {
+  font-size : 14px;
+  margin-top: 15px;
+}
+
+.public a .desc {
+  font-size: 12px;
+  color    : #C2C2C2;
+  margin   : 5px 0 10px;
+}
+
+.public .big-card {
+  width : 234px;
+  height: 614px;
+  clear : both;
+}
+
+.public ul .big-card img {
+  width: 100%;
+}
+
+.public ul li:first-child a {
+  padding: 0;
+}
+
+.phone .more:hover {
+  color: #FF6700;
+}
+
+.smart ul .small-card {
+  height: 143px;
+}

@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    main {
+      position: relative;
+      width: 1226px;
+      height: 460px;
+      border: 1px solid;
+    }
+
+    main input:nth-child(1):checked~.images img:nth-child(1),
+    main input:nth-child(2):checked~.images img:nth-child(2),
+    main input:nth-child(3):checked~.images img:nth-child(3) {
+      opacity: 1;
+    }
+
+    main input:nth-child(1):checked~.dots label:nth-child(1),
+    main input:nth-child(2):checked~.dots label:nth-child(2),
+    main input:nth-child(3):checked~.dots label:nth-child(3) {
+      background-color: #9B9D9F;
+      border-color: #748397;
+    }
+
+    main .dots {
+      position: absolute;
+      right: 30px;
+      bottom: 26px;
+      z-index: 1;
+    }
+
+    main label {
+      float: left;
+      width: 10px;
+      height: 10px;
+      margin: 0 5px;
+      border-radius: 999px;
+      border: 2px solid #8C9CB2;
+      background-color: #353638;
+      transition: .5s;
+    }
+
+
+    main img {
+      position: absolute;
+      top: 0;
+      width: 100%;
+      opacity: 0;
+      transition: .5s;
+    }
+  </style>
+</head>
+
+<body>
+  <main>
+    <input type="radio" name="s1" id="r1" checked>
+    <input type="radio" name="s1" id="r2">
+    <input type="radio" name="s1" id="r3">
+
+    <div class="dots">
+      <label for="r1"></label>
+      <label for="r2"></label>
+      <label for="r3"></label>
+    </div>
+
+    <div class="images">
+      <img src="https://cdn.cnbj1.fds.api.mi-img.com/mi-mall/918820682e4a490221cfd92b24c14b86.jpg?thumb=1&w=1226&h=460&f=webp&q=90"
+           alt="">
+      <img src="https://cdn.cnbj1.fds.api.mi-img.com/mi-mall/78d0483ed36158659fcf65a19a9b249a.jpeg?w=2452&h=920" alt="">
+      <img src="https://cdn.cnbj1.fds.api.mi-img.com/mi-mall/fc0f553382bb5143e667b284dfcf02db.jpg?thumb=1&w=1226&h=460&f=webp&q=90"
+           alt="">
+    </div>
+
+  </main>
+</body>
+
+</html>

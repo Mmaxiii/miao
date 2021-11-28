@@ -7,84 +7,52 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
   <style>
-    * {}
-
-    .ios {
-      position: relative;
-      width: 150px;
-      height: 75px;
-    }
-
     label {
-      position: absolute;
-      left: 0;
-      top: 0;
+      position: relative;
       display: inline-block;
-      width: 100%;
-      height: 100%;
-      border: 2px solid rgb(207, 207, 207);
-      border-radius: 50px;
+      width: 340px;
+      height: 200px;
+      border: 5px solid rgb(207, 207, 207);
+      border-radius: 88888px;
+      box-shadow: inset 0 0 0 0 chartreuse;
+      padding: 10px;
       transition: .5s;
     }
 
-    .one {
-      background-color: lightgreen;
-    }
-
-    .two {
-      /* left: 50%;
-      top: 50%;
-      width: 0;
-      height: 0; */
-      background-color: #fff;
-      /* border: 1px solid rgba(0, 0, 0, 0); */
-      /* border: */
-
-    }
-
-    /* input:checked+label+.two {
-      transform-origin: 100px 75px;
-      width: 0;
-      height: 0;
-    } */
-
-    input:checked+label+label+.circle {
-      /* width: 90px; */
-      left: 50%;
-    }
-
-    input:checked+label+.two {
-      /* background-color: lightgreen; */
-      left: 50%;
-      top: 50%;
-      width: 0;
-      height: 0;
-      transition: .5s;
-      border: 1px solid lightgreen;
-    }
-
-    .circle {
+    label::before {
+      content: "";
       position: absolute;
-      width: 60px;
-      height: 60px;
-      margin: 8px;
-      /* border: 1px solid; */
-      border-radius: 45px;
+      left: 10px;
+      width: 196px;
+      height: 196px;
+      padding-left: 0;
+      border-radius: 8888px;
+      box-shadow: 0 5px 20px #ccc;
       background-color: #fff;
-      box-shadow: 0 0 15px #ccc;
-      /* transition: width 1s, left 1s; */
+      transition: .5s, padding .5s .05s;
+
+    }
+
+    input:checked+label {
+      border-color: chartreuse;
+      box-shadow: inset 0 0 0 110px chartreuse;
+    }
+
+    input:checked+label::before {
+      left: 144px;
+      padding-left: 196px;
+      width: 0;
+      transition: .5s, width .5s .05s;
+
     }
   </style>
 </head>
 
 <body>
-  <div class="ios">
-    <input type="checkbox" name="" id="foo" hidden>
+  <input type="checkbox" name="" id="foo" hidden>
 
-    <label for="foo" class="one"></label>
-    <label for="foo" class="two"></label>
-    <label class="circle" for="foo"></label>
-  </div>
+  <label for="foo" class="one"></label>
+
 </body>
 
 </html>
