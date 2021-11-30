@@ -5,6 +5,7 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" type="text/css" href="font/iconfont.css">
   <title>Document</title>
   <style>
     main {
@@ -14,17 +15,62 @@
       border: 1px solid;
     }
 
-    main input:nth-child(1):checked~.images img:nth-child(1),
-    main input:nth-child(2):checked~.images img:nth-child(2),
-    main input:nth-child(3):checked~.images img:nth-child(3) {
+    main .iconfont {
+      font-size: 30px;
+    }
+
+    main input:nth-child(1):checked~.images .image:nth-child(1) img,
+    main input:nth-child(2):checked~.images .image:nth-child(2) img,
+    main input:nth-child(3):checked~.images .image:nth-child(3) img,
+    main input:nth-child(4):checked~.images .image:nth-child(4) img {
       opacity: 1;
+    }
+
+    main input:nth-child(1):checked~.images .image:nth-child(1) label,
+    main input:nth-child(2):checked~.images .image:nth-child(2) label,
+    main input:nth-child(3):checked~.images .image:nth-child(3) label,
+    main input:nth-child(4):checked~.images .image:nth-child(4) label {
+      z-index: 5;
+      display: block;
     }
 
     main input:nth-child(1):checked~.dots label:nth-child(1),
     main input:nth-child(2):checked~.dots label:nth-child(2),
-    main input:nth-child(3):checked~.dots label:nth-child(3) {
+    main input:nth-child(3):checked~.dots label:nth-child(3),
+    main input:nth-child(4):checked~.dots label:nth-child(4) {
       background-color: #9B9D9F;
       border-color: #748397;
+    }
+
+
+
+    main .image label {
+      display: none;
+      position: absolute;
+      width: 40px;
+      height: 70px;
+      text-align: center;
+      line-height: 70px;
+      color: #AEAFB1;
+
+    }
+
+    main .image label:hover {
+      color: #fff;
+      background-color: rgba(0, 0, 0, .5);
+    }
+
+
+    main .image .prev {
+      top: 195px;
+      left: 0;
+      border-radius: 0 3px 3px 0;
+    }
+
+    main .image .next {
+      top: 195px;
+      right: 0;
+      border-radius: 3px 0 0 3px;
     }
 
     main .dots {
@@ -34,7 +80,8 @@
       z-index: 1;
     }
 
-    main label {
+
+    main .dots label {
       float: left;
       width: 10px;
       height: 10px;
@@ -42,9 +89,13 @@
       border-radius: 999px;
       border: 2px solid #8C9CB2;
       background-color: #353638;
-      transition: .5s;
     }
 
+    main .dots label:hover {
+      background-color: #9B9D9F;
+      border-color: #748397;
+      cursor: pointer;
+    }
 
     main img {
       position: absolute;
@@ -52,28 +103,54 @@
       width: 100%;
       opacity: 0;
       transition: .5s;
+
     }
   </style>
 </head>
 
 <body>
   <main>
-    <input type="radio" name="s1" id="r1" checked>
-    <input type="radio" name="s1" id="r2">
-    <input type="radio" name="s1" id="r3">
+    <input type="radio" name="s1" id="r1" checked hidden>
+    <input type="radio" name="s1" id="r2" hidden>
+    <input type="radio" name="s1" id="r3" hidden>
+    <input type="radio" name="s1" id="r4" hidden>
 
     <div class="dots">
       <label for="r1"></label>
       <label for="r2"></label>
       <label for="r3"></label>
+      <label for="r4"></label>
     </div>
 
     <div class="images">
-      <img src="https://cdn.cnbj1.fds.api.mi-img.com/mi-mall/918820682e4a490221cfd92b24c14b86.jpg?thumb=1&w=1226&h=460&f=webp&q=90"
-           alt="">
-      <img src="https://cdn.cnbj1.fds.api.mi-img.com/mi-mall/78d0483ed36158659fcf65a19a9b249a.jpeg?w=2452&h=920" alt="">
-      <img src="https://cdn.cnbj1.fds.api.mi-img.com/mi-mall/fc0f553382bb5143e667b284dfcf02db.jpg?thumb=1&w=1226&h=460&f=webp&q=90"
-           alt="">
+      <div class="image">
+
+        <img src="https://cdn.cnbj1.fds.api.mi-img.com/mi-mall/918820682e4a490221cfd92b24c14b86.jpg?thumb=1&w=1226&h=460&f=webp&q=90"
+             alt="">
+        <label for="r4" class="prev"><i class="iconfont icon-arrow-left-bold"></i></label>
+        <label for="r2" class="next"><i class="iconfont icon-arrow-right-bold"></i></label>
+      </div>
+      <div class="image">
+
+        <img src="https://cdn.cnbj1.fds.api.mi-img.com/mi-mall/78d0483ed36158659fcf65a19a9b249a.jpeg?w=2452&h=920"
+             alt="">
+        <label for="r1" class="prev">prev</label>
+        <label for="r3" class="next">next</label>
+      </div>
+      <div class="image">
+
+        <img src="https://cdn.cnbj1.fds.api.mi-img.com/mi-mall/fc0f553382bb5143e667b284dfcf02db.jpg?thumb=1&w=1226&h=460&f=webp&q=90"
+             alt="">
+        <label for="r2" class="prev">prev</label>
+        <label for="r4" class="next">next</label>
+      </div>
+      <div class="image">
+
+        <img src="https://cdn.cnbj1.fds.api.mi-img.com/mi-mall/61bef947ca0b863003b3e68336192a3a.jpg?thumb=1&w=1226&h=460&f=webp&q=90"
+             alt="">
+        <label for="r3" class="prev"></label>
+        <label for="r1" class="next"></label>
+      </div>
     </div>
 
   </main>

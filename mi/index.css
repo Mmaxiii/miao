@@ -1,9 +1,9 @@
 * {
-  box-sizing         : border-box;
-  padding            : 0;
-  margin             : 0;
-  /* background-color: rgba(0, 0, 0, 0.08); */
-  /* box-shadow      : inset 0 0 1px red; */
+  box-sizing      : border-box;
+  padding         : 0;
+  margin          : 0;
+  background-color: rgba(0, 0, 0, 0.08);
+  box-shadow      : inset 0 0 1px red;
 }
 
 html,
@@ -265,7 +265,7 @@ header .right {
   /* border-top: 1px solid #E0E0E0; */
   box-shadow: 0 2px 2px rgb(219, 217, 217);
   height    : 274px;
-  z-index   : 1;
+  z-index   : 10;
 }
 
 .nav ul .jump:hover .drop::before {
@@ -321,25 +321,69 @@ header .right {
 
 /* 主轮播图 */
 
-
-
 main {
   position: relative;
   width   : 1226px;
   height  : 460px;
 }
 
-main input:nth-child(1):checked~.images img:nth-child(1),
-main input:nth-child(2):checked~.images img:nth-child(2),
-main input:nth-child(3):checked~.images img:nth-child(3) {
+main .iconfont {
+  font-size: 30px;
+}
+
+main input:nth-child(1):checked~.images .image:nth-child(1) img,
+main input:nth-child(2):checked~.images .image:nth-child(2) img,
+main input:nth-child(3):checked~.images .image:nth-child(3) img,
+main input:nth-child(4):checked~.images .image:nth-child(4) img {
   opacity: 1;
+}
+
+main input:nth-child(1):checked~.images .image:nth-child(1) label,
+main input:nth-child(2):checked~.images .image:nth-child(2) label,
+main input:nth-child(3):checked~.images .image:nth-child(3) label,
+main input:nth-child(4):checked~.images .image:nth-child(4) label {
+  z-index: 5;
+  display: block;
 }
 
 main input:nth-child(1):checked~.dots label:nth-child(1),
 main input:nth-child(2):checked~.dots label:nth-child(2),
-main input:nth-child(3):checked~.dots label:nth-child(3) {
+main input:nth-child(3):checked~.dots label:nth-child(3),
+main input:nth-child(4):checked~.dots label:nth-child(4) {
   background-color: #9B9D9F;
   border-color    : #748397;
+}
+
+
+
+main .image label {
+  display    : none;
+  position   : absolute;
+  width      : 40px;
+  height     : 70px;
+  text-align : center;
+  line-height: 70px;
+  color      : #AEAFB1;
+}
+
+
+main .image label:hover {
+  color           : #fff;
+  background-color: rgba(0, 0, 0, .5);
+  cursor          : pointer;
+}
+
+
+main .image .prev {
+  top          : 195px;
+  left         : 234px;
+  border-radius: 0 3px 3px 0;
+}
+
+main .image .next {
+  top          : 195px;
+  right        : 0;
+  border-radius: 3px 0 0 3px;
 }
 
 main .dots {
@@ -349,7 +393,8 @@ main .dots {
   z-index : 1;
 }
 
-main label {
+
+main .dots label {
   float           : left;
   width           : 10px;
   height          : 10px;
@@ -357,19 +402,24 @@ main label {
   border-radius   : 999px;
   border          : 2px solid #8C9CB2;
   background-color: #353638;
-  transition      : .5s;
 }
 
-
-main img {
-  position  : absolute;
-  top       : 0;
-  width     : 100%;
-  opacity   : 0;
-  transition: .5s;
+main .dots label:hover {
+  background-color: #9B9D9F;
+  border-color    : #748397;
+  cursor          : pointer;
 }
 
-main ul {
+main .image img {
+  position     : absolute;
+  top          : 0;
+  /* left      : 0; */
+  width        : 100%;
+  opacity      : 0;
+  transition   : .5s;
+}
+
+main .aside {
   position        : absolute;
   width           : 234px;
   top             : 0;
@@ -378,7 +428,7 @@ main ul {
   background-color: rgb(0, 0, 0, .5);
 }
 
-main ul a {
+main .aside>li>a {
   position    : relative;
   box-sizing  : border-box;
   display     : block;
@@ -390,12 +440,8 @@ main ul a {
   color       : white;
 }
 
-main ul li {
-  /* position: relative; */
 
-}
-
-main ul a::after {
+main .aside>li>a::after {
   content            : "";
   position           : absolute;
   right              : 15px;
@@ -409,26 +455,61 @@ main ul a::after {
   transform          : rotate(45deg);
 }
 
-main ul a:hover {
+main .aside>li>a:hover {
   background-color: #FF6700;
 }
 
-main ul li .menu {
+main .aside .menu {
   box-sizing: border-box;
   position  : absolute;
   display   : none;
+  height    : 460px;
+  width     : 992px;
   left      : 234px;
   top       : 0;
-
+  z-index   : 10;
 }
 
-main ul li:hover .menu {
-  display         : block;
-  height          : 460px;
-  max-width       : 992px;
-  padding         : 0 20px;
+main .aside>li:hover .menu {
+  display: block;
+
+  /* padding         : 0 20px; */
   background-color: #fff;
   box-shadow      : 0 0 5px #E0E0E0;
+}
+
+
+
+main .menu ul {
+  height       : 100%;
+  width        : 100%;
+  display      : flex;
+  flex-flow    : column wrap;
+  align-content: flex-start;
+}
+
+main .menu li {
+  width : 248px;
+  height: 76px;
+}
+
+main .menu li a {
+  display       : block;
+  width         : 100%;
+  height        : 100%;
+  line-height   : 76px;
+  /* text-align : center; */
+}
+
+main .menu li a:hover {
+  color: #FF6700;
+}
+
+main .menu li a img {
+  /* width         : 40px;
+  height        : 40px; */
+  margin-left   : 25px;
+  vertical-align: middle;
 }
 
 /* sub */
@@ -604,9 +685,7 @@ main ul li:hover .menu {
   width: 100%;
 }
 
-.public ul li:first-child a {
-  padding: 0;
-}
+
 
 .phone .more:hover {
   color: #FF6700;
@@ -614,4 +693,109 @@ main ul li:hover .menu {
 
 .smart ul .small-card {
   height: 143px;
+}
+
+.electric {
+  position  : relative;
+  display   : flex;
+  height    : 672px;
+  margin-top: 22px;
+  flex-flow : column;
+}
+
+.electric .head {
+  display        : flex;
+  justify-content: space-between;
+}
+
+.electric h2 {
+  height     : 58px;
+  line-height: 58px;
+  margin     : 0;
+  font-weight: normal;
+  font-size  : 22px;
+}
+
+.electric .more-mod {
+  line-height: 58px;
+}
+
+.electric .more {
+  line-height: 30px;
+  ;
+}
+
+.electric .more-mod .more {
+  float            : left;
+  margin-left      : 10px;
+  font-size        : 16px;
+  /* vertical-align: middle; */
+}
+
+
+.electric .main {
+  display  : flex;
+  flex-grow: 1;
+}
+
+.electric .main .big-card {
+  width       : 234px;
+  height      : 100%;
+  flex-shrink : 0;
+  margin-right: 14px;
+}
+
+.electric .product-mod {
+  visibility: hidden;
+  position  : absolute;
+  width     : 978px;
+  height    : 614px;
+  top       : 58px;
+  right     : 0;
+  transition: 0s 4s;
+}
+
+.electric .more-hot:hover {
+  color: #FF6700;
+}
+
+.electric .more-hot:hover::after {
+  content         : "";
+  position        : absolute;
+  height          : 2px;
+  width           : 33px;
+  top             : 30px;
+  background-color: #ff5700;
+}
+
+.electric .more-hot:hover .product-mod {
+  visibility: visible;
+  display   : block;
+  transition: none;
+}
+
+.electric .product-mod ul {
+  display        : flex;
+  width          : 100%;
+  height         : 100%;
+  flex-flow      : wrap;
+  justify-content: space-between;
+  align-content  : space-between;
+}
+
+.electric .product-mod li {
+  width : 234px;
+  height: 300px;
+
+}
+
+.electric .product-mod li:last-child {
+  display        : flex;
+  flex-flow      : column;
+  justify-content: space-between;
+}
+
+.electric .product-mod li .small-card {
+  height: 143px;
+  width : 100%;
 }
