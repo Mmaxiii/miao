@@ -1,9 +1,9 @@
 * {
-  box-sizing      : border-box;
-  padding         : 0;
-  margin          : 0;
-  background-color: rgba(0, 0, 0, 0.08);
-  box-shadow      : inset 0 0 1px red;
+  box-sizing         : border-box;
+  padding            : 0;
+  margin             : 0;
+  /* background-color: rgba(0, 0, 0, 0.08);
+  box-shadow         : inset 0 0 1px red; */
 }
 
 html,
@@ -25,6 +25,17 @@ h3,
 h4 {
   font-weight: normal;
 
+}
+
+a h3 {
+  font-size : 14px;
+  margin-top: 15px;
+}
+
+a .desc {
+  font-size: 12px;
+  color    : #C2C2C2;
+  margin   : 5px 0 10px;
 }
 
 ul {
@@ -70,14 +81,13 @@ header a:hover {
 }
 
 header .app:hover::before {
-  content               : "";
-  position              : absolute;
-  display               : inline-block;
-  top                   : 25px;
-  left                  : 15px;
-  /* background-color   : #acf; */
-  border                : 8px solid transparent;
-  border-bottom-color   : #fff;
+  content            : "";
+  position           : absolute;
+  display            : inline-block;
+  top                : 25px;
+  left               : 15px;
+  border             : 8px solid transparent;
+  border-bottom-color: #fff;
 }
 
 header .app {
@@ -129,28 +139,38 @@ header .cart {
   background-color: #424242;
 }
 
-header .cart::after {
-  content         : "";
-  position        : absolute;
-  left            : -196px;
-  display         : block;
-  width           : 316px;
-  height          : 0;
-  background-color: #fff;
-  box-shadow      : 0 3px 3px rgb(219, 217, 217);
-  z-index         : 3;
+header .icon-cart-full:before {
+  vertical-align: bottom;
 }
 
-header .cart:hover::after {
+header .cart a::after {
+  content : "";
+  position: absolute;
+  left    : -196px;
+  display : block;
+  width   : 316px;
+  height  : 0;
+
+  background-color: #fff;
+  box-shadow      : 0 3px 3px rgb(219, 217, 217);
+  z-index         : 20;
+}
+
+header .cart a:hover::after {
   width     : 316px;
   height    : 100px;
   transition: .3s;
-
 }
 
-header .cart:hover {
+
+header .cart a:hover {
   color           : #FF6700;
   background-color: #fff;
+}
+
+header .cart a {
+  width : 100%;
+  height: 100%;
 }
 
 header .right {
@@ -162,13 +182,13 @@ header .right {
 
 /* 导航栏 */
 .nav .logo {
-  float              : left;
-  position           : relative;
-  z-index            : 2;
-  width              : 56px;
-  height             : 56px;
-  /* background-color: #acf; */
-  margin-top         : 21px;
+  float     : left;
+  position  : relative;
+  width     : 56px;
+  height    : 56px;
+  margin-top: 21px;
+  z-index   : 11;
+
 }
 
 .nav .logo a {
@@ -206,7 +226,7 @@ header .right {
 .nav .sreach {
   box-sizing: border-box;
   position  : relative;
-  z-index   : 2;
+  z-index   : 11;
   float     : right;
   width     : 296px;
   height    : 50px;
@@ -294,7 +314,7 @@ header .right {
 }
 
 .nav .drop .title {
-  margin-top: 25px;
+  margin-top: 10px;
   color     : #000;
 }
 
@@ -459,28 +479,24 @@ main .aside>li>a:hover {
   background-color: #FF6700;
 }
 
-main .aside .menu {
-  box-sizing: border-box;
-  position  : absolute;
-  display   : none;
-  height    : 460px;
-  width     : 992px;
-  left      : 234px;
-  top       : 0;
-  z-index   : 10;
+/* flex 版菜单 */
+main .aside .menu-flex {
+  position: absolute;
+  display : none;
+  height  : 460px;
+  width   : 992px;
+  left    : 234px;
+  top     : 0;
+  z-index : 10;
 }
 
-main .aside>li:hover .menu {
-  display: block;
-
-  /* padding         : 0 20px; */
+main .aside>li:hover .menu-flex {
+  display         : block;
   background-color: #fff;
   box-shadow      : 0 0 5px #E0E0E0;
 }
 
-
-
-main .menu ul {
+main .menu-flex ul {
   height       : 100%;
   width        : 100%;
   display      : flex;
@@ -488,17 +504,75 @@ main .menu ul {
   align-content: flex-start;
 }
 
+main .menu-flex li {
+  width : 248px;
+  height: 76px;
+}
+
+main .menu-flex li a {
+  display    : block;
+  width      : 100%;
+  height     : 100%;
+  line-height: 76px;
+}
+
+main .menu-flex li a:hover {
+  color: #FF6700;
+}
+
+main .menu-flex li a img {
+
+  margin-left   : 25px;
+  vertical-align: middle;
+}
+
+/* block 版菜单 */
+main .menu {
+  position           : absolute;
+  display            : none;
+  height             : 460px;
+  /* width           : 10px; */
+  left               : 234px;
+  top                : 0;
+  background-color   : #fff;
+  z-index            : 10;
+}
+
+main .aside>li:hover .menu {
+  display         : block;
+  background-color: #fff;
+  box-shadow      : 0 0 5px #E0E0E0;
+}
+
 main .menu li {
   width : 248px;
   height: 76px;
 }
 
+main .menu li:nth-child(n + 7) {
+  margin-left: 248px;
+}
+
+main .menu li:nth-child(n + 13) {
+  margin-left: 496px;
+}
+
+main .menu li:nth-child(n + 19) {
+  margin-left: 744px;
+}
+
+main .menu li:nth-child(6n+7) {
+  margin-top: -456px;
+}
+
 main .menu li a {
-  display       : block;
-  width         : 100%;
-  height        : 100%;
-  line-height   : 76px;
-  /* text-align : center; */
+  display      : block;
+  width        : 100%;
+  height       : 100%;
+  line-height  : 76px;
+  text-overflow: ellipsis;
+  overflow     : hidden;
+  white-space  : nowrap;
 }
 
 main .menu li a:hover {
@@ -506,16 +580,15 @@ main .menu li a:hover {
 }
 
 main .menu li a img {
-  /* width         : 40px;
-  height        : 40px; */
   margin-left   : 25px;
   vertical-align: middle;
+
 }
 
 /* sub */
 .sub {
-  height    : 170px;
-  /* border : 1px solid; */
+  height: 170px;
+
   margin-top: 14px;
 }
 
@@ -588,10 +661,10 @@ main .menu li a img {
 
 /* home */
 .home {
-  width           : 100%;
-  height          : 4000px;
+  width: 100%;
+
   margin-top      : 26px;
-  padding-top     : 26px;
+  padding         : 26px 0;
   background-color: #F5F5F5;
 }
 
@@ -600,6 +673,7 @@ main .menu li a img {
   vertical-align: top;
 }
 
+/* 浮动版 产品模块 */
 .public {
   margin-top: 22px;
 }
@@ -626,7 +700,7 @@ main .menu li a img {
   font-size  : 22px;
 }
 
-.public .more {
+.phone .more {
   float      : right;
   height     : 58px;
   line-height: 58px;
@@ -649,7 +723,6 @@ main .menu li a img {
 .public .big-card:hover {
   top       : -2px;
   box-shadow: 0 5px 10px #ccc;
-
 }
 
 .public ul li a {
@@ -685,16 +758,110 @@ main .menu li a img {
   width: 100%;
 }
 
-
-
 .phone .more:hover {
   color: #FF6700;
+}
+
+.smart {
+  position: relative;
+}
+
+.smart .more-mod {
+  float: right;
+}
+
+.smart .more-mod .more {
+  float         : left;
+  margin        : 10px 0 0 10px;
+  font-size     : 16px;
+  height        : 30px;
+  /* line-height: 30px; */
+  transition    : 0s 3s;
+
+}
+
+.smart .more-mod .product-mod li {
+  transition: none;
+}
+
+
+
+.smart .more-mod .reset:hover .product-mod {
+  visibility: hidden;
+  transition: none;
+
+}
+
+.smart .more-mod .product-mod {
+  visibility: hidden;
+  position  : absolute;
+  top       : 58px;
+  right     : 0;
+  transition: 0s 99999s;
+}
+
+
+
+.smart .more-mod .reset .more:hover {
+  color     : #FF6700;
+  transition: none;
+}
+
+.smart .reset:hover .more {
+  color     : black;
+  transition: none;
+}
+
+.smart .more-mod .more:hover .product-mod {
+  visibility: visible;
+  transition: none;
+}
+
+.smart .more-mod .hot-mod .product-mod {
+  visibility: visible;
+
 }
 
 .smart ul .small-card {
   height: 143px;
 }
 
+.smart .more-mod .product-mod a {
+  padding-top: 10px;
+}
+
+.smart .more-mod .product-mod img {
+  width: 75%;
+}
+
+.smart .product-mod .small-card a img {
+  position: absolute;
+  top     : 0;
+  bottom  : 0;
+  right   : 10px;
+  margin  : auto;
+  width   : 40%;
+}
+
+.smart .product-mod .small-card h3,
+.smart .product-mod .small-card p {
+  width     : 40%;
+  text-align: left;
+}
+
+.smart .product-mod .small-card a {
+  padding: 30px 0 0 30px;
+}
+
+.smart .product-mod .small-card i {
+  position : absolute;
+  top      : 45px;
+  right    : 30px;
+  color    : #FF6700;
+  font-size: 50px;
+}
+
+/* flex 版产品模块 */
 .electric {
   position  : relative;
   display   : flex;
@@ -703,12 +870,10 @@ main .menu li a img {
   flex-flow : column;
 }
 
-.electric .head {
-  display        : flex;
-  justify-content: space-between;
-}
+
 
 .electric h2 {
+  float      : left;
   height     : 58px;
   line-height: 58px;
   margin     : 0;
@@ -717,20 +882,39 @@ main .menu li a img {
 }
 
 .electric .more-mod {
-  line-height: 58px;
+  float: right;
 }
 
 .electric .more {
-  line-height: 30px;
-  ;
+  float: left;
 }
 
 .electric .more-mod .more {
-  float            : left;
-  margin-left      : 10px;
-  font-size        : 16px;
-  /* vertical-align: middle; */
+  margin       : 10px 0 0 10px;
+  font-size    : 16px;
+  height       : 30px;
+  border-bottom: 0;
+  transition   : 0s 99999s;
 }
+
+.electric .more-mod section .more-hot {
+  color: #FF6700;
+}
+
+.electric .more-mod section .more-hot .product-mod {
+  visibility: visible;
+}
+
+.electric section:hover .more {
+  color     : black;
+  transition: none;
+}
+
+.electric .more-mod section .more:hover {
+  color     : #FF6700;
+  transition: none;
+}
+
 
 
 .electric .main {
@@ -739,6 +923,7 @@ main .menu li a img {
 }
 
 .electric .main .big-card {
+  position    : relative;
   width       : 234px;
   height      : 100%;
   flex-shrink : 0;
@@ -752,26 +937,18 @@ main .menu li a img {
   height    : 614px;
   top       : 58px;
   right     : 0;
-  transition: 0s 4s;
+  transition: 0s 99999s;
 }
 
-.electric .more-hot:hover {
-  color: #FF6700;
-}
-
-.electric .more-hot:hover::after {
-  content         : "";
-  position        : absolute;
-  height          : 2px;
-  width           : 33px;
-  top             : 30px;
-  background-color: #ff5700;
-}
-
-.electric .more-hot:hover .product-mod {
-  visibility: visible;
-  display   : block;
+.electric section:hover .product-mod {
+  visibility: hidden;
   transition: none;
+}
+
+.electric .more:hover .product-mod {
+  visibility   : visible;
+  /* display   : block; */
+  transition   : none;
 }
 
 .electric .product-mod ul {
@@ -784,9 +961,9 @@ main .menu li a img {
 }
 
 .electric .product-mod li {
-  width : 234px;
-  height: 300px;
-
+  position: relative;
+  width   : 234px;
+  height  : 300px;
 }
 
 .electric .product-mod li:last-child {
@@ -796,6 +973,174 @@ main .menu li a img {
 }
 
 .electric .product-mod li .small-card {
-  height: 143px;
+  position: relative;
+  height  : 143px;
+  width   : 100%;
+}
+
+.electric .product-mod li a {
+  position        : absolute;
+  top             : 0;
+  width           : 100%;
+  height          : 100%;
+  padding-top     : 10px;
+  background-color: #fff;
+
+  text-align: center;
+}
+
+.electric .product-mod li a img {
+  width: 75%;
+}
+
+.electric .product-mod li a:hover,
+.electric .big-card ul li a:hover {
+  top       : -2px;
+  box-shadow: 0 5px 10px #ccc;
+  transition: .5s;
+}
+
+.electric .big-card ul {
+  height         : 100%;
+  display        : flex;
+  flex-flow      : column;
+  justify-content: space-between;
+}
+
+.electric .big-card ul li {
+  position: relative;
+  width   : 234px;
+  height  : 300px;
+}
+
+.electric .big-card ul li a {
+  position: absolute;
+  display : block;
+  width   : 100%;
+  height  : 100%;
+  top     : 0;
+}
+
+.electric .product-mod li .small-card a {
+  position: absolute;
+  width   : 100%;
+  height  : 100%;
+  padding : 30px 0 0 30px;
+}
+
+.electric .product-mod li .small-card a img {
+  position   : absolute;
+  top        : 0;
+  bottom     : 0;
+  right      : 10px;
+  margin     : auto;
+  width      : 40%;
+  /* margin  : 10px 10px 0 0; */
+}
+
+.electric .product-mod li .small-card h3,
+.electric .product-mod li .small-card p {
+  width     : 40%;
+  text-align: left;
+}
+
+.electric .product-mod li .small-card i {
+  position : absolute;
+  top      : 45px;
+  right    : 30px;
+  color    : #FF6700;
+  font-size: 50px;
+}
+
+footer {
   width : 100%;
+  height: 333px;
+}
+
+footer .center {
+  height: 100%;
+}
+
+footer .service ul {
+  display      : flex;
+  height       : 80px;
+  margin-bottom: 40px;
+  border-bottom: 1px solid #ccc;
+}
+
+footer .service ul li {
+  position   : relative;
+  flex-grow  : 1;
+  text-align : center;
+  line-height: 80px;
+}
+
+footer .service ul li:nth-child(-n+4):after {
+  content         : "";
+  position        : absolute;
+  top             : 26px;
+  right           : 0;
+  height          : 26px;
+  width           : 1px;
+  background-color: #ccc;
+
+}
+
+footer .service ul li a {
+  font-size : 16px;
+  color     : rgb(97, 97, 97);
+  transition: .2s;
+}
+
+footer .service ul li a:hover {
+  color: #FF6700;
+}
+
+footer .links dl {
+  float: left;
+  width: 160px;
+}
+
+footer .links dt {
+  font-size    : 14px;
+  margin-bottom: 30px;
+}
+
+footer .links dd {
+  font-size    : 12px;
+  margin-bottom: 18px;
+}
+
+footer .contact {
+  float     : right;
+  width     : 251px;
+  text-align: center;
+}
+
+footer .contact .phone {
+  font-size: 22px;
+  color    : #FF6700;
+}
+
+footer .contact .time {
+  font-size: 12px;
+  color    : #000;
+}
+
+footer .contact .manual {
+  display    : block;
+  width      : 120px;
+  height     : 30px;
+  line-height: 30px;
+  margin     : 10px auto;
+  border     : 1px solid #FF6700;
+  color      : #FF6700;
+}
+
+footer .contact .follow {
+  font-size: 12px;
+}
+
+footer .contact .follow a:hover {
+  color: #FF6700;
 }

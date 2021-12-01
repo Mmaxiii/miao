@@ -6,6 +6,27 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "11487995",
+      "name": "cart- full",
+      "font_class": "cart-full",
+      "unicode": "e746",
+      "unicode_decimal": 59206
+    },
+    {
+      "icon_id": "21497122",
+      "name": "维修",
+      "font_class": "weixiu",
+      "unicode": "e602",
+      "unicode_decimal": 58882
+    },
+    {
+      "icon_id": "21497123",
+      "name": "全部",
+      "font_class": "aichegujiabeifen7",
+      "unicode": "e604",
+      "unicode_decimal": 58884
+    },
+    {
       "icon_id": "15838429",
       "name": "arrow-down",
       "font_class": "arrow-down",
