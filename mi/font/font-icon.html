@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Document</title>
+  <link rel="stylesheet" href="./font">
+  <style>
+
+    @font-face {
+        font-family: MiFont;
+        src: url(./mi.woff);
+        font-weight: 400
+    }
+    @font-face {
+      font-family: IconFont;
+      src: url(./fontawesome-webfont.ttf);
+    }
+
+    [mifont] {
+      font-family: MiFont;
+    }
+
+    [icon] {
+      font-family: IconFont;
+      font-style: normal;
+    }
+    [icon="music"]::before {
+      content: '\f001';
+    }
+    [icon="search"]::before {
+      content: '\f002';
+    }
+    [icon="mail"]::before {
+      content: '\f003';
+    }
+    [icon="heart"]::before {
+      content: '\f004';
+    }
+    [icon="star"]::before {
+      content: '\f005';
+    }
+    [icon="star-o"]::before {
+      content: '\f006';
+    }
+    [icon="user"]::before {
+      content: '\f007';
+    }
+  </style>
+</head>
+<body>
+  <i mifont>&#xe635;</i>
+  <i class="fa fa-mail"></i>
+  <i icon="mail"></i>
+  <i icon="heart"></i>
+  <i icon="star"></i>
+  <i icon="star"></i>
+
+  <style>
+    .rate {
+      display: inline-block;
+      border: 2px solid;
+    }
+    .rate label {
+      font-family: IconFont;
+      float: left;
+    }
+    .rate label::before {
+      content: '\f006';
+    }
+    .rate:hover label::before {
+      content: '\f005';
+    }
+    .rate:hover label:hover ~ label::before {
+      content: '\f006';
+    }
+  </style>
+  <span class="rate">
+    <label></label>
+    <label></label>
+    <label></label>
+    <label></label>
+    <label></label>
+  </span>
+</body>
+</html>

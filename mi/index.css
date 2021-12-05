@@ -24,7 +24,6 @@ h2,
 h3,
 h4 {
   font-weight: normal;
-
 }
 
 a h3 {
@@ -144,13 +143,12 @@ header .icon-cart-full:before {
 }
 
 header .cart a::after {
-  content : "";
-  position: absolute;
-  left    : -196px;
-  display : block;
-  width   : 316px;
-  height  : 0;
-
+  content         : "";
+  position        : absolute;
+  left            : -196px;
+  display         : block;
+  width           : 316px;
+  height          : 0;
   background-color: #fff;
   box-shadow      : 0 3px 3px rgb(219, 217, 217);
   z-index         : 20;
@@ -199,8 +197,8 @@ header .right {
 }
 
 .nav {
-  height     : 100px;
-  /* overflow: hidden; */
+  height: 100px;
+
 }
 
 .nav ul {
@@ -237,7 +235,7 @@ header .right {
   box-sizing    : border-box;
   float         : left;
   outline       : none;
-  width         : 242px;
+  width         : 245px;
   height        : 50px;
   padding       : 0;
   padding-left  : 10px;
@@ -716,7 +714,6 @@ main .menu li a img {
   margin-bottom: 14px;
   text-align   : center;
   transition   : .5s;
-
 }
 
 .public ul li:hover,
@@ -771,17 +768,17 @@ main .menu li a img {
 }
 
 .smart .more-mod .more {
-  float         : left;
-  margin        : 10px 0 0 10px;
-  font-size     : 16px;
-  height        : 30px;
-  /* line-height: 30px; */
-  transition    : 0s 3s;
+  float    : left;
+  margin   : 10px 0 0 10px;
+  font-size: 16px;
+  height   : 30px;
+
+  transition: 0s 99999s;
 
 }
 
 .smart .more-mod .product-mod li {
-  transition: none;
+  transition: top .5s, box-shadow .5s;
 }
 
 
@@ -985,6 +982,7 @@ main .menu li a img {
   height          : 100%;
   padding-top     : 10px;
   background-color: #fff;
+  transition      : top .5s, box-shadow .5s;
 
   text-align: center;
 }

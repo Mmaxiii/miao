@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Document</title>
+  把所有css按加载顺序合成一个文件然后用link标签引入
+  把css代码直接写进页面的style标签（taobao首页）
+  <link rel="stylesheet" href="xxx.css">
+  <style>
+    @font-face {
+      font-family: AaaaaaBBBB;
+      font-style: normal;
+      font-weight: normal;
+      src: url('./Comforter-Regular.ttf');
+    }
+    @font-face {
+      font-family: AaaaaaBBBB;
+      font-style: italic;
+      font-weight: normal;
+      src: url('./Comforter-xieti.ttf');
+    }
+    @font-face {
+      font-family: AaaaaaBBBB;
+      font-style: normal;
+      font-weight: bold;
+      src: url('./Comforter-Regular-bold.ttf');
+    }
+    @font-face {
+      font-family: AaaaaaBBBB;
+      font-style: italic;
+      font-weight: bold;
+      src: url('./Comforter-xieti-bold.ttf');
+    }
+
+    div {
+      font-family: AaaaaaBBBB;
+      font-style: italic;
+    }
+  </style>
+</head>
+<body>
+  <div>
+    Lorem ipsum dolor, sit amet consectetur adipisicing elit. Vero, voluptatibus quisquam nihil delectus assumenda, sunt ipsa, facere neque numquam maiores provident reiciendis dolorum. Et, delectus. Provident placeat reprehenderit nisi sed!
+  </div>
+</body>
+</html>
