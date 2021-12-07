@@ -55,49 +55,86 @@
       vertical-align: middle;
     }
 
+
+
     .father4 {
       display: flex;
-      align-items: center;
+
     }
 
     .center4 {
       max-width: 100%;
       max-height: 100%;
+      margin: auto;
     }
 
     .father5 {
       display: flex;
+      align-items: center;
 
+      justify-content: center;
+      margin-left: 400px;
     }
 
     .center5 {
-      max-width: 100%;
-      max-height: 100%;
+      width: 400px;
+      height: 500px;
+      flex-shrink: 0;
+      border: 2px solid #78e08f;
+    }
+
+    .father6 {
+      position: relative;
       margin: auto;
+    }
+
+    .center6 {
+      width: 400px;
+      height: 500px;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      border: 2px solid #ff7675;
+    }
+
+    h3 {
+      color: #eb2f06;
     }
   </style>
 </head>
 
 <body>
-  <h3>用table-cell vertical-align:middle</h3>
+  <h3>子元素必须必父元素小</h3>
+  <h4>No.1 用table-cell把父元素设置成单元格(不能定位了，table-cell同时设置了内部布局&外部布局，外面裹着一层table-row、table)
+    再用水平居中对齐text-align 竖直居中对齐vertical-align:middle;(只有在table-cell里是真居中)
+  </h4>
   <div class="father father1">
     <img class="center1" src="https://www.12306.cn/index/images/abanner01.jpg" alt="">
   </div>
-  <h3>用定位四方为0 margin：auto</h3>
+  <h4>No.2 用定位四方为0 margin：auto（此时竖直方向的margin也会自动填充）子元素必须给定宽高，否则会被撑大</h4>
   <div class="father father2">
     <img class="center2" src="https://www.12306.cn/index/images/abanner01.jpg" alt="">
   </div>
-  <h3>子元素是行内块，父元素font-size:0;水平center，竖直middle</h3>
+  <h4>No.3 子元素是行内块，父元素font-size:0;水平text-align:center，竖直vertical:middle;(与x的中点对齐，父元素字号为0，x大小为零，则正好居中)</h4>
   <div class="father father3">
     <img class="center3" src="https://www.12306.cn/index/images/abanner01.jpg" alt="">
   </div>
-  <h3>flex align-items:center;</h3>
+
+  <h4>No.4 flex margin:auto; margin会自动填充间隙</h4>
   <div class="father father4">
     <img class="center4" src="https://www.12306.cn/index/images/abanner01.jpg" alt="">
   </div>
-  <h3>flex margin:auto;</h3>
+
+  <hr>
+  <h3>子元素比父元素大也生效</h3>
+  <h4>No.5 flex align-items:center;设置flex子元素在行内居中对齐</h4>
   <div class="father father5">
-    <img class="center5" src="https://www.12306.cn/index/images/abanner01.jpg" alt="">
+    <div class="center5"></div>
+  </div>
+  <h4>No.6 先用定位到left50%，top50%，再用transform:translate(-50%,-50%) transform里的%是相对于自身尺寸</h4>
+  <div class="father father6">
+    <div class="center6"></div>
   </div>
 </body>
 
