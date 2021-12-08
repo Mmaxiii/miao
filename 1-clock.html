@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style type="text/less">
+    @keyframes rotate {
+  from {
+    transform:rotate(0deg);
+  }
+  to {
+    transform:rotate(360deg);
+  }
+}
+
+@keyframes shake-sec {
+  from {
+    transform:translate(-50%,0) rotate(0);
+  }
+  10% {
+    transform:translate(-50%,0) rotate(2deg);
+  }
+  20% {
+    transform:translate(-50%,0) rotate(-1deg);
+  }
+  30% {
+    transform:translate(-50%,0) rotate(0);
+  }
+  to {
+    transform:translate(-50%,0) rotate(0);
+  }
+}
+@keyframes shake-min {
+  from {
+    transform:translate(-50%,0) rotate(0);
+  }
+ 0.17% {
+    transform:translate(-50%,0) rotate(2deg);
+  }
+  0.35% {
+    transform:translate(-50%,0) rotate(-1deg);
+  }
+  0.52% {
+    transform:translate(-50%,0) rotate(0);
+  }
+  to {
+    transform:translate(-50%,0) rotate(0);
+  }
+}
+@keyframes shake-h {
+  from {
+    transform:translate(-50%,0) rotate(0);
+  }
+    0.0028% {
+    transform:translate(-50%,0) rotate(2deg);
+  }
+  0.0058% {
+    transform:translate(-50%,0) rotate(-1deg);
+  }
+  0.0087% {
+    transform:translate(-50%,0) rotate(0);
+  }
+ 
+  to {
+    transform:translate(-50%,0) rotate(0);
+  }
+}
+
+.clock {
+  position:relative;
+  margin-left:50px;
+  width: 210px;
+  height: 210px;
+  border-radius:105px;
+  
+  background-color: #3c6382;
+  box-shadow:5px 5px 50px  #0c2461;
+  .num {
+    position:absolute;
+    top:50%;
+    left:50%;
+    transform:translate(-50%,-50%);
+    text-align:center;
+   color:#fff;
+    span{
+      display:inline-block;
+    }
+  }
+  .origin {
+    position:absolute;
+    width: 8px;
+    height: 8px;
+    border-radius:5px;
+    background-color: #fff;
+    top:50%;
+    left:50%;
+    transform:translate(-50%,-50%);
+    border:1px solid #7f8c8d;
+  }
+  .second-father {
+    width: 100%;
+    height: 100%;
+    animation: rotate 60s steps(60,end) infinite;
+     .second {
+        position:absolute;
+        height: 70px;
+        width: 2px;
+        bottom:50%;
+        left:50%;
+        transform:translate(-50%,0);
+        transform-origin:center bottom;
+        background-color: #f1c40f;
+        animation: shake-sec 1s infinite;
+        border-top-left-radius:  1px 10px;
+      border-top-right-radius:  1px 10px;
+      } 
+  }
+  .min-father {
+    position:absolute;
+    top:0;
+    left:0;
+    width: 100%;
+    height: 100%;
+    animation: rotate 3600s steps(60,end)  infinite;
+    .min {
+      position:absolute;
+      width: 4px;
+      height: 50px;
+      bottom:50%;
+      left:50%;
+      background-color: #ecf0f1;
+      transform:translate(-50%,0);
+      transform-origin:center bottom;
+      animation: shake-min 60s  infinite;
+      xborder:1px solid #7f8c8d;
+      border-top-left-radius:  3px 10px;
+      border-top-right-radius:  3px 10px;
+    }
+  }
+  .h-father {
+     position:absolute;
+    top:0;
+    left:0;
+    width: 100%;
+    height: 100%;
+     animation: rotate 43200s steps(60,end)  infinite;
+    .h {
+      position:absolute;
+      width: 6px;
+      height: 30px;
+      bottom:50%;
+      left:50%;
+      transform:translate(-50%,0);
+      background-color: #ecf0f1;
+       transform-origin:center bottom;
+      animation: shake-h 3600s infinite;
+      border:1px solid #7f8c8d;
+        border-top-left-radius:  3px 15px;
+      border-top-right-radius:  3px 15px;
+    }
+   }
+  .h1 {
+   transform:translate(-50%,-50%) rotate(30deg) translate(0,-88px) rotate(-30deg);
+  }
+  .h2 {
+       transform:translate(-50%,-50%) rotate(60deg) translate(0,-88px) rotate(-60deg);
+  }
+  .h3 {
+       transform:translate(-50%,-50%) rotate(90deg) translate(0,-88px) rotate(-90deg);
+  }
+  .h4 {
+        transform:translate(-50%,-50%) rotate(120deg) translate(0,-88px) rotate(-120deg);
+  }
+  .h5 {
+      transform:translate(-50%,-50%) rotate(150deg) translate(0,-88px) rotate(-150deg);
+  }
+  .h6 {
+       transform:translate(-50%,-50%) rotate(180deg) translate(0,-88px) rotate(-180deg);
+  }
+  .h7 {
+     transform:translate(-50%,-50%) rotate(210deg) translate(0,-88px) rotate(-210deg);
+  }
+  .h8 {
+      transform:translate(-50%,-50%) rotate(240deg) translate(0,-88px) rotate(-240deg);
+  }
+  .h9 {
+      transform:translate(-50%,-50%) rotate(270deg) translate(0,-88px) rotate(-270deg);
+  }
+  .h10 {
+     transform:translate(-50%,-50%) rotate(300deg) translate(0,-88px) rotate(-300deg);
+  }
+  .h11 {
+       transform:translate(-50%,-50%) rotate(330deg) translate(0,-88px) rotate(-330deg);
+  }
+  .h12 {
+       transform:translate(-50%,-50%) translate(0,-88px) ;
+  }
+}
+
+  </style>
+</head>
+
+<body>
+  <div class="clock">
+    <div class="num h1"><span>1</span></div>
+    <div class="num h2"><span>2</span></div>
+    <div class="num h3"><span>3</span></div>
+    <div class="num h4"><span>4</span></div>
+    <div class="num h5"><span>5</span></div>
+    <div class="num h6"><span>6</span></div>
+    <div class="num h7"><span>7</span></div>
+    <div class="num h8"><span>8</span></div>
+    <div class="num h9"><span>9</span></div>
+    <div class="num h10"><span>10</span></div>
+    <div class="num h11"><span>11</span></div>
+    <div class="num h12"><span>12</span></div>
+
+    <div class="h-father">
+      <div class="h"></div>
+    </div>
+    <div class="min-father">
+      <div class="min"></div>
+    </div>
+    <div class="second-father">
+      <div class="second"></div>
+    </div>
+    <div class="origin"></div>
+  </div>
+</body>
+<script src="./mi/less.min.js"></script>
+
+</html>

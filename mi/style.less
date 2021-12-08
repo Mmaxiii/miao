@@ -1268,32 +1268,62 @@ i {
             top       : 0;
             left      : 0;
             z-index   : 2000;
-            transition: .3s;
+            transition: .4s;
 
             .show {
-              position   : fixed;
-              top        : 50%;
-              left       : 50%;
-              width      : 880px;
-              height     : 560px;
-              margin-top : -280px;
-              margin-left: -440px;
-              transition : .3s;
+              opacity : 0;
+              position: fixed;
+              top     : 50%;
+              left    : 50%;
+              width   : 880px;
+
+              transform : translate(-50%, -55%);
+              transition: .7s;
 
 
-              img {
-                width : 100%;
-                height: 100%;
+
+              .close {
+                // opacity    : 0;
+                height     : 60px;
+                line-height: 60px;
+                transition : .5s;
+
+                span {
+                  font-size     : 18px;
+                  vertical-align: middle;
+                  margin-left   : 20px;
+                }
+
+                img {
+                  width : 100%;
+                  height: 100%;
+                }
+
+                label {
+                  position     : absolute;
+                  top          : 14px;
+                  right        : 14px;
+                  width        : 30px;
+                  height       : 30px;
+                  line-height  : 30px;
+                  border-radius: 15px;
+                  color        : transparent;
+                }
               }
 
-              label {
-                position     : absolute;
-                top          : 14px;
-                right        : 14px;
-                width        : 30px;
-                height       : 30px;
-                border-radius: 15px;
-                color        : transparent;
+              .video {
+                width        : 880px;
+                margin       : 0;
+                // opacity   : 0;
+                transition   : .5s;
+
+                video {
+
+                  display: block;
+                  width  : 100%;
+
+
+                }
               }
             }
           }
@@ -1308,6 +1338,16 @@ i {
 
           .show {
             background-color: #F5F5F5;
+            transform       : translate(-50%, -50%);
+            opacity         : 1;
+
+            .close {
+              // opacity: 1;
+            }
+
+            .video {
+              // opacity: 1;
+            }
 
             label {
 
@@ -1327,12 +1367,8 @@ i {
               }
             }
           }
-
         }
-
-
       }
-
     }
   }
 
