@@ -7,51 +7,54 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
   <link rel="stylesheet" type="text/css" href="font/iconfont.css">
+  <style>
+    * {
+      background-color: rgba(0, 0, 0, 0.08);
+      box-shadow: inset 0 0 1px red;
+    }
 
+    html {
+      zoom: 1.5;
+    }
+
+    div {
+      display: grid;
+      width: 100%;
+      height: 100px;
+      grid-template-columns: repeat(4, 1fr);
+      grid-template-rows: 1fr 2fr 1fr;
+      grid-template-areas:
+        "a c b d"
+        "a c b d"
+        "x x   b d";
+    }
+
+    .a {
+      grid-area: a;
+    }
+  </style>
+</head>
 
 <body>
-  .icon-right {
-  display : inline-block;
-  margin-left : 10px;
-  font-size : 18px;
-  width : 25px;
-  height : 25px;
-  background-color: #ccc;
-  border-radius : 999px;
-  vertical-align : middle;
-  line-height : initial;
-  padding : 3px 0 0 4px;
+  <div>
+    <span class="a">
+      1</span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
 
-  &::after {
-  content: "\E623";
-  }
-  }
+  </div>
 </body>
 
-<script>
-  const data = [
-    { name: "js", price: 100 },
-    { name: "mysql", price: 212 },
-    { name: "vue.js", price: 98 }
-  ];
-  class Lesson {
-    constructor(data) {
-      this.model = data;
-    }
-    price() {
-      return this.model.price;
-    }
-    name() {
-      return this.model.name;
-    }
-    static createBatch(data) {
-      return data.map(item => new Lesson(item))
-    }
-    static maxPrice(data) {
-      return data.sort((a, b) => b.price() - a.price())[0]
-    }
-  }
-  let lessons = Lesson.createBatch(data)
-  console.dir(Lesson);
-  console.log(Lesson.maxPrice(lessons).name());
-</script>
+</html>

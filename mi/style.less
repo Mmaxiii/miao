@@ -383,6 +383,10 @@ i {
 
       background-color: #424242;
 
+      i {
+        font-size: 20px;
+      }
+
       a {
         width : 100%;
         height: 100%;
@@ -439,6 +443,10 @@ i {
       margin-top  : 21px;
       z-index     : 200;
       margin-right: 178px;
+
+      &:active {
+        transform: scale(0.9);
+      }
 
       a {
         width     : 100%;
@@ -610,6 +618,19 @@ i {
                   margin-bottom: 10px;
                 }
               }
+
+              &::after {
+                content         : "";
+                position        : absolute;
+                top             : 86px;
+                width           : 1px;
+                height          : 100px;
+                background-color: #E0E0E0;
+              }
+
+              &:last-child::after {
+                display: none;
+              }
             }
           }
         }
@@ -748,17 +769,12 @@ i {
         color       : white;
 
         &::after {
-          content            : "";
-          position           : absolute;
-          right              : 15px;
-          top                : 16px;
-          height             : 5px;
-          width              : 5px;
-          /* background-color: #acf; */
-          border             : 2px solid #E0E0E0;
-          border-bottom      : none;
-          border-left        : none;
-          transform          : rotate(45deg);
+          content    : "\E623";
+          position   : absolute;
+          right      : 22px;
+          top        : 1px;
+          font-family: mifont;
+          font-size  : 16px;
         }
 
         &:hover {
@@ -906,7 +922,7 @@ i {
   .home {
     width           : 100%;
     margin-top      : 26px;
-    padding-top     : 6px;
+    padding-top     : 4px;
     background-color: #F5F5F5;
     overflow        : hidden;
 
@@ -976,9 +992,10 @@ i {
     .more-esp {
       float      : right;
       margin-left: 10px;
+      margin-top : 12px;
       font-size  : 16px;
       height     : 30px;
-      line-height: 58px;
+      line-height: 30px;
       transition : .3s;
       cursor     : default;
 
@@ -1026,17 +1043,20 @@ i {
         }
 
         .more-common {
-          float      : left;
-          margin-left: 20px;
-          font-size  : 16px;
-          height     : 30px;
-          transition : 0s 99999s;
-          line-height: 30px;
-          cursor     : default;
+
+          float        : left;
+          margin-left  : 20px;
+          font-size    : 16px;
+          height       : 30px;
+          transition   : 0s 999999s;
+          line-height  : 30px;
+          cursor       : default;
+          border-bottom: 0px solid;
         }
 
         .hot-mod {
-          color: #ff6700;
+          color        : #ff6700;
+          border-bottom: 2px solid;
         }
 
         .product-mod {
@@ -1045,7 +1065,7 @@ i {
           position     : absolute;
           top          : 58px;
           right        : 0;
-          transition   : 0s 99999s;
+          transition   : 0s 999999s;
 
           ul {
             width: 992px;
@@ -1138,24 +1158,26 @@ i {
 
         &:hover {
           .product-mod {
-            visibility   : hidden;
-            // display   : none;
-            transition   : none;
+            visibility: hidden;
+            transition: none;
           }
 
           .more-common {
             color     : black;
+            border    : none;
             transition: none;
           }
         }
 
         .more-common:hover {
-          color     : #FF6700;
-          transition: none;
+          color        : #FF6700;
+          transition   : none;
+          border-bottom: 2px solid;
 
-          .icon-right {
-            background-color: #ff6700;
-          }
+
+          // .icon-right {
+          //   background-color: #ff6700;
+          // }
 
           .product-mod {
             visibility   : visible;
@@ -1523,6 +1545,8 @@ i {
       float : left;
       width : 56px;
       height: 56px;
+
+
     }
 
     .info-links {

@@ -12,72 +12,27 @@
 </head>
 
 <body>
-  <button message='后盾人' class='red'>后盾人</button>
-  <button message='hdcms'>hdcms</button>
+
 </body>
 <script>
-  function User() { };
-  User.prototype.name = function () {
-    console.log('user name');
-  };
-  let a = new User();
-  function Admin() { };
-  Admin.prototype = User.prototype;
-  console.log(Admin.prototype);
-  Admin.prototype.name = function () {
-    console.log('admin name');
-  };
-  let b = new Admin();
-  a.name();
-  b.name();
-
-
-  // let hd = {
-  //   name: 123
-  // }
-  // console.dir(hd)
-  // Object.setPrototypeOf(hd, null)
-  // hd.__proto__ = 123
-  // function User(name) {
-  //   this.name = name;
-  // }
-  // let hd = new User('后盾人')
-  // console.log(hd);
-  // let ls = new hd.constructor('ls')
-  // console.log(ls);
-  // console.log(hd.__proto__ == ls.__proto__);
-  // let arr = [2, 3, 4, 56]
-  // arr.filter
-  // let btns = document.querySelectorAll('button')
-  // // console.log(arr.filter);
-  // console.log(btns);
-  // btns = [].filter.call(btns, item => {
-
-  //   return item.hasAttribute("class");
-  // })
-  // console.log(btns[0].innerHTML);
-  // let hd = {
-  //   data: [1, 2, 3, 55, 0, 6, 7]
-  // }
-  // Object.setPrototypeOf(hd, {
-  //   max(data) {
-  //     console.log(data);
-  //     return data.sort((a, b) => b - a)[0]
-  //   }
-  // })
-  // console.log(hd.max(hd.data));
-  // // console.log(hd.__proto__);
-  // let xj = {
-  //   lessons: { js: 99, php: 33, node: 88, linux: 90 },
-  //   //   get data() {
-  //   //     return Object.values(this.lessons)
-
-  //   //   }
-  // }
-  // let a = Object.values(xj.lessons)
-  // console.log(hd.max.call(null, Object.values(xj.lessons)));
-  // console.log(a);
-
+  class User {
+    constructor(name) {
+      this.name = name;
+    }
+    say() {
+      return this.name;
+    }
+  }
+  class Admin extends User {
+    constructor(name) {
+      super(name);
+    }
+    say() {
+      return "后盾人：" + super.say();
+    }
+  }
+  const xj = new Admin("向军");
+  console.log(xj.say());
 </script>
 
 
