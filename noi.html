@@ -496,7 +496,7 @@
   console.log(ave.toFixed(4));
 </script>
 
-<script xtype="xxx" id="ch0105/04">
+<script type="xxx" id="ch0105/04">
   var n = prompt('数量')
   var sum = 0;
   var ave = 0;
@@ -504,5 +504,34 @@
     sum += +prompt('数据？')
   }
   var ave = sum / n
-  console.log(sum, +ave.toFixed(4));
+  console.log(sum, ave.toFixed(4));
+</script>
+
+<script type="xxx" id="ch0105/05">
+  var n = prompt('数量')
+  var max = -Infinity;
+  // var arr = [];
+  // for (let i = 0; i < n; i++) {
+  //   arr.push(+prompt('数？'))
+  // }
+  // var max = Math.max(...arr)
+  for (let i = 0; i < n; i++) {
+    var s = +prompt('数？')
+    max = s > max ? s : max
+  }
+  console.log(max);
+</script>
+
+<script xtype="xxx" id="ch0105/06">
+  var n = prompt('数量')
+  var max = -Infinity;
+  var min = Infinity;
+
+  for (let i = 0; i < n; i++) {
+    var s = +prompt('数？')
+    max = s > max ? s : max
+    min = s < min ? s : min
+  }
+  // console.log(max);
+  console.log(max - min);
 </script>
