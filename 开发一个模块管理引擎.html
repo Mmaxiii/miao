@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+
+</body>
+<script>
+  let module = (function () {
+    const moduleList = {};  //定义一个空对象，模块集，来装模块
+
+    function define(name, modules, action) {// 传入模块的名字、要依赖的模块、对模块的动作来定义一个模块
+      modules.map((m, i) => {
+        modules[i] = moduleList[m];
+        console.log(moduleList);
+      })
+      moduleList[name] = action.apply(null, modules);
+      //将模块执行之后的结果按照名字放入moduleList，并将依赖的模块，当参数传进去（就是可以在新建的模块里面使用依赖模块开放的方法），就像下面lesson可以使用hd模块的方法
+      // 以定义hd模块为例，将hd:{first(arr){...},max(arr){...}}传入了moduleList,并未传入参数
+
+    }
+    return { define };
+  })();
+  module.define('hd', [], function () {//模块名字为“hd”，不依赖模块，开放first、max方法
+    return {
+      first(arr) {
+        return arr[0];
+      },
+      max(arr, key) {
+        return arr.sort((a, b) => b[key] - a[key])[0];
+      }
+    }
+  });
+  module.define('lesson', ['hd'], function (hd) {
+    let data = [
+      { name: 'js', price: 99 },
+      { name: 'css', price: 18 }
+    ]
+    console.log(hd.max(data, 'price'));
+  });
+</script>
+<script type="module"></script>
+
+</html>

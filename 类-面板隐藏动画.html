@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    * {
+      padding: 0;
+      margin: 0;
+      box-sizing: content-box;
+    }
+
+    body {
+      padding: 30px;
+    }
+
+    .slide {
+      width: 300px;
+      display: flex;
+      flex-direction: column;
+      /* box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3); */
+    }
+
+    .slide dt {
+      height: 30px;
+      background: #34495e;
+      color: white;
+      display: flex;
+      align-items: center;
+      padding-left: 10px;
+      cursor: pointer;
+    }
+
+    .slide dt:first-of-type {
+      border-top-left-radius: 10px;
+      border-top-right-radius: 10px;
+    }
+
+    .slide dd {
+      height: 100px;
+      background: #f1c40f;
+      overflow: hidden;
+    }
+
+    .slide dd div {
+      padding: 10px;
+    }
+
+    .slide dd:last-of-type {
+      border-bottom-left-radius: 10px;
+      border-bottom-right-radius: 10px;
+    }
+  </style>
+
+<body>
+  <div class="slide s1">
+    <dt>后盾人</dt>
+    <dd>
+      <div>houdunren.com</div>
+    </dd>
+    <dt>后盾人</dt>
+    <dd>
+      <div>hdcms.com</div>
+    </dd>
+    <dt>后盾人</dt>
+    <dd>
+      <div>hdcms.com</div>
+    </dd>
+  </div>
+</body>
+<script>
+  //需求：点击标题，保留其显示其面板，其余的面板隐藏
+  class Animation {
+    constructor(el) {//传入一个元素到构造函数中
+      this.el = el;
+      this.timeout = 5;  //设置定时器的时间
+      this.defaultHeight = this.height; //获取原始高度，从get height 访问器中获取
+      // console.log(this.defaultHeight);
+    }
+    hide(callback) {  // 用于隐藏元素
+      this.isShow = false;
+      let id = setInterval(() => {  //用定时器使元素的height减小
+        // console.log(this.height);
+        if (this.height <= 0) {  // 判断元素是否隐藏完成，完成后要清除定时器
+          clearInterval(id);  //清除定时器
+          callback && callback(); // 如果传入了回调函数就调用
+          return; // 退出定时器，不要执行下面的height -1，会有动画bug
+        }
+        this.height = this.height - 1;  //隐藏动画的主体，每隔timeout 元素的height-1
+      }, this.timeout)
+    }
+    show(callback) {
+      this.isShow = true;
+      let id = setInterval(() => {
+        // console.log(this.height);
+        if (this.height >= this.defaultHeight) {
+          clearInterval(id);
+          callback && callback();
+          return;
+        }
+        this.height = this.height + 1;
+
+      }, this.timeout)
+    }
+    get height() {  // height 访问器，所有调用height的地方都从此处取
+      return window.getComputedStyle(this.el).height.slice(0, - 2) * 1; // slice是为了除去“px”， *1 是为了将返回的字符串转换成数值
+    }
+    set height(height) {  // height 访问器，所有存储height的值的地方都要经过
+      this.el.style.height = height + "px";
+    }
+  }
+
+  class Slide {
+    constructor(el) {
+      this.el = document.querySelector(el); //获取指定元素div
+      this.links = this.el.querySelectorAll("dt"); //获取元素div里面全部的dt
+      this.panels = [...this.el.querySelectorAll('dd')].map(item => new Panel(item));
+
+      this.bind();
+    }
+    bind() { // 绑定事件的方法
+      this.links.forEach((item, i) => {  //给每个dt加点击事件
+        item.addEventListener("click", () => {
+          this.action(i);  //调用action方法，并将 索引i 传入
+        });
+      })
+
+    }
+
+    action(i) {
+      Panel.hideAll(Panel.filter(this.panels, i), () => {//向hideAll方法传入过滤后的元素和callback
+        this.panels[i].show();//在callback中调用show（），使面板显示
+      });
+
+    }
+  }
+  class Panel extends Animation {  //因为要隐藏面板要用到Animation里面的方法，所以继承
+    static num = 0;  //静态属性，设立一个数值，用来判断动画是否执行完
+    static hideAll(items, callback) {//静态方法
+      if (Panel.num > 0) return;  //num > 0,说明动画还没执行完
+      items.forEach(item => {
+        Panel.num++;    //动画执行之前，num+1
+        item.hide(() => {  //执行hide方法（隐藏动画），并传入一个回调函数
+          Panel.num--; //回调函数让num--  =>  动画执行完成，num归零
+        });
+      });
+      callback && callback(); // 动画完成，调用上面的回调函数
+    }
+    static filter(items, i) { //创建一个过滤方法，过滤掉被点击的links
+      return items.filter((item, index) => index != i);
+    }
+  }
+  let hd = new Slide(".s1")
+  console.log(hd);
+</script>
+
+
+</html>

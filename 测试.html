@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+
+</body>
+<script>
+
+  // for (var i = 2; i <= 10; i++) {//4
+  //   //假设所有的数都是质数
+  //   var flag = true;
+  //   //通过嵌套循环找到 i 除了1 和本身以外所有可能出现的因子
+  //   for (var j = 2; j < i; j++) {
+  //     //判断 i 是否为质数
+  //     if (i % j == 0) {//能进到当前的分支 说明不是质数
+  //       flag = false;
+  //     }
+  //   }
+  //   if (flag == true) {
+  //     console.log(i);
+  //   }
+  // }
+  let x = 100;
+  foo: for (let i = 2; i <= x; i++) {
+    for (let j = 2; j < i; j++) {
+      if (i % j == 0) {
+        continue foo;
+      }
+    }
+    console.log(i)
+  }
+  // let arr = [1, 2, 3, 4, 5, 1, 2, 4, 5, 5, 3, 3];
+  // let eor = 0;
+  // for (let i = 0; i < arr.length; i++) {
+  //   eor = eor ^ arr[i]
+  // }
+  // // console.log(eor);
+  // let rightone = eor & (~eor + 1);
+  // console.log(rightone);
+  // let onlyone = 0;
+  // for (let i = 0; i < arr.length; i++) {
+  //   console.log(arr[i] & rightone);
+  //   if ((arr[i] & rightone) == 0) onlyone = onlyone ^ arr[i];
+  // }
+  // console.log(onlyone);
+  // console.log(eor ^ onlyone);
+  // let hd = 'asdf///\\sdfsfsa';
+  // console.log(hd);
+  // console.log(hd.match(/ \/ /));
+//   let hd = "hah哈哈哈哈电风扇";
+//   console.log(hd.match(/\p{sc=Han}+/gu));
+
+//   let hd = `
+//   #1 js,200元 #
+//   #2 php,300元 #
+//   #9 houdunren.com #
+//   #3 node.js,180元 #
+// `;
+
+//   let lesson = hd.match(/^\s*#\d+\s+.+\s+#$/gm).map(v => {
+//     v = v.replace(/\s*#\d+\s/, '').replace(/\s*#/, '');
+//     [title, price] = v.split(",");
+//     return { title, price }
+//   })
+//   console.log(lesson);
+// [{name:'js',price:'200元'}]
+//   let lessons = hd.match(/^\s*#\d+\s+.+\s+#$/gm).map(v => {
+//     v = v.replace(/\s*#\d+\s*/, "").replace(/\s+#/, "");
+//     [name, price] = v.split(",");
+//     return { name, price };
+//   });
+//   console.log(JSON.stringify(lessons, null, 2));
+</script>
+
+</html>
