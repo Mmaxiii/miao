@@ -1,117 +1,117 @@
 <script type="xxx" id="ch0103/01">
-  var a = Number(prompt('a'))
-  var b = Number(prompt('b'))
+  let a = Number(prompt('a'))
+  let b = Number(prompt('b'))
   console.log(a + b)
 </script>
 
 <script type="xxx" id="ch0103/02">
-  var a = Number(prompt('a'))
-  var b = Number(prompt('b'))
-  var c = Number(prompt('c'))
+  let a = Number(prompt('a'))
+  let b = Number(prompt('b'))
+  let c = Number(prompt('c'))
   console.log((a + b) * c)
 </script>
 
 <script type="xxx" id="ch0103/03">
-  var a = Number(prompt('a'))
-  var b = Number(prompt('b'))
-  var c = Number(prompt('c'))
+  let a = Number(prompt('a'))
+  let b = Number(prompt('b'))
+  let c = Number(prompt('c'))
   console.log(parseInt((a + b) / c))
 </script>
 
 <script type="xxx" id="ch0103/04">
-  var a = Number(prompt('a'))
-  var b = Number(prompt('b'))
+  let a = Number(prompt('a'))
+  let b = Number(prompt('b'))
   console.log(parseInt(a / b), a % b)
 </script>
 
 <script type="xxx" id="ch0103/05">
-  var a = Number(prompt('a'))
-  var b = Number(prompt('b'))
+  let a = Number(prompt('a'))
+  let b = Number(prompt('b'))
   console.log((a / b).toFixed(9))
 </script>
 
 <script type="xxx" id="ch0103/06">
-  var a = Number(prompt('确诊数'))
-  var b = Number(prompt('死亡数'))
+  let a = Number(prompt('确诊数'))
+  let b = Number(prompt('死亡数'))
   console.log(((b / a) * 100).toFixed(3) + "%")
 </script>
 
 <script type="xxx" id="ch0103/07">
-  var x = Number(prompt('x'))
-  var a = Number(prompt('a'))
-  var b = Number(prompt('b'))
-  var c = Number(prompt('c'))
-  var d = Number(prompt('d'))
+  let x = Number(prompt('x'))
+  let a = Number(prompt('a'))
+  let b = Number(prompt('b'))
+  let c = Number(prompt('c'))
+  let d = Number(prompt('d'))
   // f(x) = ax3 + bx2 + cx + d
-  var y = (a * x ** 3 + b * x ** 2 + c * x + d).toFixed(7)
+  let y = (a * x ** 3 + b * x ** 2 + c * x + d).toFixed(7)
   console.log(y)
 </script>
 
 <script type="xxx" id="ch0103/08">
-  var f = Number(prompt('f'))
+  let f = Number(prompt('f'))
 
-  var C = (5 * (f - 32) / 9).toFixed(5)
+  let C = (5 * (f - 32) / 9).toFixed(5)
   console.log(C)
 </script>
 
 <script type="xxx" id="ch0103/09">
-  var r = Number(prompt('请输入圆的半径r'))
-  var pi = 3.14159
-  var d = 2 * r
-  var l = 2 * pi * r
-  var s = pi * r ** 2
+  let r = Number(prompt('请输入圆的半径r'))
+  let pi = 3.14159
+  let d = 2 * r
+  let l = 2 * pi * r
+  let s = pi * r ** 2
 
   console.log(d.toFixed(4), l.toFixed(4), s.toFixed(4))
 </script>
 
 <script type="xxx" id="ch0103/10">
   // R = 1/(1/r1 + 1/r2)
-  var r1 = Number(prompt('r1'))
-  var r2 = Number(prompt('r2'))
+  let r1 = Number(prompt('r1'))
+  let r2 = Number(prompt('r2'))
 
-  var R = 1 / (1 / r1 + 1 / r2)
+  let R = 1 / (1 / r1 + 1 / r2)
 
   console.log(R.toFixed(2))
 </script>
 
 <script type="xxx" id="ch0103/11">
 
-  var a = Number(prompt('a'))
-  var b = Number(prompt('b'))
+  let a = Number(prompt('a'))
+  let b = Number(prompt('b'))
 
-  var c = a % b
+  let c = a % b
 
   console.log(c.toFixed(4))
 </script>
 
 <script type="xxx" id="ch0103/12">
   // V=4/3*πr3，这里取π= 3.14。
-  var r = Number(prompt('r'))
+  let r = Number(prompt('r'))
 
-  var V = 3.14 * r ** 3 * 4 / 3
+  let V = 3.14 * r ** 3 * 4 / 3
 
   console.log(V.toFixed(2))
 </script>
 
 <script type="xxx" id="ch0103/13">
 
-  var num = Number(prompt('num'))
+  let num = Number(prompt('num'))
 
-  var a = num % 10
-  var b = ((num - a) / 10) % 10
-  var c = (num - 10 * b - a) / 100
-  var mun = "" + a + b + c
+  let a = num % 10
+  let b = ((num - a) / 10) % 10
+  let c = (num - 10 * b - a) / 100
+  let mun = "" + a + b + c
 
   console.log(mun)
 </script>
 
 <script type="xxx" id="ch0103/14">
 
-  var h = Number(prompt('h'))
-  var r = Number(prompt('r'))
-  var pi = 3.14159
-  var v = pi * r * r * h
-  var num = Math.ceil(20000 / v)
+  let h = Number(prompt('h'))
+  let r = Number(prompt('r'))
+  let pi = 3.14159
+  let v = pi * r * r * h
+  let num = Math.ceil(20000 / v)
 
 
   console.log(num)
@@ -119,11 +119,11 @@
 
 <script type="xxx" id="ch0103/15">
 
-  var n = Number(prompt('n'))
-  var x = Number(prompt('x'))
-  var y = Number(prompt('y'))
+  let n = Number(prompt('n'))
+  let x = Number(prompt('x'))
+  let y = Number(prompt('y'))
 
-  var num = Math.floor(n - y / x)
+  let num = Math.floor(n - y / x)
 
 
   console.log(num)
@@ -131,63 +131,63 @@
 
 <script type="xxx" id="ch0103/16">
 
-  var x1 = Number(prompt('x1'))
-  var y1 = Number(prompt('y1'))
-  var x2 = Number(prompt('x2'))
-  var y2 = Number(prompt('y2'))
+  let x1 = Number(prompt('x1'))
+  let y1 = Number(prompt('y1'))
+  let x2 = Number(prompt('x2'))
+  let y2 = Number(prompt('y2'))
 
-  var l = Math.sqrt((x2 - x1) ** 2 + (y2 - y1) ** 2)
+  let l = Math.sqrt((x2 - x1) ** 2 + (y2 - y1) ** 2)
 
   console.log(l.toFixed(3))
 </script>
 
 <script type="xxx" id="ch0103/17">
 
-  var x1 = Number(prompt('x1'))
-  var y1 = Number(prompt('y1'))
-  var x2 = Number(prompt('x2'))
-  var y2 = Number(prompt('y2'))
-  var x3 = Number(prompt('x3'))
-  var y3 = Number(prompt('y3'))
+  let x1 = Number(prompt('x1'))
+  let y1 = Number(prompt('y1'))
+  let x2 = Number(prompt('x2'))
+  let y2 = Number(prompt('y2'))
+  let x3 = Number(prompt('x3'))
+  let y3 = Number(prompt('y3'))
 
-  var a = Math.sqrt((x2 - x1) ** 2 + (y2 - y1) ** 2)
-  var b = Math.sqrt((x3 - x2) ** 2 + (y3 - y2) ** 2)
-  var c = Math.sqrt((x3 - x1) ** 2 + (y3 - y1) ** 2)
+  let a = Math.sqrt((x2 - x1) ** 2 + (y2 - y1) ** 2)
+  let b = Math.sqrt((x3 - x2) ** 2 + (y3 - y2) ** 2)
+  let c = Math.sqrt((x3 - x1) ** 2 + (y3 - y1) ** 2)
 
-  var p = (a + b + c) / 2
+  let p = (a + b + c) / 2
 
-  var s = Math.sqrt(p * (p - a) * (p - b) * (p - c))
+  let s = Math.sqrt(p * (p - a) * (p - b) * (p - c))
   console.log(s.toFixed(2))
 </script>
 
 <script type="xxx" id="ch0103/18">
 
-  var a1 = Number(prompt('a1'))
-  var a2 = Number(prompt('a2'))
-  var n = Number(prompt('n'))
+  let a1 = Number(prompt('a1'))
+  let a2 = Number(prompt('a2'))
+  let n = Number(prompt('n'))
 
-  var diff = a2 - a1
-  var num = a1 + (n - 1) * diff
+  let diff = a2 - a1
+  let num = a1 + (n - 1) * diff
 
   console.log(num)
 </script>
 
 <script type="xxx" id="ch0103/19">
 
-  var a = Number(prompt('a'))
-  var b = Number(prompt('b'))
+  let a = Number(prompt('a'))
+  let b = Number(prompt('b'))
 
-  var num = a * b
+  let num = a * b
 
   console.log(num)
 </script>
 
 <script type="xxx" id="ch0103/20">
 
-  var n = Number(prompt('n'))
+  let n = Number(prompt('n'))
 
 
-  var num = Math.pow(2, n)
+  let num = Math.pow(2, n)
 
   console.log(num)
 </script>
@@ -195,7 +195,7 @@
 
 <script type="xxx" id="ch0104/01">
 
-  var n = Number(prompt('n'))
+  let n = Number(prompt('n'))
 
   if (n > 0) {
     console.log('positive');
@@ -209,7 +209,7 @@
 
 <script type="xxx" id="ch0104/02">
 
-  var n = Number(prompt('n'))
+  let n = Number(prompt('n'))
   if (n >= 0) {
     console.log(n)
   } else {
@@ -220,27 +220,27 @@
 
 <script type="xxx" id="ch0104/03">
 
-  var n = Number(prompt('n'))
+  let n = Number(prompt('n'))
 
-  var res = n % 2 == 1 ? 'odd' : 'even'
+  let res = n % 2 == 1 ? 'odd' : 'even'
 
   console.log(res);
 </script>
 
 <script type="xxx" id="ch0104/04">
 
-  var n = prompt('n')
-  var getAscii = n.charCodeAt()
+  let n = prompt('n')
+  let getAscii = n.charCodeAt()
   // console.log(getAscii);
-  var res = getAscii % 2 == 1 ? 'YES' : 'NO'
+  let res = getAscii % 2 == 1 ? 'YES' : 'NO'
 
   console.log(res);
 </script>
 
 <script type="xxx" id="ch0104/05">
 
-  var a = Number(prompt('a'))
-  var b = Number(prompt('b'))
+  let a = Number(prompt('a'))
+  let b = Number(prompt('b'))
 
   if (a > b) {
     console.log('>');
@@ -253,36 +253,36 @@
 
 <script type="xxx" id="ch0104/06">
 
-  var a = Number(prompt('a'))
+  let a = Number(prompt('a'))
 
-  var res = a > 9 && a < 100 ? 1 : 0
+  let res = a > 9 && a < 100 ? 1 : 0
 
   console.log(res);
 </script>
 
 <script type="xxx" id="ch0104/07">
 
-  var a = Number(prompt('a'))
-  var b = Number(prompt('b'))
+  let a = Number(prompt('a'))
+  let b = Number(prompt('b'))
 
-  var res = a > 10 || b > 20 ? 1 : 0
+  let res = a > 10 || b > 20 ? 1 : 0
 
   console.log(res);
 </script>
 
 <script type="xxx" id="ch0104/08">
 
-  var a = Number(prompt('a'))
+  let a = Number(prompt('a'))
 
-  var res = a % 3 == 0 && a % 5 == 0 ? 'YES' : 'NO'
+  let res = a % 3 == 0 && a % 5 == 0 ? 'YES' : 'NO'
 
   console.log(res);
 </script>
 
 <script type="xxx" id="ch0104/09">
-  var n = +prompt("n")
+  let n = +prompt("n")
 
-  var flag = false
+  let flag = false
 
   if (n % 3 == 0) {
     console.log(3)
@@ -305,9 +305,9 @@
 </script>
 
 <script type="xxx" id="ch0104/10">
-  var a = +prompt("语文成绩")
-  var b = +prompt("数学成绩")
-  var k = 0
+  let a = +prompt("语文成绩")
+  let b = +prompt("数学成绩")
+  let k = 0
   // if ((59.9 - a) * (59.9 - b) < 0) {
   //   console.log(1);
   // } else { console.log(0); }
@@ -319,19 +319,19 @@
 </script>
 
 <script type="xxx" id="ch0104/11">
-  var a = +prompt("a")
+  let a = +prompt("a")
 
-  var res = a == 1 || a == 3 || a == 5 ? 'NO' : 'YES'
+  let res = a == 1 || a == 3 || a == 5 ? 'NO' : 'YES'
 
   console.log(res);
 
 </script>
 
 <script type="xxx" id="ch0104/12">
-  var a = +prompt("a")
+  let a = +prompt("a")
 
-  var bikeTime = 27 + 23 + a / 3;
-  var walkTime = a / 1.2
+  let bikeTime = 27 + 23 + a / 3;
+  let walkTime = a / 1.2
 
   if (bikeTime < walkTime) {
     console.log('Bike');
@@ -344,8 +344,8 @@
 </script>
 
 <script type="xxx" id="ch0104/13">
-  var a = +prompt("a")
-  var b = '请输入0-20的数'
+  let a = +prompt("a")
+  let b = '请输入0-20的数'
   if (a < 5) {
     b = -a + 2.5
   } else if (a < 10) {
@@ -358,12 +358,12 @@
 </script>
 
 <script type="xxx" id="ch0104/14">
-  var b = +prompt("多重")
-  var a = prompt("是否加急 y / n")
+  let b = +prompt("多重")
+  let a = prompt("是否加急 y / n")
 
-  var urgent = a == "y" ? 5 : 0
+  let urgent = a == "y" ? 5 : 0
 
-  var cost = (b <= 1000 ? 0 : Math.ceil((b - 1000) / 500) * 4) + 8 + urgent
+  let cost = (b <= 1000 ? 0 : Math.ceil((b - 1000) / 500) * 4) + 8 + urgent
 
   console.log(cost);
 
@@ -371,48 +371,48 @@
 </script>
 
 <script type="xxx" id="ch0104/15">
-  var a = +prompt("a")
-  var b = +prompt("b")
-  var c = +prompt("c")
+  let a = +prompt("a")
+  let b = +prompt("b")
+  let c = +prompt("c")
 
   console.log(Math.max(a, b, c));
 
 </script>
 
 <script type="xxx" id="ch0104/16">
-  var a = +prompt("a")
-  var b = +prompt("b")
-  var c = +prompt("c")
+  let a = +prompt("a")
+  let b = +prompt("b")
+  let c = +prompt("c")
 
-  var res = a + b > c && a + c > b && c + b > a ? 'yes' : 'no'
+  let res = a + b > c && a + c > b && c + b > a ? 'yes' : 'no'
 
   console.log(res);
 
 </script>
 
 <script type="xxx" id="ch0104/17">
-  var a = +prompt("a")
+  let a = +prompt("a")
 
-  var res = a % 4 == 0 && a % 100 != 0 || a % 400 == 0 ? 'Y' : 'N'
+  let res = a % 4 == 0 && a % 100 != 0 || a % 400 == 0 ? 'Y' : 'N'
 
   console.log(res);
 
 </script>
 
 <script type="xxx" id="ch0104/18">
-  var x = +prompt("x")
-  var y = +prompt("y")
+  let x = +prompt("x")
+  let y = +prompt("y")
 
-  var res = x <= 1 && x >= -1 && y <= 1 && y >= -1 ? 'yes' : 'no'
+  let res = x <= 1 && x >= -1 && y <= 1 && y >= -1 ? 'yes' : 'no'
 
   console.log(res);
 
 </script>
 
 <script type="xxx" id="ch0104/19">
-  var a = +prompt("a")
-  var b = +prompt("b")
-  var c = prompt("c")
+  let a = +prompt("a")
+  let b = +prompt("b")
+  let c = prompt("c")
 
   switch (c) {
     case "+":
@@ -425,7 +425,7 @@
       console.log(a * b);
       break;
     case "/":
-      var res = b == 0 ? 'Divided by zero' : a / b
+      let res = b == 0 ? 'Divided by zero' : a / b
       console.log(res);
       break;
   }
@@ -433,35 +433,37 @@
 
 </script>
 
-<script type="xxx" id="ch0104/20">
-  var a = +prompt("a")
-  var b = +prompt("b")
-  var c = +prompt("c")
+<script xtype="xxx" id="ch0104/20">
+  let a = +prompt("a")
+  let b = +prompt("b")
+  let c = +prompt("c")
 
-  var delta = b * b - 4 * a * c
-  var x1 = (-b + Math.sqrt(b ** 2 - 4 * a * c)) / (2 * a)
-  var x2 = (-b - Math.sqrt(b ** 2 - 4 * a * c)) / (2 * a)
-  var m = 0
-  var n = 0
+  let delta = b * b - 4 * a * c
+  let x1 = (-b + Math.sqrt(delta)) / (2 * a)
+  let x2 = (-b - Math.sqrt(delta)) / (2 * a)
+  let m = 0
+  let n = 0
 
   if (delta == 0) {
     console.log('x1=x2=' + x1.toFixed(5));
   } else if (delta > 0) {
-    console.log('x1 =' + x1.toFixed(5), 'x2=' + x2.toFixed(5));
+    console.log('x1=' + x1.toFixed(5) + ';' + 'x2=' + x2.toFixed(5));
   } else {
+
     m = "" + (-b / (2 * a)).toFixed(5)
-    n = "" + (Math.sqrt(4 * a * c - b ** 2) / (2 * a)).toFixed(5)
+    n = "" + (Math.sqrt(-delta) / (2 * a)).toFixed(5)
+    if (n < 0) { }
     x1 = m + '+' + n + 'i'
     x2 = m + '-' + n + 'i'
-    console.log('x1=' + x1, 'x2=' + x2);
+    console.log('x1=' + x1 + ';' + 'x2=' + x2);
   }
 </script>
 <script type="xxx" id="ch0104/21">
-  var n = Number(prompt('n'))
-  var x = Number(prompt('x'))
-  var y = Number(prompt('y'))
+  let n = Number(prompt('n'))
+  let x = Number(prompt('x'))
+  let y = Number(prompt('y'))
 
-  var num = Math.floor(n - y / x)
+  let num = Math.floor(n - y / x)
 
 
   console.log(num)
@@ -469,69 +471,69 @@
 </script>
 
 <script type="xxx" id="ch0105/01">
-  var n = +prompt('有几个学生？')
-  var sum = 0;
+  let n = +prompt('有几个学生？')
+  let sum = 0;
   for (let i = 0; i < n; i++) {
     sum += +prompt('学生多大？') 
   }
-  var ave = sum / n
+  let ave = sum / n
   console.log(ave.toFixed(2));
 </script>
 
 <script type="xxx" id="ch0105/02">
-  var sum = 0;
+  let sum = 0;
 
 
   for (let i = 0; i < 12; i++) {
     sum += +prompt('钱？')
   }
-  var ave = sum / 12
+  let ave = sum / 12
   console.log('$' + ave.toFixed(2));
 </script>
 
 <script type="xxx" id="ch0105/03">
-  var n = prompt('样本容量')
-  var sum = 0;
+  let n = prompt('样本容量')
+  let sum = 0;
   for (let i = 0; i < n; i++) {
     sum += +prompt('数据？')
   }
-  var ave = sum / n
+  let ave = sum / n
   console.log(ave.toFixed(4));
 </script>
 
 <script type="xxx" id="ch0105/04">
-  var n = prompt('数量')
-  var sum = 0;
+  let n = prompt('数量')
+  let sum = 0;
 
   for (let i = 0; i < n; i++) {
     sum += +prompt('数据？')
   }
-  var ave = sum / n
+  let ave = sum / n
   console.log(sum, ave.toFixed(5));
 </script>
 
 <script type="xxx" id="ch0105/05">
-  var n = prompt('数量')
-  var max = -Infinity;
-  // var arr = [];
+  let n = prompt('数量')
+  let max = -Infinity;
+  // let arr = [];
   // for (let i = 0; i < n; i++) {
   //   arr.push(+prompt('数？'))
   // }
-  // var max = Math.max(...arr)
+  // let max = Math.max(...arr)
   for (let i = 0; i < n; i++) {
-    var s = +prompt('数？')
+    let s = +prompt('数？')
     max = s > max ? s : max
   }
   console.log(max);
 </script>
 
 <script type="xxx" id="ch0105/06">
-  var n = prompt('数量')
-  var max = -Infinity;
-  var min = Infinity;
+  let n = prompt('数量')
+  let max = -Infinity;
+  let min = Infinity;
 
   for (let i = 0; i < n; i++) {
-    var s = +prompt('数？')
+    let s = +prompt('数？')
     max = s > max ? s : max
     min = s < min ? s : min
   }
@@ -540,10 +542,10 @@
 </script>
 
 <script type="xxx" id="ch0105/07">
-  var n = prompt('数量')
-  var g = 0
-  var s = 0
-  var b = 0
+  let n = prompt('数量')
+  let g = 0
+  let s = 0
+  let b = 0
 
   for (let i = 0; i < n; i++) {
     g += +prompt('金数？')
@@ -551,25 +553,25 @@
     b += +prompt('铜数？')
   }
   // console.log(max);
-  var sum = g + s + b
+  let sum = g + s + b
   console.log(g, s, b, sum);
 </script>
 
 <script type="xxx" id="ch0105/08">
-  var n = +prompt('几角型')
-  var sum = 0;
+  let n = +prompt('几角型')
+  let sum = 0;
 
   for (let i = 0; i < n - 1; i++) {
     sum += +prompt('角度？')
   }
-  var angle = (n - 2) * 180 - sum
+  let angle = (n - 2) * 180 - sum
   console.log(angle);
 </script>
 
 <script type="xxx" id="ch0105/09">
-  var m = +prompt('m')
-  var n = +prompt('n')
-  var sum = 0;
+  let m = +prompt('m')
+  let n = +prompt('n')
+  let sum = 0;
 
   for (let i = m; i <= n; i++) {
     sum += (i % 2 == 1 ? i : 0)
@@ -579,9 +581,9 @@
 </script>
 
 <script type="xxx" id="ch0105/10">
-  var m = +prompt('m')
-  var n = +prompt('n')
-  var sum = 0;
+  let m = +prompt('m')
+  let n = +prompt('n')
+  let sum = 0;
 
   for (let i = m; i <= n; i++) {
     sum += (i % 17 == 0 ? i : 0)
@@ -591,13 +593,13 @@
 </script>
 
 <script type="xxx" id="ch0105/11">
-  var n = +prompt('n')
-  var sum1 = 0;
-  var sum5 = 0;
-  var sum10 = 0;
+  let n = +prompt('n')
+  let sum1 = 0;
+  let sum5 = 0;
+  let sum10 = 0;
 
   for (let i = 0; i < n; i++) {
-    var k = +prompt('k?')
+    let k = +prompt('k?')
     if (k == 1) {
       sum1++
     } else if (k == 5) {
@@ -611,11 +613,11 @@
 </script>
 
 <script type="xxx" id="ch0105/12">
-  var n = +prompt('数列长度')
-  var x = +prompt('指定数字')
-  var sum = 0;
+  let n = +prompt('数列长度')
+  let x = +prompt('指定数字')
+  let sum = 0;
   for (let i = 0; i < n; i++) {
-    var k = +prompt('k?')
+    let k = +prompt('k?')
     if (k == x) {
       sum++
     }
@@ -625,9 +627,9 @@
 </script>
 
 <script type="xxx" id="ch0105/13">
-  var a = +prompt('a')
-  var n = +prompt('n')
-  var sum = 1;
+  let a = +prompt('a')
+  let n = +prompt('n')
+  let sum = 1;
   for (let i = 0; i < n; i++) {
     sum *= a
   }
@@ -636,9 +638,9 @@
 </script>
 
 <script type="xxx" id="ch0105/14">
-  var p = +prompt('人口基数')
-  var n = +prompt('年数')
-  // var sum = 0;
+  let p = +prompt('人口基数')
+  let n = +prompt('年数')
+  // let sum = 0;
   for (let i = 0; i < n; i++) {
     p = p * (1 + 0.001)
   }
@@ -647,10 +649,10 @@
 </script>
 
 <script type="xxx" id="ch0105/15">
-  var r = +prompt('利率')
-  var m = +prompt('总值')
-  var y = +prompt('年数')
-  // var sum = 0;
+  let r = +prompt('利率')
+  let m = +prompt('总值')
+  let y = +prompt('年数')
+  // let sum = 0;
   for (let i = 0; i < y; i++) {
     m = m * (1 + r / 100)
   }
@@ -659,11 +661,11 @@
 </script>
 
 <script type="xxx" id="ch0105/16">
-  var n = +prompt('年薪/w')
-  var k = +prompt('房价增长率')
-  var x = 200
-  var sum = n
-  var y = 1
+  let n = +prompt('年薪/w')
+  let k = +prompt('房价增长率')
+  let x = 200
+  let sum = n
+  let y = 1
 
   while (sum < x) {
     x = x * (1 + k / 100)
@@ -677,10 +679,10 @@
 
 <script type="xxx" id="ch0105/17">
   // debugger
-  var k = +prompt('k?')
-  var a = 1;
-  var b = 1;
-  var num = 0
+  let k = +prompt('k?')
+  let a = 1;
+  let b = 1;
+  let num = 0
   if (k != 1 || k != 2) {
     for (let i = 0; i < k - 2; i++) {
       num = b
@@ -693,14 +695,14 @@
 
 <script type="xxx" id="ch0105/18">
   // debugger
-  var n = Number(prompt('n?'))
-  var j1 = Number(prompt('总数?'))
-  var j2 = Number(prompt('有效?'))
-  var j3 = j2 / j1
+  let n = Number(prompt('n?'))
+  let j1 = Number(prompt('总数?'))
+  let j2 = Number(prompt('有效?'))
+  let j3 = j2 / j1
   for (let i = 0; i < n - 1; i++) {
-    var a = Number(prompt('总数?'))
-    var b = Number(prompt('有效?'))
-    var ef = b / a
+    let a = Number(prompt('总数?'))
+    let b = Number(prompt('有效?'))
+    let ef = b / a
     if (ef - j3 < 0.05 && j3 - ef < 0.05) {
       console.log('same')
     } else if (ef - j3 > 0.05) {
@@ -713,16 +715,16 @@
 </script>
 
 <script type="xxx" id="ch0105/19">
-  var n = Number(prompt("屋顶？"))
-  var res = 0;
+  let n = Number(prompt("屋顶？"))
+  let res = 0;
   for (let i = 0; i < n; i++) {
-    var x = Number(prompt('x'))
-    var y = Number(prompt('y'))
-    var p = Number(prompt('人？'))
+    let x = Number(prompt('x'))
+    let y = Number(prompt('y'))
+    let p = Number(prompt('人？'))
 
-    var l = Math.sqrt(x ** 2 + y ** 2)
-    var onWayTime = 2 * l / 50
-    var peopleTime = (1 + 0.5) * p
+    let l = Math.sqrt(x ** 2 + y ** 2)
+    let onWayTime = 2 * l / 50
+    let peopleTime = (1 + 0.5) * p
     res += Math.ceil(onWayTime + peopleTime)
   }
   console.log(res)
@@ -730,15 +732,15 @@
 
 <script type="xxx" id="ch0105/20">
   // debugger
-  var h = Number(prompt("h？"))
-  var k = 10
-  var res = 2 * h;
-  var i = 2;
+  let h = Number(prompt("h？"))
+  let k = 10
+  let res = 2 * h;
+  let i = 2;
   while (true) {
     res += h / (2 ** (i - 1))
     i++
     if (i == k) {
-      var s = h / (2 ** (i - 1)) / 2
+      let s = h / (2 ** (i - 1)) / 2
       break
     }
   }
@@ -747,15 +749,15 @@
 
 <script type="xxx" id="ch0105/21">
   // debugger
-  var n = Number(prompt("n？"))
+  let n = Number(prompt("n？"))
 
   while (n != 1) {
     if (n % 2 == 1) {
-      var m = n
+      let m = n
       n = n * 3 + 1
       console.log(`${m}*3+1=${n}`);
     } else {
-      var m = n
+      let m = n
       n = n / 2
       console.log(`${m}/2=${n}`);
     }
@@ -766,13 +768,13 @@
 
 <script type="xxx" id="ch0105/22">
   // debugger
-  var n = 12
-  var sum = 0
-  var save = 0
-  var k = 0
-  var j = 0
+  let n = 12
+  let sum = 0
+  let save = 0
+  let k = 0
+  let j = 0
   for (let i = 1; i <= n; i++) {
-    var m = Number(prompt('预算'))
+    let m = Number(prompt('预算'))
     sum += 300 - m
     if (sum >= 100) {
       save += Math.trunc(sum / 100) * 100
@@ -789,11 +791,11 @@
 </script>
 
 <script type="xxx" id="ch0105/23">
-  var m = Number(prompt('总量'))
-  var n = Number(prompt('人数'))
-  var j = 0
+  let m = Number(prompt('总量'))
+  let n = Number(prompt('人数'))
+  let j = 0
   for (let i = 0; i < n; i++) {
-    var k = Number(prompt('取药数量？'))
+    let k = Number(prompt('取药数量？'))
     m = m - k
     if (m < 0) {
       j++
@@ -804,11 +806,11 @@
 </script>
 
 <script type="xxx" id="ch0105/24">
-  var n = Number(prompt('小时？'))
-  var j = 0
+  let n = Number(prompt('小时？'))
+  let j = 0
   for (let i = 0; i < n; i++) {
-    var shou = Number(prompt('收缩'))
-    var shu = Number(prompt('舒张'))
+    let shou = Number(prompt('收缩'))
+    let shu = Number(prompt('舒张'))
     j++
     if (shou < 90 || shou > 140) {
       j = 0
@@ -837,24 +839,24 @@
 </script>
 
 <script type="xxx" id="ch0105/26">
-  var n = Number(prompt('个数？'))
-  var j = 0
+  let n = Number(prompt('个数？'))
+  let j = 0
   for (let i = 0; i < n; i++) {
-    var num = Number(prompt('数？'))
-    var ge = num % 10
-    var shi = (num - ge) / 10 % 10
-    var bai = (num - shi * 10 - ge) / 100 % 10
-    var qian = (num - bai * 100 - shi * 10 - ge) / 1000 % 10
-    var diff = ge - shi - bai - qian
+    let num = Number(prompt('数？'))
+    let ge = num % 10
+    let shi = (num - ge) / 10 % 10
+    let bai = (num - shi * 10 - ge) / 100 % 10
+    let qian = (num - bai * 100 - shi * 10 - ge) / 1000 % 10
+    let diff = ge - shi - bai - qian
     if (diff > 0) j++
   }
   console.log(j);
 </script>
 
 <script type="xxx" id="ch0105/27">
-  var k = Number(prompt('k'))
-  var sn = 0
-  var n = 1
+  let k = Number(prompt('k'))
+  let sn = 0
+  let n = 1
   while (true) {
     sn += 1 / n
     if (sn > k) break
@@ -865,8 +867,8 @@
 
 <script type="xxx" id="ch0105/28">
   // debugger
-  var n = prompt('n')
-  var j = n.length
+  let n = prompt('n')
+  let j = n.length
   for (let i = 0; i < j; i++) {
     k = n % 10
     n = (n - k) / 10
@@ -877,9 +879,9 @@
 
 <script type="xxx" id="ch0105/29">
   // debugger
-  var n = prompt('n')
-  var sum = 0
-  var j = Number(n) < 0 ? n.length - 1 : n.length
+  let n = prompt('n')
+  let sum = 0
+  let j = Number(n) < 0 ? n.length - 1 : n.length
   for (let i = 0; i < j; i++) {
     k = n % 10
     n = (n - k) / 10
@@ -888,11 +890,11 @@
   console.log(sum);
 </script>
 <script type="xxx" id="ch0105/30">
-  var m = Number(prompt('m'))
-  var k = Number(prompt('k'))
-  var sum = 0
+  let m = Number(prompt('m'))
+  let k = Number(prompt('k'))
+  let sum = 0
   if (m % 19 == 0) {
-    var a = 0
+    let a = 0
     for (let i = 0; i < m.length; i++) {
       a = n % 10
       n = (n - a) / 10
@@ -906,12 +908,12 @@
 </script>
 
 <script type="xxx" id="ch0105/31">
-  // debugger
-  var n = Number(prompt('灯'))
-  var m = Number(prompt('人'))
+
+  let n = Number(prompt('灯'))
+  let m = Number(prompt('人'))
 
   for (let i = 1; i <= n; i++) {
-    var k = 1;
+    let k = 1;
     for (let j = 1; j <= m; j++) {
       if (i % j == 0) {
         k = -k
@@ -922,12 +924,12 @@
 </script>
 
 <script type="xxx" id="ch0105/32">
-  var n = Number(prompt('n'))
-  var q = 2
-  var p = 1
-  var sum = 0
+  let n = Number(prompt('n'))
+  let q = 2
+  let p = 1
+  let sum = 0
   for (let i = 0; i < n; i++) {
-    var j = 0
+    let j = 0
     sum += q / p
     j = q
     q = q + p
@@ -937,9 +939,9 @@
 </script>
 
 <script type="xxx" id="ch0105/33">
-  var n = Number(prompt('n'))
-  var k = -1
-  var sum = 0
+  let n = Number(prompt('n'))
+  let k = -1
+  let sum = 0
 
   for (let i = 1; i <= n; i++) {
     sum += 1 / i * k ** (i - 1)
@@ -949,10 +951,10 @@
 
 <script type="xxx" id="ch0105/34">
   // debugger
-  var n = Number(prompt('n'))
-  var sum = 0
+  let n = Number(prompt('n'))
+  let sum = 0
   for (let i = 1; i <= n; i++) {
-    var f = 1
+    let f = 1
     for (let j = 1; j <= i; j++) {
       f *= j
     }
@@ -963,10 +965,10 @@
 
 <script type="xxx" id="ch0105/35">
   // debugger
-  var n = Number(prompt('n'))
-  var sum = 1
+  let n = Number(prompt('n'))
+  let sum = 1
   for (let i = 1; i <= n; i++) {
-    var f = 1
+    let f = 1
     for (let j = 1; j <= i; j++) {
       f *= j
     }
@@ -977,9 +979,9 @@
 </script>
 
 <script type="xxx" id="ch0105/36">
-  var x = Number(prompt('x'))
-  var n = Number(prompt('n'))
-  var sum = 0
+  let x = Number(prompt('x'))
+  let n = Number(prompt('n'))
+  let sum = 0
   for (let i = n; i >= 0; i--) {
     sum += x ** i
   }
@@ -987,9 +989,9 @@
 </script>
 
 <script type="xxx" id="ch0105/37">
-  var M = Number(prompt('最大体力'))
-  var n = Number(prompt('初始战斗力'))
-  var x = Number(prompt('能量元素'))
+  let M = Number(prompt('最大体力'))
+  let n = Number(prompt('初始战斗力'))
+  let x = Number(prompt('能量元素'))
   while (x >= M / n) {
     x = x - Math.ceil(M / n)
     for (let i = 1; i <= M; i++) {
@@ -999,29 +1001,31 @@
   console.log(n);
 </script>
 
-<script xtype="xxx" id="ch0105/38">
-  var n = Number(prompt('n'))
-  var f = 0;
-  for (let i = 0; i <= n; i++) {
-    c = Number(prompt('c'))
-    f = (n - i) * c
-    console.log(f);
+<script type="xxx" id="ch0105/38">
+  let n = Number(prompt('n'))
+  let f = 0;
+  if (n == 0) {
+    console.log(0)
+  } else {
+    for (let i = 0; i <= n; i++) {
+      c = Number(prompt('c'))
+      f = (n - i) * c
+      console.log(f);
+    }
   }
   //不会
 </script>
 
 <script type="xxx" id="ch0105/39">
   //debugger
-  var n = prompt('n')
-  var sum = 0
+  let n = prompt('n')
+  let sum = 0
   foo: for (let i = 1; i <= n; i++) {
-    var k = 0;
-    var m = i
-    var j = String(n).length
+    let k = 0;
+    let m = i
+    let j = String(n).length
 
-    if (i % 7 == 0) {
-      continue foo
-    } else {
+    if (i % 7 != 0) {
       for (let a = 0; a < j; a++) {
         k = m % 10
         m = (m - k) / 10
@@ -1034,13 +1038,13 @@
 </script>
 
 <script type="xxx" id="ch0105/40">
-  var n = Number(prompt('n'))
+  let n = Number(prompt('n'))
   // debugger
-  var sum = 0
+  let sum = 0
   for (let i = 1; i <= n; i++) {
-    var k = 0
-    var m = i
-    var j = String(m).length
+    let k = 0
+    let m = i
+    let j = String(m).length
     for (let a = 0; a < j; a++) {
       k = m % 10
       m = (m - k) / 10
@@ -1051,14 +1055,14 @@
 </script>
 
 <script type="xxx" id="ch0105/41">
-  var n1 = Number(prompt('n1'))
-  var n2 = Number(prompt('n2'))
+  let n1 = Number(prompt('n1'))
+  let n2 = Number(prompt('n2'))
   // debugger
-  var sum = 0
+  let sum = 0
   for (let i = n1; i <= n2; i++) {
-    var k = 0
-    var m = i
-    var j = String(m).length
+    let k = 0
+    let m = i
+    let j = String(m).length
     for (let a = 0; a < j; a++) {
       k = m % 10
       m = (m - k) / 10
@@ -1070,11 +1074,11 @@
 </script>
 
 <script type="xxx" id="ch0105/42">
-  var h = Number(prompt('h'))
-  var w = Number(prompt('w'))
-  var f = prompt('符号')
-  var o = Number(prompt('o'))
-  var s = ""
+  let h = Number(prompt('h'))
+  let w = Number(prompt('w'))
+  let f = prompt('符号')
+  let o = Number(prompt('o'))
+  let s = ""
   // debugger
 
   if (o == 1) {
@@ -1097,9 +1101,9 @@
 </script>
 
 <script type="xxx" id="ch0105/43">
-  var n = Number(prompt('n'))
+  let n = Number(prompt('n'))
   debugger
-  var time = Date.now();
+  let time = Date.now();
   // console.log(time);
   for (let i = 2; i <= n - 1; i++) {
     if ((n / i) % 1 == 0) {
@@ -1107,19 +1111,19 @@
       break
     };
   }
-  var time2 = Date.now();
+  let time2 = Date.now();
 </script>
 
 <script type="xxx" id="ch0105/44">
-  var n = Number(prompt('n'))
-  var i = 2
-  var num = 1
+  let n = Number(prompt('n'))
+  let i = 2
+  let num = 1
   if (n == 1) {
     console.log(2);
   } else {
     while (true) {
       i++
-      var k = 0
+      let k = 0
       for (let j = 2; j < i; j++) {
         if (i % j == 0) k++
       }
@@ -1133,9 +1137,9 @@
 </script>
 
 <script type="xxx" id="ch0105/45">
-  var n = Number(prompt('n'))
-  var d = 0
-  var sum = 0
+  let n = Number(prompt('n'))
+  let d = 0
+  let sum = 0
   for (let i = 1; i <= n; i++) {
     if (d == n) break
     for (let j = 1; j <= i; j++) {
