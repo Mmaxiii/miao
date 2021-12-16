@@ -659,11 +659,10 @@
 </script>
 
 <script type="xxx" id="ch0105/16">
-  //不理解
   var n = +prompt('年薪/w')
   var k = +prompt('房价增长率')
   var x = 200
-  var sum = 0
+  var sum = n
   var y = 1
 
   while (sum < x) {
@@ -820,21 +819,21 @@
   console.log(j);
 </script>
 <script type="xxx" id="ch0105/25">
-  var n = Number(prompt('数？'))
-  var m = 0
-  var i = 0
-  var num7 = 0
-  while (true) {
-    debugger
-    m = n % 7
-    l = n - m * 7 ** i
-    num7 = m * 10 ** i
-    console.log(1);
-    if (l == 0) break
-    console.log(2);
+  for (let i = 0; i < 7; i++) {
+    for (let j = 0; j < 7; j++) {
+      for (let k = 1; k < 7; k++) {
+        let num7 = i * 7 ** 2 + j * 7 + k
+        let num9 = k * 9 ** 2 + j * 9 + i
+        if (num7 == num9) {
+          Num7 = "" + i + j + k
+          Num9 = "" + k + j + i
+          console.log(num7, Num7, Num9);
+        }
+      }
+    }
+
 
   }
-  console.log(num7);
 </script>
 
 <script type="xxx" id="ch0105/26">
@@ -988,24 +987,25 @@
 </script>
 
 <script type="xxx" id="ch0105/37">
-  var m = Number(prompt('最大体力'))
+  var M = Number(prompt('最大体力'))
   var n = Number(prompt('初始战斗力'))
   var x = Number(prompt('能量元素'))
-  var maxn = 0;
-  for (let i = 1; i <= m; i++) {
-    maxn = n + Math.trunc(i / n)
-    x * maxn  = m
-    if ()
+  while (x >= M / n) {
+    x = x - Math.ceil(M / n)
+    for (let i = 1; i <= M; i++) {
+      if (i % n == 0) n++
+    }
   }
-  //不会
+  console.log(n);
 </script>
 
-<script type="xxx" id="ch0105/38">
+<script xtype="xxx" id="ch0105/38">
   var n = Number(prompt('n'))
   var f = 0;
   for (let i = 0; i <= n; i++) {
     c = Number(prompt('c'))
-    f += c * x ** (n - i)
+    f = (n - i) * c
+    console.log(f);
   }
   //不会
 </script>
@@ -1134,13 +1134,15 @@
 
 <script type="xxx" id="ch0105/45">
   var n = Number(prompt('n'))
-  var i = 0
+  var d = 0
   var sum = 0
-  while(true) {
-    i++
-    var 
-    for (let j = 0; j < i ; j++)
-    sum += i 
+  for (let i = 1; i <= n; i++) {
+    if (d == n) break
+    for (let j = 1; j <= i; j++) {
+      sum += i
+      d++
+      if (d == n) break
+    }
   }
-  //不会
+  console.log(sum);
 </script>
