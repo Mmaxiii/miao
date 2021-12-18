@@ -452,9 +452,13 @@
 
     m = "" + (-b / (2 * a)).toFixed(5)
     n = "" + (Math.sqrt(-delta) / (2 * a)).toFixed(5)
-    if (n < 0) { }
-    x1 = m + '+' + n + 'i'
-    x2 = m + '-' + n + 'i'
+    if (n < 0) {
+      x1 = m + '+' + (-n) + 'i'
+      x2 = m + '-' + (-n) + 'i'
+    } else {
+      x1 = m + '+' + n + 'i'
+      x2 = m + '-' + n + 'i'
+    }
     console.log('x1=' + x1 + ';' + 'x2=' + x2);
   }
 </script>
@@ -482,7 +486,6 @@
 
 <script type="xxx" id="ch0105/02">
   let sum = 0;
-
 
   for (let i = 0; i < 12; i++) {
     sum += +prompt('钱？')
@@ -664,16 +667,19 @@
   let n = +prompt('年薪/w')
   let k = +prompt('房价增长率')
   let x = 200
-  let sum = n
-  let y = 1
+  let sum = 0
+  let buyed = false
+ for (let i = 1; i <= n; i++) {
+   sum += n
+   if (sum >= x) {
+     console.log(i)
+     buyed = true
+     break
+   }
+   x = x * (1 + k / 100)
+ }
 
-  while (sum < x) {
-    x = x * (1 + k / 100)
-    sum += n
-    y++
-    if (y > 20) break
-  }
-  y > 20 ? console.log('Impossible') : console.log(y);;
+ if(buyed) console.log('Impossible')
   // console.log(y);
 </script>
 
