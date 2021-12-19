@@ -433,7 +433,7 @@
 
 </script>
 
-<script xtype="xxx" id="ch0104/20">
+<script type="xxx" id="ch0104/20">
   let a = +prompt("a")
   let b = +prompt("b")
   let c = +prompt("c")
@@ -684,19 +684,20 @@
 </script>
 
 <script type="xxx" id="ch0105/17">
-  // debugger
+
   let k = +prompt('k?')
   let a = 1;
   let b = 1;
-  let num = 0
-  if (k != 1 || k != 2) {
-    for (let i = 0; i < k - 2; i++) {
-      num = b
-      b = a + b
-      a = num
-    }
+  let c = 0
+
+  for (let i = 1; i < k; i++) {
+    c = a + b
+    a = b
+    b = c
   }
-  console.log(b);
+  console.log(a)
+
+
 </script>
 
 <script type="xxx" id="ch0105/18">
@@ -1026,21 +1027,27 @@
   //debugger
   let n = prompt('n')
   let sum = 0
-  foo: for (let i = 1; i <= n; i++) {
+
+  for (let i = 1; i <= n; i++) {
     let k = 0;
     let m = i
     let j = String(n).length
-
+    let flag = false
     if (i % 7 != 0) {
       for (let a = 0; a < j; a++) {
         k = m % 10
         m = (m - k) / 10
-        if (k == 7) continue foo
+        if (k == 7) {
+          flag = true
+          break
+        }
       }
-      sum += i ** 2
+      if (!flag) { sum += i ** 2 }
     }
   }
+
   console.log(sum);
+
 </script>
 
 <script type="xxx" id="ch0105/40">
@@ -1155,4 +1162,164 @@
     }
   }
   console.log(sum);
+</script>
+
+<script type="xxx" id="narcissistic">
+  // narcissistic: 输入一个数，判断是否是水仙花数
+  let n = Number(prompt())
+  if (n >= 100 && n < 1000) {
+    let sum = 0
+    let k = n
+    while (k > 0) {
+      sum += Math.pow(k % 10, 3)
+      k = Math.floor(k / 10)
+    }
+    console.log(sum == n ? 'YES' : 'NO');
+  } else {
+    console.log("NO");
+  }
+</script>
+
+<script type="xxx" id="narcissistics">
+  // narcissistics: 输出10000以内的水仙花数
+
+  for (let i = 100; i < 1000; i++) {
+    let k = i
+    let sum = 0
+    while (k > 0) {
+      sum += Math.pow(k % 10, 3)
+      k = Math.floor(k / 10)
+    }
+    if (sum == i) console.log(i)
+  }
+</script>
+<script type="xxx" id="palindrom">
+  // palindrom: 输入一个数，判断它数是否是回文数，如1223221
+  let n = Number(prompt())
+  let k = n
+  let sum = ""
+  while (k > 0) {
+    sum += k % 10
+    k = Math.floor(k / 10)
+  }
+  n == Number(sum) ? console.log("YES") : console.log("NO");
+
+</script>
+
+<script type="xxx" id="weekday">
+  // weekday: 输入年份与月份，输出这个月的第一天是周几（视具体设定，周一可以用1或0表示）
+  // 不会
+
+</script>
+
+<script type="xxx" id="complete-number">
+  //<!-- complete-number: 输入一个数，判断它是否是完全数（自行查相关概念） -->
+  let n = Number(prompt())
+  let sum = 0
+  for (let i = 1; i < n; i++) {
+    if (Number.isInteger(n / i)) {
+      sum += i
+    }
+  }
+  sum == n ? console.log("YES") : console.log("NO")
+</script>
+
+<script type="xxx" id="complete-numbers">
+  //complete-numbers: 输出1000以内的完全数
+  for (i = 2; i <= 1000; i++) {
+    let sum = 0
+    for (j = 1; j < i; j++) {
+      if (Number.isInteger(i / j)) {
+        sum += j
+      }
+    }
+    if (sum == i) console.log(i)
+  }
+</script>
+
+<script type="xxx" id="prime">
+  // prime: 输入一个数，判断它是否是素数
+  let n = Number(prompt())
+  let flag = true
+  for (let j = 2; j < n; j++) {
+    if (n % j == 0) {
+      flag = false
+      break
+    }
+  }
+  flag ? console.log('YES') : console.log('NO')
+</script>
+
+<script type="xxx" id="primes">
+  //primes: 输出100以内的素数
+  for (let i = 2; i <= 100; i++) {
+    let flag = true
+    for (let j = 2; j < i; j++) {
+      if (i % j == 0) {
+        flag = false
+        break
+      }
+    }
+    if (flag) console.log(i)
+  }
+</script>
+
+<script type="xxx" id="itoa">
+// itoa: 给定一个整数，将其转换为字符串：不能使用String等现成函数，但可以使用非此功能的其它函数，也不能利用任意运算符的自动类型转换
+//不会
+</script>
+
+<script type="xxx" id="lcf&lcm">
+  // lcf&lcm: 输入两个数，输出它们的最大公约数和最小公倍数
+  let m = Number(prompt())
+  let n = Number(prompt())
+  let lcm = 0
+  let lcf = 0
+  let flag = false
+  for (let i = m; i >= 1; i--) {
+    let M = 0
+    if (m % i == 0) {
+      M = i
+    } else {
+      continue
+    }
+    for (let j = n; j >= 1; j--) {
+      let N = 0
+      if (n % j == 0) {
+        N = j
+      } else {
+        continue
+      }
+      if (N == M) {
+        lcf = M
+        flag = true
+        break
+      }
+    }
+    if (flag) {
+      flag = false
+      break
+    }
+  }
+
+  console.log(lcf);
+
+
+  for (let i = 1; i <= n; i++) { //外层是m，最小公倍数不会超过m * n
+    let M = m * i
+    for (let j = 1; j <= m; j++) { //里层是n
+      let N = n * j
+      if (M == N) {
+        lcm = N
+        flag = true
+        break
+      }
+    }
+    if (flag) {
+      console.log(lcm)
+      break
+    }
+  }
+
+
 </script>
