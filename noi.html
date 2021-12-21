@@ -1272,11 +1272,6 @@
   //辗转相除法
   function lcf(m, n) {
     let temp = 1
-    if (n > m) { //保证m大n小
-      temp = n
-      n = m
-      m = temp
-    }
     while (temp) {
       temp = m % n
       m = n
@@ -1289,54 +1284,7 @@
   let lcm = m * n / lcf(m, n)
   console.log(lcm);
 
-  //穷举法
-  // let lcm = 0
-  // let lcf = 0
-  // let flag = false
-  // for (let i = m; i >= 1; i--) {
-  //   let M = 0
-  //   if (m % i == 0) {
-  //     M = i
-  //   } else {
-  //     continue
-  //   }
-  //   for (let j = n; j >= 1; j--) {
-  //     let N = 0
-  //     if (n % j == 0) {
-  //       N = j
-  //     } else {
-  //       continue
-  //     }
-  //     if (N == M) {
-  //       lcf = M
-  //       flag = true
-  //       break
-  //     }
-  //   }
-  //   if (flag) {
-  //     flag = false
-  //     break
-  //   }
-  // }
 
-  // console.log(lcf);
-
-
-  // for (let i = 1; i <= n; i++) { //外层是m，最小公倍数不会超过m * n
-  //   let M = m * i
-  //   for (let j = 1; j <= m; j++) { //里层是n
-  //     let N = n * j
-  //     if (M == N) {
-  //       lcm = N
-  //       flag = true
-  //       break
-  //     }
-  //   }
-  //   if (flag) {
-  //     console.log(lcm)
-  //     break
-  //   }
-  // }
 
 </script>
 
