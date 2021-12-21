@@ -710,7 +710,7 @@
     let a = Number(prompt('总数?'))
     let b = Number(prompt('有效?'))
     let ef = b / a
-    if (ef - j3 < 0.05 && j3 - ef < 0.05) {
+    if (ef - j3 <= 0.05 && j3 - ef <= 0.05) {
       console.log('same')
     } else if (ef - j3 > 0.05) {
       console.log('better');
@@ -740,34 +740,30 @@
 <script type="xxx" id="ch0105/20">
   // debugger
   let h = Number(prompt("h？"))
-  let k = 10
-  let res = 2 * h;
-  let i = 2;
-  while (true) {
-    res += h / (2 ** (i - 1))
-    i++
-    if (i == k) {
-      let s = h / (2 ** (i - 1)) / 2
-      break
-    }
+  let sum = -h
+  for (i = 1; i <= 10 ; i++) {
+    sum = 2 * h
+    h = h / 2
   }
-  console.log(res, s)
+  console.log(sum, h)
 </script>
 
 <script type="xxx" id="ch0105/21">
   // debugger
   let n = Number(prompt("n？"))
-
+  let str = ""
   while (n != 1) {
+    let m = n
+
     if (n % 2 == 1) {
-      let m = n
       n = n * 3 + 1
-      console.log(`${m}*3+1=${n}`);
+      str = `${m}*3+1=${n}`
     } else {
-      let m = n
       n = n / 2
-      console.log(`${m}/2=${n}`);
+      str = `${m}/2=${n}`
     }
+    console.log(str);
+
   }
   console.log('End');
 
@@ -787,10 +783,8 @@
       save += Math.trunc(sum / 100) * 100
       sum = sum - Math.trunc(sum / 100) * 100
     } else if (sum < 0) {
-      if (j == 0) {
         k = -i
-        j++
-      }
+        break
     }
   }
   k == 0 ? console.log(save * 1.2 + sum) : console.log(k);
@@ -813,19 +807,7 @@
 </script>
 
 <script type="xxx" id="ch0105/24">
-  let n = Number(prompt('小时？'))
-  let j = 0
-  for (let i = 0; i < n; i++) {
-    let shou = Number(prompt('收缩'))
-    let shu = Number(prompt('舒张'))
-    j++
-    if (shou < 90 || shou > 140) {
-      j = 0
-    } else if (shu < 60 || shu > 90) {
-      j = 0
-    }
-  }
-  console.log(j);
+ nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn
 </script>
 <script type="xxx" id="ch0105/25">
   for (let i = 0; i < 7; i++) {
@@ -875,42 +857,43 @@
 <script type="xxx" id="ch0105/28">
   // debugger
   let n = prompt('n')
-  let j = n.length
-  for (let i = 0; i < j; i++) {
+  
+  while(n != 0) {
     k = n % 10
     n = (n - k) / 10
-    console.log(k);
+    console.log(k)
   }
 
 </script>
 
 <script type="xxx" id="ch0105/29">
   // debugger
-  let n = prompt('n')
+  let n = Number(prompt('n'))
   let sum = 0
-  let j = Number(n) < 0 ? n.length - 1 : n.length
-  for (let i = 0; i < j; i++) {
+  while (n != 0) {
     k = n % 10
     n = (n - k) / 10
-    sum += k * (10 ** (j - i - 1))
+    sum = sum * 10 + k
   }
   console.log(sum);
 </script>
 <script type="xxx" id="ch0105/30">
   let m = Number(prompt('m'))
   let k = Number(prompt('k'))
-  let sum = 0
+ 
   if (m % 19 == 0) {
+    let sum = 0
     let a = 0
-    for (let i = 0; i < m.length; i++) {
-      a = n % 10
-      n = (n - a) / 10
+    while (m != 0) {
+      a = m % 10
+      m = (m - a) / 10
       if (a == 3) sum++
     }
-    console.log('YES');
+    if (sum == k) {
+      console.log('YES');
+    }
   } else {
     console.log('NO');
-
   }
 </script>
 
@@ -936,11 +919,11 @@
   let p = 1
   let sum = 0
   for (let i = 0; i < n; i++) {
-    let j = 0
+    
     sum += q / p
-    j = q
+   
     q = q + p
-    p = j
+    p = q - p
   }
   console.log(sum.toFixed(4));
 </script>
@@ -957,31 +940,26 @@
 </script>
 
 <script type="xxx" id="ch0105/34">
-  // debugger
   let n = Number(prompt('n'))
   let sum = 0
+  let f = 1
   for (let i = 1; i <= n; i++) {
-    let f = 1
-    for (let j = 1; j <= i; j++) {
-      f *= j
-    }
+    f *= i
     sum += f
   }
   console.log(sum);
 </script>
 
 <script type="xxx" id="ch0105/35">
-  // debugger
+
   let n = Number(prompt('n'))
   let sum = 1
+  let f = 1
   for (let i = 1; i <= n; i++) {
-    let f = 1
-    for (let j = 1; j <= i; j++) {
-      f *= j
-    }
+    f *= i
     sum += 1 / f
   }
-  console.log(sum.toFixed(10));
+  console.log(sum.toFix(10  ));
 
 </script>
 
@@ -1012,15 +990,16 @@
   let n = Number(prompt('n'))
   let f = 0;
   if (n == 0) {
+    let c = Number(prompt('c'))
     console.log(0)
   } else {
-    for (let i = 0; i <= n; i++) {
+    for (let i = n; i >= 0; i--) {
       c = Number(prompt('c'))
-      f = (n - i) * c
-      console.log(f);
+      f = i * c
+      if (i) console.log(f);
     }
   }
-  //不会
+
 </script>
 
 <script type="xxx" id="ch0105/39">
@@ -1092,21 +1071,26 @@
   let f = prompt('符号')
   let o = Number(prompt('o'))
   let s = ""
-  // debugger
+  let edgeline = ''
+  for (let i = 1; i <= w; i++) {
+    edgeline += f
+  }
 
-  if (o == 1) {
-    for (let i = 1; i <= h; i++) {
-      s += f.repeat(w) + "\n"
-    }
-  } else if (o == 0) {
-
-    for (let i = 1; i <= h; i++) {
-      if (i == 1) {
-        s += f.repeat(w) + "\n"
-      } else if (i == h) {
-        s += f.repeat(w)
+  let midline = f
+  for (let i = 1; i < w - 1; i++) {
+    midline += " "
+  }
+  midline += f
+  for (let i = 1; i <= h; i++) {
+    if (i == 1) {
+      s += edgeline + '\n'
+    } else if (i == h) {
+      s += edgeline
+    } else {
+      if (o) {
+        s += edgeline + '\n'
       } else {
-        s += f + " ".repeat(w - 2) + f + "\n"
+        s += midline + '\n'
       }
     }
   }
@@ -1138,7 +1122,10 @@
       i++
       let k = 0
       for (let j = 2; j < i; j++) {
-        if (i % j == 0) k++
+        if (i % j == 0) {
+          k++
+          break
+        }
       }
       if (k == 0) num++
       if (num == n) {
@@ -1154,12 +1141,13 @@
   let d = 0
   let sum = 0
   for (let i = 1; i <= n; i++) {
-    if (d == n) break
     for (let j = 1; j <= i; j++) {
       sum += i
       d++
       if (d == n) break
     }
+    if (d == n) break
+
   }
   console.log(sum);
 </script>
@@ -1240,15 +1228,20 @@
 <script type="xxx" id="prime">
   // prime: 输入一个数，判断它是否是素数
   let n = Number(prompt())
-  let flag = true
-  for (let j = 2; j < n; j++) {
-    if (n % j == 0) {
-      flag = false
-      break
+
+  function isPrime(n) {
+    if(n < 2) {
+      return false
     }
+    for (let i = 2; i * i <= n; i++) {
+      if(n % i == 0) {
+        return false
+      }
+    }
+    return true
   }
 
-  flag && n > 1 ? console.log('YES') : console.log('NO')
+
  
 </script>
 
@@ -1271,61 +1264,93 @@
 //不会
 </script>
 
-<script type="xxx" id="lcf&lcm">
+<script xtype="xxx" id="lcf&lcm">
   // lcf&lcm: 输入两个数，输出它们的最大公约数和最小公倍数
   let m = Number(prompt())
   let n = Number(prompt())
-  let lcm = 0
-  let lcf = 0
-  let flag = false
-  for (let i = m; i >= 1; i--) {
-    let M = 0
-    if (m % i == 0) {
-      M = i
-    } else {
-      continue
+
+  //辗转相除法
+  function lcf(m, n) {
+    let temp = 1
+    if (n > m) { //保证m大n小
+      temp = n
+      n = m
+      m = temp
     }
-    for (let j = n; j >= 1; j--) {
-      let N = 0
-      if (n % j == 0) {
-        N = j
-      } else {
-        continue
-      }
-      if (N == M) {
-        lcf = M
-        flag = true
-        break
-      }
+    while (temp) {
+      temp = m % n
+      m = n
+      n = temp
     }
-    if (flag) {
-      flag = false
-      break
-    }
+    return m
   }
+  console.log(lcf(m, n));
 
-  console.log(lcf);
+  let lcm = m * n / lcf(m, n)
+  console.log(lcm);
+
+  //穷举法
+  // let lcm = 0
+  // let lcf = 0
+  // let flag = false
+  // for (let i = m; i >= 1; i--) {
+  //   let M = 0
+  //   if (m % i == 0) {
+  //     M = i
+  //   } else {
+  //     continue
+  //   }
+  //   for (let j = n; j >= 1; j--) {
+  //     let N = 0
+  //     if (n % j == 0) {
+  //       N = j
+  //     } else {
+  //       continue
+  //     }
+  //     if (N == M) {
+  //       lcf = M
+  //       flag = true
+  //       break
+  //     }
+  //   }
+  //   if (flag) {
+  //     flag = false
+  //     break
+  //   }
+  // }
+
+  // console.log(lcf);
 
 
-  for (let i = 1; i <= n; i++) { //外层是m，最小公倍数不会超过m * n
-    let M = m * i
-    for (let j = 1; j <= m; j++) { //里层是n
-      let N = n * j
-      if (M == N) {
-        lcm = N
-        flag = true
-        break
-      }
-    }
-    if (flag) {
-      console.log(lcm)
-      break
-    }
-  }
+  // for (let i = 1; i <= n; i++) { //外层是m，最小公倍数不会超过m * n
+  //   let M = m * i
+  //   for (let j = 1; j <= m; j++) { //里层是n
+  //     let N = n * j
+  //     if (M == N) {
+  //       lcm = N
+  //       flag = true
+  //       break
+  //     }
+  //   }
+  //   if (flag) {
+  //     console.log(lcm)
+  //     break
+  //   }
+  // }
 
 </script>
 
-<script type="xxx" id="itoa">
+<script type="xxx" id="sqrt">
   // sqrt: 输入一个数，求它的平方根，精确到小数点后3位，不能使用Math.sqrt
-  //不会
+  let n = Number(prompt())
+
+  console.log(sqrt$(n).toFixed(3));
+  
+  function sqrt$(n) {
+    let g = n // g为猜测值，可以是任意整数，暂且是n
+    while (Math.abs(g * g - n) > 0.001) {
+      g = (g + n / g) / 2
+    }
+    return g
+  }
   </script>

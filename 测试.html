@@ -11,17 +11,19 @@
 <body>
 
 </body>
-<script>
-  let n = Number(prompt())
-  let flag = true
-  for (let j = 2; j < n; j++) {
-    if (n % j == 0) {
-      flag = false
-      break
+<script xtype="xxx" id="ch0105/21">
+  function isPrime(n) {
+    if (n < 2) {
+      return false
     }
+    for (let i = 2; i * i <= n; i++) {
+      if (n % i == 0) {
+        return false
+      }
+    }
+    return true
   }
 
-  flag && n > 1 ? console.log('YES') : console.log('NO')
 </script>
 
 </html>
