@@ -12,6 +12,20 @@
 
 </body>
 <script>
+  flatten = function (array) {
+    let res = []
+    let len = array.length
+    for (let i = 0; i < len; i++) {
+      if (Array.isArray(array[i])) {
+        for (let j = 0; j < array[i].length; j++) {
+          res.push(array[i][j])
+        }
+      } else {
+        res.push(array[i])
+      }
+    }
+    return res
+  }
   fill = function (array, filler, start = 0, end = array.length) {
     for (let i = start; i < end; i++) {
       array[i] = filler
