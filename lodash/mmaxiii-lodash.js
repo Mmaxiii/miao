@@ -1,5 +1,8 @@
 
 var mmaxiii = {
+  iteratee: function (pred) {
+
+  }
   chunk: function (array, size) {
     let len = array.length
     let res = []
@@ -135,7 +138,7 @@ var mmaxiii = {
     let res = ''
     let len = ary.length - 1
     for (let i = 0; i < len; i++) {
-      res += ary[i] + sep
+      res = res + ary[i] + sep
     }
     return res + ary[len]
   },
@@ -156,6 +159,7 @@ var mmaxiii = {
     for (let i = 0, j = ary.length - 1; i < n; i++, j--) {
       this.swap(ary, i, j)
     }
+    return ary
   },
 
   swap: function (ary, i, j) {
@@ -206,6 +210,7 @@ var mmaxiii = {
     return res
   },
 
+
   filter: function (coll, pred) {
     let res = []
     if (Array.isArray(pred)) {
@@ -241,6 +246,48 @@ var mmaxiii = {
     for (let key in coll) {
       pred(coll[key], key, coll)
     }
-  }
+  },
 
+  map: function (coll, pred) {
+    let res = []
+    if (typeof pred === 'function') {
+      for (let key in coll) {
+        let item = pred(coll[key], key, coll)
+        res.push(item)
+      }
+    } else {
+      for (let key in coll) {
+        if (pred in coll[key]) {
+          res.push(coll[key][pred])
+        }
+      }
+    }
+    return res
+  },
+
+  reduce: function (coll, pred, initial) {
+    let res = []
+    let start = 0
+    if (arguments.length == 2) {
+      initial = coll[0]
+      start = 1
+    }
+    for (let i = start; i < coll.length; i++) {
+      initial = pred(initial, coll[i])
+    }
+    return initial
+  },
+
+  sample: function (coll) {
+    let n = Math.random() * coll.length >> 0
+    return coll[n]
+  },
+
+  shuffle: function (coll) {
+    let obj = {}
+    while (obj.length !== coll.length) {
+      let n = Math.random() * coll.length >> 0
+      obj[n] = 1
+    }
+  }
 }
