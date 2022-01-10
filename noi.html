@@ -1154,31 +1154,63 @@
 
 <script type="xxx" id="narcissistic">
   // narcissistic: 输入一个数，判断是否是水仙花数
-  let n = Number(prompt())
-  if (n >= 100 && n < 1000) {
-    let sum = 0
-    let k = n
-    while (k > 0) {
-      sum += Math.pow(k % 10, 3)
-      k = Math.floor(k / 10)
-    }
-    console.log(sum == n ? 'YES' : 'NO');
-  } else {
-    console.log("NO");
+  function digitWidth(n) {
+    let width = 0
+
+    do {
+      width++
+      let ge = n % 10
+      n = (n - ge) / 10
+    } while (n > 0)
+
+    return width
   }
+
+  function isNarcissistic(n) {
+    let w = digitWidth(n)
+    let sum = 0
+    let m = n
+    while (m > 0) {
+      let ge = m % 10
+      sum += Math.pow(ge, w)
+      m = (m - ge) / 10
+    }
+    return sum == n
+  }
+  let n = Number(prompt())
+  console.log(isNarcissistic(n) ? 'YES' : 'NO');
 </script>
 
 <script type="xxx" id="narcissistics">
   // narcissistics: 输出10000以内的水仙花数
 
-  for (let i = 100; i < 1000; i++) {
-    let k = i
+  function digitWidth(n) {
+    let width = 0
+
+    do {
+      width++
+      let ge = n % 10
+      n = (n - ge) / 10
+    } while (n > 0)
+
+    return width
+  }
+
+  function isNarcissistic(n) {
+    let w = digitWidth(n)
     let sum = 0
-    while (k > 0) {
-      sum += Math.pow(k % 10, 3)
-      k = Math.floor(k / 10)
+    let m = n
+    while (m > 0) {
+      let ge = m % 10
+      sum += Math.pow(ge, w)
+      m = (m - ge) / 10
     }
-    if (sum == i) console.log(i)
+    return sum == n
+  }
+  for (let i = 1; i <= 10000; i++) {
+    if (isNarcissistic(i)){
+      console.log(i)
+    }
   }
 </script>
 <script type="xxx" id="palindrom">
@@ -1196,32 +1228,81 @@
 
 <script type="xxx" id="weekday">
   // weekday: 输入年份与月份，输出这个月的第一天是周几（视具体设定，周一可以用1或0表示）
-  // 不会
+  let year = Number(prompt())
+  let month = Number(prompt())
+  function isLeapYear(year) {
+    if (year % 400 == 0) {
+      return true
+    }
+    if (year % 100 == 0) {
+      return false
+    }
+    if (year % 4 == 0) {
+      return true
+    }
+    return false
+  }
 
+  function getMonthDay(year, month) {
+    switch (month) {
+      case 1:
+      case 3:
+      case 5:
+      case 7:
+      case 8:
+      case 10:
+      case 12:
+        return 31
+      case 2:
+        if (isLeapYear(year)) {
+          return 29
+        } else {
+          return 28
+        }
+      default:
+        return 30
+    }
+  }
+
+  function days(year, month) {
+    let day = 0
+    let y = year - 1
+    day = 365 * y + Math.trunc(y / 4) - Math.trunc(y / 100) + Math.trunc(y / 400)
+    for (let m = 1; m < month; m++) {
+      day += getMonthDay(year, m)
+    }
+    day = (day + 1) % 7
+    return day
+  }
+console.log(days(year,month))
 </script>
 
 <script type="xxx" id="complete-number">
   //<!-- complete-number: 输入一个数，判断它是否是完全数（自行查相关概念） -->
   let n = Number(prompt())
-  let sum = 0
-  for (let i = 1; i < n; i++) {
-    if (Number.isInteger(n / i)) {
-      sum += i
+  function isComplete(n) {
+    let sum = 1
+    let stop = Math.sqrt(n)
+    for (let i = 2; i < stop; i++) {
+      if (n % i == 0) {
+        sum += i + n / i
+      }
     }
+
+    if (stop == Math.trunc(stop)) {
+      sum += stop
+    }
+    return sum == n
   }
-  sum == n ? console.log("YES") : console.log("NO")
+  console.log(isComplete(n) ? 'YES' : 'NO');
 </script>
 
 <script type="xxx" id="complete-numbers">
   //complete-numbers: 输出1000以内的完全数
   for (i = 2; i <= 1000; i++) {
-    let sum = 0
-    for (j = 1; j < i; j++) {
-      if (Number.isInteger(i / j)) {
-        sum += j
-      }
+    if(isComplete(i)){
+      console.log(i)
     }
-    if (sum == i) console.log(i)
   }
 </script>
 
@@ -1248,20 +1329,46 @@
 <script type="xxx" id="primes">
   //primes: 输出100以内的素数
   for (let i = 2; i <= 100; i++) {
-    let flag = true
-    for (let j = 2; j < i; j++) {
-      if (i % j == 0) {
-        flag = false
-        break
-      }
-    }
-    if (flag) console.log(i)
+  if(isPrime(i)) {
+    console.log(i)
+  }
   }
 </script>
 
 <script type="xxx" id="itoa">
 // itoa: 给定一个整数，将其转换为字符串：不能使用String等现成函数，但可以使用非此功能的其它函数，也不能利用任意运算符的自动类型转换
-//不会
+let n = Number(prompt())
+function itoa(n) {
+  let res = ""
+  while (n > 0) {
+    let m = n % 10
+
+    if (m == 0) {
+      res = '0' + res
+    } else if (m == 1) {
+      res = '1' + res
+    } else if (m == 2) {
+      res = '2' + res
+    } else if (m == 3) {
+      res = '3' + res
+    } else if (m == 4) {
+      res = '4' + res
+    } else if (m == 5) {
+      res = '5' + res
+    } else if (m == 6) {
+      res = '6' + res
+    } else if (m == 7) {
+      res = '7' + res
+    } else if (m == 8) {
+      res = '8' + res
+    } else if (m == 9) {
+      res = '9' + res
+    }
+    n = (n - m) / 10
+  }
+  return res
+}
+console.log(itoa(n))
 </script>
 
 <script xtype="xxx" id="lcf&lcm">
@@ -1283,7 +1390,6 @@
 
   let lcm = m * n / lcf(m, n)
   console.log(lcm);
-
 
 
 </script>

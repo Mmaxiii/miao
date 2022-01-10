@@ -65,63 +65,63 @@
   // YOUR CODE GOES BELOW
 
   //在 坐标 (42, 42) 画出一个点
-  dot(42, 42)
-  //画一条实线
-  for (let i = 0; i < 100; i++) {
-    dot(i, 10)
-  }
-  //画一条一个实点一个空点的虚线
-  for (let i = 0; i < 100; i++) {
-    if (i % 2 == 0) dot(i, 20)
-  }
-  //画一条两个实点两个空点的虚线
-  for (let i = 0; i < 100; i++) {
-    if (i % 4 == 0) {
-      dot(i, 30)
-      dot(i + 1, 30)
-    }
-  }
-  //画一条三个实点两个空点的虚线
-  for (let i = 0; i < 100; i++) {
-    if (i % 5 == 0) {
-      dot(i, 40)
-      dot(i + 1, 40)
-      dot(i + 2, 40)
-    }
-  }
-  //画一条45度的斜线
-  for (let i = 0; i < 100; i++) {
-    dot(i, i, "#9b59b6")
-  }
-  //画一条30度的斜线（与x轴或y轴的夹角呈30度）
-  for (let i = 0; i < 100; i++) {
-    let y = Math.sqrt(3) * i
-    dot(i + 30, y, "#9b59b6")
-  }
+  // dot(42, 42)
+  // //画一条实线
+  // for (let i = 0; i < 100; i++) {
+  //   dot(i, 10)
+  // }
+  // //画一条一个实点一个空点的虚线
+  // for (let i = 0; i < 100; i++) {
+  //   if (i % 2 == 0) dot(i, 20)
+  // }
+  // //画一条两个实点两个空点的虚线
+  // for (let i = 0; i < 100; i++) {
+  //   if (i % 4 == 0) {
+  //     dot(i, 30)
+  //     dot(i + 1, 30)
+  //   }
+  // }
+  // //画一条三个实点两个空点的虚线
+  // for (let i = 0; i < 100; i++) {
+  //   if (i % 5 == 0) {
+  //     dot(i, 40)
+  //     dot(i + 1, 40)
+  //     dot(i + 2, 40)
+  //   }
+  // }
+  // //画一条45度的斜线
+  // for (let i = 0; i < 100; i++) {
+  //   dot(i, i, "#9b59b6")
+  // }
+  // //画一条30度的斜线（与x轴或y轴的夹角呈30度）
+  // for (let i = 0; i < 100; i++) {
+  //   let y = i / Math.sqrt(3)
+  //   dot(i + 30, y, "#9b59b6")
+  // }
   //画一条跨越画布左上角和右下角的对角线
-  for (let i = 0; i < 500; i++) {
-    y = 4 / 5 * i
-    dot(i, y, "#e74c3c")
-  }
+  // for (let i = 0; i < 500; i++) {
+  //   y = 4 / 5 * i
+  //   dot(i, y, "#e74c3c")
+  // }
   //画一个空心矩形
 
-  for (let i = 1; i <= 100; i++) { //长
-    for (let j = 1; j <= 50; j++) { //宽
-      if (j == 1 || j == 50) {
-        dot(i + 100, j + 20, '#2ecc71')
-      } else {
-        if (i == 1 || i == 100) {
-          dot(i + 100, j + 20, '#2ecc71')
-        }
-      }
-    }
-  }
+  // for (let i = 1; i <= 100; i++) { //长
+  //   for (let j = 1; j <= 50; j++) { //宽
+  //     if (j == 1 || j == 50) {
+  //       dot(i + 100, j + 20, '#2ecc71')
+  //     } else {
+  //       if (i == 1 || i == 100) {
+  //         dot(i + 100, j + 20, '#2ecc71')
+  //       }
+  //     }
+  //   }
+  // }
   //画一个实心矩形
-  for (let i = 1; i <= 100; i++) { //长
-    for (let j = 1; j <= 50; j++) { //宽
-      dot(i + 220, j + 20, '#2ecc71')
-    }
-  }
+  // for (let i = 1; i <= 100; i++) { //长
+  //   for (let j = 1; j <= 50; j++) { //宽
+  //     dot(i + 220, j + 20, '#2ecc71')
+  //   }
+  // }
   //画两个个空心的圆，居中
   //  一个半径为50像
   /* let r1 = 50
@@ -135,7 +135,27 @@
     let x = 50 * Math.cos(j / 2 / Math.PI)
     dot(x + 250, y + 200, '#f1c40f')
   }
-
+  function circular(cx, cy, r) {
+    let x = 0
+    let y = r
+    while (x < y) {
+      dot(x + cx, y + cy)
+      dot(-x + cx, y + cy)
+      dot(x + cx, -y + cy)
+      dot(-x + cx, -y + cy)
+      dot(y + cx, x + cy)
+      dot(-y + cx, x + cy)
+      dot(y + cx, -x + cy)
+      dot(-y + cx, -x + cy)
+      x++
+      let a = x * x + y * y
+      let b = x * x + (y - 1) * (y - 1)
+      if (Math.abs(a - r * r) > Math.abs(b - r * r)) {
+        y--
+      }
+    }
+  }
+  circular(350, 150, 100)
   //  一个半径为200像素
   let r2 = 200
   for (let i = 1; i <= 2 * r2; i++) {
@@ -169,66 +189,84 @@
 
   // }
   //画一个【大小合适】的sin(x)的图像
-  for (let j = 0; j <= 360; j++) {
-    let y = 100 * Math.sin(j * 2 * Math.PI / 360)// 
-    // let x = 50 * Math.cos(j / 2 / Math.PI)
-    dot(j + 100, -y + 300, '#f1c40f')
-  }
-  //  画出rgb色彩空间的某一面（尺寸要大于100x100）
-  let red = 255
-  let g = 255
-  let b = 255
-  let r4 = 150 //长宽
-  for (let x = 1; x <= r4; x++) {
-    let R = red - x * 255 / r4
-    for (let y = 1; y <= r4; y++) {
-      let G = g - y * 255 / r4
-      let color = `rgb(${R},${G},${b})`
-      dot(x + 300, y, color)
-    }
-  }
-  //       如果做出上一题后，尝试将其每个点的坐标乘以一个矩阵（如(2,0,0,2)或(1,0.27得到新的位置，即绘制出被线性变幻后的色彩空间某一面
-  //       可以考虑如下几种矩阵：
-  //          2 0
-  //          0 2
-  //          ------
-  for (let x = 1; x <= r4; x++) {
+  // for (let j = 0; j <= 360; j++) {
+  //   let y = 100 * Math.sin(j * 2 * Math.PI / 360)//
+  //   // let x = 50 * Math.cos(j / 2 / Math.PI)
+  //   dot(j + 100, -y + 300, '#f1c40f')
+  // }
+  // //  画出rgb色彩空间的某一面（尺寸要大于100x100）
+  // let red = 255
+  // let g = 255
+  // let b = 255
+  // let r4 = 150 //长宽
+  // for (let x = 1; x <= r4; x++) {
+  //   let R = red - x * 255 / r4
+  //   for (let y = 1; y <= r4; y++) {
+  //     let G = g - y * 255 / r4
+  //     let color = `rgb(${R},${G},${b})`
+  //     dot(x + 300, y, color)
+  //   }
+  // }
+  // //       如果做出上一题后，尝试将其每个点的坐标乘以一个矩阵（如(2,0,0,2)或(1,0.27得到新的位置，即绘制出被线性变幻后的色彩空间某一面
+  // //       可以考虑如下几种矩阵：
+  // //          2 0
+  // //          0 2
+  // //          ------
+  // for (let x = 1; x <= r4; x++) {
 
-    let R = red - x * 255 / r4
-    for (let y = 1; y <= r4; y++) {
-      let G = g - y * 255 / r4
-      let color = `rgb(${R},${G},${b})`
-      let X = x * (2 + 0)
-      let Y = y * (0 + 2)
-      dot(X, Y, color)
-    }
-  }
-  //          1  0.27
-  //          0  1
-  //          ------
-  for (let x = 1; x <= r4; x++) {
+  //   let R = red - x * 255 / r4
+  //   for (let y = 1; y <= r4; y++) {
+  //     let G = g - y * 255 / r4
+  //     let color = `rgb(${R},${G},${b})`
+  //     let X = x * (2 + 0)
+  //     let Y = y * (0 + 2)
+  //     dot(X, Y, color)
+  //   }
+  // }
+  // //          1  0.27
+  // //          0  1
+  // //          ------
+  // for (let x = 1; x <= r4; x++) {
 
-    let R = red - x * 255 / r4
-    for (let y = 1; y <= r4; y++) {
-      let G = g - y * 255 / r4
-      let color = `rgb(${R},${G},${b})`
-      let X = x * (1 + 0)
-      let Y = y * (0.27 + 1)
-      dot(X + 200, Y + 100, color)
+  //   let R = red - x * 255 / r4
+  //   for (let y = 1; y <= r4; y++) {
+  //     let G = g - y * 255 / r4
+  //     let color = `rgb(${R},${G},${b})`
+  //     let X = x * (1 + 0)
+  //     let Y = y + 0.27 * x
+  //     dot(X + 200, Y + 100, color)
+  //   }
+  // }
+  // //          0.5    0.87
+  // //          -0.87  0.5
+  // for (let x = 1; x <= r4; x++) {
+  //   let R = red - x * 255 / r4
+  //   for (let y = 1; y <= r4; y++) {
+  //     let G = g - y * 255 / r4
+  //     let color = `rgb(${R},${G},${b})`
+  //     let X = x * 0.5 - 0.87 * y
+  //     let Y = x * 0.87 + 0.5 * y
+  //     dot(X + 200, Y + 200, color)
+  //   }
+  // }
+
+  function line(x1, y1, x2, y2, color) {
+    let x = x1
+    let y = y1
+    let dx = x2 - x1
+    let dy = y2 - y1
+    let yp = 0
+    while (x < x2) {
+      dot(x, y, color)
+      x++
+      yp += dy
+      if (yp > dx) {
+        y++
+        yp -= dx
+      }
     }
   }
-  //          0.5    0.87
-  //          -0.87  0.5
-  for (let x = 1; x <= r4; x++) {
-    let R = red - x * 255 / r4
-    for (let y = 1; y <= r4; y++) {
-      let G = g - y * 255 / r4
-      let color = `rgb(${R},${G},${b})`
-      let X = x * (0.5 + -0.87)
-      let Y = y * (0.87 + 0.5)
-      dot(X + 200, Y + 200, color)
-    }
-  }
+  line(111, 111, 222, 145, 'red')
 </script>
 
 </html>

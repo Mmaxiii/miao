@@ -11,17 +11,47 @@
 <body>
 
 </body>
-<script xtype="xxx" id="ch0105/21">
-  function isPrime(n) {
-    if (n < 2) {
-      return false
-    }
-    for (let i = 2; i * i <= n; i++) {
-      if (n % i == 0) {
-        return false
+<script>
+  chunk = function (array, size) {
+    let len = array.length
+    let res = []
+    for (let i = 0; i < len; i += size) {
+      let temp = []
+      let n = Math.min(i + size, len)
+      for (let j = i; j < n; j++) {
+        temp.push(array[j])
       }
+      res.push(temp)
     }
-    return true
+    return res
+  }
+
+  function stringify(val) {
+    if (typeof val === 'number' || typeof val === 'boolean') {
+      return val + ''
+    }
+    if (typeof val === 'string') {
+      return '"' + val + '"'
+    }
+    if (typeof val === null) {
+      return 'null'
+    }
+
+    if (Array.isArray(val)) {
+      let res = '['
+      for (let i = 0; i < val.length; i++) {
+        res += stringify(val[i]) + ','
+      }
+      res = res.slice(0, -1) + ']'
+      return res
+    } else {
+      let res = '{'
+      for (let key in val) {
+        res += key + ':' + stringify(val[key]) + ','
+      }
+      res = res.slice(0, -1) + '}'
+      return res
+    }
   }
 
 </script>

@@ -1,0 +1,70 @@
+<script>
+  var topKFrequent = function (nums, k) {
+    let map = new Map()
+    for (let i = 0; i < nums.length; i++) {
+      map.set(nums[i], (map.get(nums[i]) || 0) + 1)
+    }
+
+    let queue = []
+
+    for (let key of map.keys()) {
+      let item = {}
+      item.value = key
+      item.priority = map.get(key)
+
+      if (queue.length == 0) {
+        queue.push(item)
+      } else {
+        let added = false
+
+        for (let i = 0; i < queue.length; i++) {
+          if (item.priority > queue[i].priority) {
+            queue.splice(i, 0, item)
+            added = true
+            break
+          }
+        }
+        if (!added) queue.push(item)
+        if (queue.length > k) queue.pop()
+      }
+    }
+
+
+    return queue
+  };
+
+  var search = function (nums, target) {
+
+    let l = 0
+    let r = nums.length - 1
+    if (nums[l] == target) return l
+    if (nums[r] == target) return r
+    if (nums.length == 1) {
+      if (nums[0] == target) return 0
+      return -1
+    }
+    while (l + 1 != r) {
+      let m = Math.floor((l + r) / 2)
+      if (nums[m] == target) return m
+      if (nums[m] >= nums[0]) {
+        if (target <= nums[m] && target >= nums[nums.length - 1]) {
+          r = m
+
+        } else {
+          l = m
+        }
+      } else {
+        if (nums[m] < target && target < nums[nums.length - 1]) {
+          l = m
+
+
+        } else {
+          r = m
+        }
+      }
+    }
+    if (nums[r] !== target) return -1
+    return r
+
+  };
+</script>

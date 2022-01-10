@@ -1,0 +1,43 @@
+<script>
+  let arr = [-4, -1, 0, 3, 10];
+  aa(arr)
+  console.log(arr);
+  function aa(arr) {
+
+    quickSort(arr, 0, arr.length - 1)
+    function quickSort(arr, L = 0, R = n - 1) {
+      if (L < R) {
+        let num = Math.floor(Math.random() * (R - L + 1))
+        swap(arr, L + num, R)
+        let p = partition(arr, L, R)
+        quickSort(arr, L, p[0] - 1)
+        quickSort(arr, p[1] + 1, R)
+      }
+    }
+    function partition(arr, L, R) {
+      let less = L - 1
+      let more = R
+      while (L < more) {
+        if (arr[L] > arr[R]) {
+          swap(arr, L, --more)
+        } else if (arr[L] < arr[R]) {
+          swap(arr, ++less, L)
+          L++
+        } else {
+          L++
+        }
+      }
+      swap(arr, more, R)
+      return [less + 1, more]
+    }
+    function swap(arr, a, b) {
+      let c = 0;
+      c = arr[a];
+      arr[a] = arr[b];
+      arr[b] = c;
+    }
+
+    return arr
+  }
+
+</script>
