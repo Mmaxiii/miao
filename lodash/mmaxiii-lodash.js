@@ -1,8 +1,6 @@
 
 var mmaxiii = {
-  iteratee: function (pred) {
 
-  }
   chunk: function (array, size) {
     let len = array.length
     let res = []
@@ -284,10 +282,17 @@ var mmaxiii = {
   },
 
   shuffle: function (coll) {
-    let obj = {}
-    while (obj.length !== coll.length) {
-      let n = Math.random() * coll.length >> 0
-      obj[n] = 1
+    let res = Array(coll.length)
+    for (let i = 0; i < res.length; i++) {
+      res[i] = coll[i]
     }
+    let n = res.length >> 1
+    for (let i = 0; i < n; i++) {
+      let temp1 = Math.random() * res.length >> 0
+      let temp2 = Math.random() * res.length >> 0
+      this.swap(res, temp1, temp2)
+    }
+
+    return res
   }
 }
