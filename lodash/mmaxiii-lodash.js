@@ -378,22 +378,20 @@ var mmaxiii = {
       start = 0
       end = arguments[0]
     }
-    if (step == 0) {
-      let count = Math.max(start, end) - Math.min(start, end)
-      for (let i = 0; i < count; i++) {
+    if (step !== 0) {
+      let count = (end - start) / step
+
+      for (let i = start, j = 0; j < count; j++, i += step) {
+        res.push(i)
+      }
+
+    } else {
+      let count = Math.abs(end - start)
+      for (let j = 0; j < count; j++) {
         res.push(start)
       }
-      return res
     }
-    if (start > end) {
-      for (let i = start; i > end; i += step) {
-        res.push(i)
-      }
-    } else {
-      for (let i = start; i < end; i += step) {
-        res.push(i)
-      }
-    }
+
     return res
   },
 
@@ -402,8 +400,16 @@ var mmaxiii = {
     if (Array.isArray(value)) {
       res = []
       for (let i = 0; i < value.length; i++) {
-        res.push(value[i])
+        res.push(this.clonedeep(value[i]))
       }
+    } else if (typeof value === 'object') {
+      res = {}
+      for (let key in value) {
+        res[key] = this.clonedeep(value[key])
+      }
+    } else {
+      res = value
     }
+    return res
   }
 }
