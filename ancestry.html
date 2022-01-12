@@ -281,28 +281,145 @@
 
 <script>
   var ancestry = JSON.parse(ANCESTRY_FILE)
-  let result = []
-  function map(array, f) {
 
-    array.forEach(function (ele, i) {
-      result.push(f(ele, i))
-    })
 
+  function keyBy(ary, name) {
+    let obj = {}
+    for (let i = 0; i < ancestry.length; i++) {
+      let key = ancestry[i][name]
+      obj[key] = ancestry[i]
+    }
+    return obj
   }
+  let byName = keyBy(ancestry, 'name')
 
-  map(ancestry, function (item) {
-    return item.sex
+  ancestry.forEach(item => {
+    let fatherName = item.father
+    let motherName = item.mother
+    item.fatherObj = byName[fatherName]
+    item.motherObj = byName[motherName]
   })
 
+  console.log(ancestry);
 
-
-  let young = []
-  function getYoung(arr) {
-    arr.forEach(ele => {
-      if (ele.born > 1900 && ele.born < 1925) {
-        young.push(ele)
-      }
-    });
+  function gene(name) {
+    if (name === 'Pauwels van Haverbeke') return 1
+    if (!obj[name]) return 0
+    let fatherName = obj[name].father
+    let motherName = obj[name].mother
+    let res = (gene(fatherName) + gene(motherName)) / 2
+    return res
   }
-  getYoung(ancestry)
+
+  function bind(f, ...fixedArgs) {
+    return function (...args) {
+      return f(...fixedArgs, ...args)
+    }
+  }
+
+  // }
+  // keyBy(ancestry, 'name')
+
+
+  // let result = []
+  // function map(array, f) {
+
+  //   array.forEach(function (ele, i) {
+  //     result.push(f(ele, i))
+  //   })
+
+  // }
+
+  // map(ancestry, function (item) {
+  //   return item.sex
+  // })
+
+  function filter(ary, test) {
+    let res = []
+    for (let idx = 0; idx < ary.length; idx++) {
+      let item = ary[idx]
+      if (test(item, idx, ary)) res.push(item)
+    }
+    return res
+  }
+  function map(ary, f) {
+    let res = []
+    for (let idx = 0; idx < ary.length; idx++) {
+      let item = ary[idx]
+      res.push(f(item, idx, ary))
+    }
+    return res
+  }
+  function forEach(ary, f) {
+    for (let idx = 0; idx < ary.length; idx++) {
+      let item = ary[idx]
+      f(item, idx, ary)
+    }
+  }
+
+  function reduce(ary, f, initial) {
+    let start = 0
+    if (arguments.length == 2) {
+      start = 1
+      initial = ary[0]
+    }
+    for (let i = start; i < ary.length; i++) {
+      initial = f(initial, ary[i])
+    }
+    return initial
+  }
+  let arr = [{
+    id: 1,
+    parent: 0,
+    name: 'foo',
+  }, {
+    id: 2,
+    parent: 1,
+    name: 'foo',
+  },
+  {
+    id: 3,
+    parent: 1,
+    name: 'foo',
+  },
+  {
+    id: 4,
+    parent: 3,
+    name: 'foo',
+  },
+  {
+    id: 5,
+    parent: 3,
+    name: 'foo',
+  },
+  ]
+  console.log(arr);
+  let byParent = by(arr, 'parent')
+  let byId = by(arr, 'id')
+  function by(ary, target) {
+    let res = {}
+    for (let i = 0; i < ary.length; i++) {
+      let item = ary[i]
+      res[item[target]] = item
+    }
+    return res
+  }
+  debugger;
+  arr.forEach(item => {
+    let parentId = item.parent
+    if (parentId in byId) {
+      let byParent = byId[parentId]
+      byParent.children ? byParent.children.push(item) : byParent.children = [item]
+    }
+  })
+  console.log(arr);
+  // let young = []
+  // function getYoung(arr) {
+  //   arr.forEach(ele => {
+  //     if (ele.born > 1900 && ele.born < 1925) {
+  //       young.push(ele)
+  //     }
+  //   });
+  // }
+  // getYoung(ancestry)
 </script>

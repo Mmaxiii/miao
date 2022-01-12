@@ -294,5 +294,116 @@ var mmaxiii = {
     }
 
     return res
+  },
+  /**
+   * @param collection array/Object/string
+   * @return length
+   * 
+   */
+  size: function (collection) {
+    let length = 0
+    for (let key in collection) {
+      length++
+    }
+    return length
+  },
+
+  isboolean: function (value) {
+    return value === true || value === false
+  },
+
+  isnan: function (value) {
+    return !(value === value)
+  },
+
+  isnil: function (value) {
+    return value === null || value === undefined
+  },
+
+  isnull: function (value) {
+    return value === null
+  },
+
+  isnumber: function (value) {
+    return typeof value === 'number'
+  },
+
+  toarray: function (value) {
+    let res = []
+    for (let key in value) {
+      res.push(value[key])
+    }
+    return res
+  },
+
+  ceil: function (number, percision = 0) {
+    let base = Math.pow(10, percision)
+    number = number * base
+    let n = number % base
+    if (n > 0) number = (number >> 0) + 1
+    number = number / base
+    return number
+  },
+
+  max: function (array) {
+    let maxNum = -Infinity
+    for (let i = 0; i < array.length; i++) {
+      maxNum = array[i] > maxNum ? array[i] : maxNum
+    }
+    return maxNum === -Infinity ? undefined : maxNum
+  },
+
+  sum: function (array) {
+    let sum = 0
+    for (let i = 0; i < array.length; i++) {
+      sum += array[i]
+    }
+    return sum
+  },
+
+  repeat: function (string, n = 1) {
+    let res = ''
+    for (let i = 0; i < n; i++) {
+      res += string
+    }
+    return res
+  },
+
+  range: function (start = 0, end, step = 1) {
+    let res = []
+    if (arguments.length === 1) {
+      if (arguments[0] < 0) {
+        step = -1
+      }
+      start = 0
+      end = arguments[0]
+    }
+    if (step == 0) {
+      let count = Math.max(start, end) - Math.min(start, end)
+      for (let i = 0; i < count; i++) {
+        res.push(start)
+      }
+      return res
+    }
+    if (start > end) {
+      for (let i = start; i > end; i += step) {
+        res.push(i)
+      }
+    } else {
+      for (let i = start; i < end; i += step) {
+        res.push(i)
+      }
+    }
+    return res
+  },
+
+  clonedeep: function (value) {
+    let res = null
+    if (Array.isArray(value)) {
+      res = []
+      for (let i = 0; i < value.length; i++) {
+        res.push(value[i])
+      }
+    }
   }
 }
