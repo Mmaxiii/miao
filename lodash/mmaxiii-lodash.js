@@ -35,7 +35,7 @@ var mmaxiii = {
     return res
   },
 
-  dropright: function (array, n = 1) {
+  dropRight: function (array, n = 1) {
     let res = []
     let len = array.length
     for (let i = 0; i < len - n; i++) {
@@ -52,57 +52,27 @@ var mmaxiii = {
   },
 
   flatten: function (array) {
-    let res = []
-    let len = array.length
-    for (let i = 0; i < len; i++) {
-      if (Array.isArray(array[i])) {
-        for (let j = 0; j < array[i].length; j++) {
-          res.push(array[i][j])
-        }
-      } else {
-        res.push(array[i])
-      }
-    }
-    return res
-  },
-  flattendeep: function (array) {
-    let res = []
-    let len = array.length
-    for (let i = 0; i < len; i++) {
-      if (Array.isArray(array[i])) {
-
-        let temp = flattendeep(array[i])
-
-        for (let j = 0; j < temp.length; j++) {
-          res.push(temp[j])
-        }
-      } else {
-        res.push(array[i])
-      }
-    }
-    return res
+    return flattendepth(array)
   },
 
-  flattendepth: function (array, depth) {
-    let res = []
-    let len = array.length
-    for (let i = 0; i < len; i++) {
-
-      if (Array.isArray(array[i]) && depth) {
-
-        let temp = flattendepth(array[i], depth - 1)
-        for (let j = 0; j < temp.length; j++) {
-          res.push(temp[j])
-        }
-
-      } else {
-        res.push(array[i])
-      }
-    }
-    return res
+  flattenDeep: function (array) {
+    return flattendepth(array, Infinity)
   },
 
-  frompairs: function (array) {
+  flattenDepth=function (array, depth = 1) {
+
+    return array.reduce((result, item) => {
+      if (Array.isArray(item) && depth) {
+        result.push(...flattendepth(item, depth - 1))
+      } else {
+        result.push(item)
+      }
+      return result
+    }, [])
+
+  },
+
+  fromPairs: function (array) {
     let res = {}
     let len = array.length
     for (let i = 0; i < len; i++) {
@@ -115,7 +85,7 @@ var mmaxiii = {
     return array[0]
   },
 
-  indexof: function (array, val, from = 0) {
+  indexOf: function (array, val, from = 0) {
     let len = array.length
     for (let i = from; i < len; i++) {
       if (array[i] == val) return i
@@ -145,7 +115,7 @@ var mmaxiii = {
     return ary[ary.length - 1]
   },
 
-  lastindexof: function (ary, val, from = ary.length - 1) {
+  lastIndexOf: function (ary, val, from = ary.length - 1) {
     for (let i = from; i >= 0; i--) {
       if (ary[i] === val) return i
     }
@@ -240,7 +210,7 @@ var mmaxiii = {
     return res
   },
 
-  foreach: function (coll, pred) {
+  forEach: function (coll, pred) {
     for (let key in coll) {
       pred(coll[key], key, coll)
     }
@@ -308,27 +278,27 @@ var mmaxiii = {
     return length
   },
 
-  isboolean: function (value) {
+  isBoolean: function (value) {
     return value === true || value === false
   },
 
-  isnan: function (value) {
+  isNaN: function (value) {
     return !(value === value)
   },
 
-  isnil: function (value) {
+  isNil: function (value) {
     return value === null || value === undefined
   },
 
-  isnull: function (value) {
+  isNull: function (value) {
     return value === null
   },
 
-  isnumber: function (value) {
+  isNumber: function (value) {
     return typeof value === 'number'
   },
 
-  toarray: function (value) {
+  toArray: function (value) {
     let res = []
     for (let key in value) {
       res.push(value[key])
@@ -395,20 +365,35 @@ var mmaxiii = {
     return res
   },
 
-  clonedeep: function (value) {
+  cloneDeep: function (value) {
     let res = null
     if (Array.isArray(value)) {
       res = []
       for (let i = 0; i < value.length; i++) {
-        res.push(this.clonedeep(value[i]))
+        res.push(this.cloneDeep(value[i]))
       }
     } else if (typeof value === 'object') {
       res = {}
       for (let key in value) {
-        res[key] = this.clonedeep(value[key])
+        res[key] = this.cloneDeep(value[key])
       }
     } else {
       res = value
+    }
+    return res
+  },
+
+  difference: function (...args) {
+    let obj = args[1].reduce((result, element) => {  //练习
+      result[element] = 1
+      return result
+    }, {})
+    let res = []
+    for (let i = 0; i < args[0].length; i++) {
+      let item = args[0][i]
+      if (!(item in obj)) {
+        res.push(item)
+      }
     }
     return res
   }

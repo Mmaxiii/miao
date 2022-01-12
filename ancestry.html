@@ -280,9 +280,65 @@
 </script>
 
 <script>
+  function groupBy1(arr, f) {
+    return arr.reduce((result, it) => {
+      let groupName = f(it)
+      if (!result[groupName]) {
+        result[groupName] = []
+      }
+      result[groupName] = it
+      return result
+    }, {})
+  }
+  function swap(arr, l, r) {
+    let c = arr[l]
+    arr[l] = arr[r]
+    arr[r] = c
+  }
+  function qSortWith(arr, compare = (a, b) => a - b, start = 0, end = arr.length - 1) {  // 传入比较关系compare
+    if (start >= end) return arr
+
+    let pivotIdx = (Math.random() * (end - start + 1) + start) >> 0
+    let pivot = arr[pivotIdx]
+
+    swap(arr, pivotIdx, end)
+
+    let i = start
+
+    let k = start
+    for (let j = start; j < end; j++) {
+      if (compare(arr[j], pivot) < 0) {  // 比较关系  与 0 的比较
+        if (k !== i) {
+          swap(arr, i, j)
+        }
+        swap(arr, k, j)
+        i++
+        k++
+      } else if (compare(arr[j], pivot) === 0) {
+        swap(arr, j, k++)
+      }
+    }
+    swap(arr, end, k)
+
+    qSortWith(arr, compare, start, i - 1)
+    qSortWith(arr, compare, k + 1, end)
+
+    return arr
+  }
   var ancestry = JSON.parse(ANCESTRY_FILE)
 
-
+  function groupBy(array, predicate) {
+    return array.reduce((result, item) => {
+      if (predicate(item)) {
+        let groupName = predicate(item)
+        if (!result[groupName]) {
+          result[groupName] = []
+        }
+        result[groupName].push(item)
+      }
+      return result
+    }, {})
+  }
   function keyBy(ary, name) {
     let obj = {}
     for (let i = 0; i < ancestry.length; i++) {
@@ -394,7 +450,6 @@
   },
   ]
   console.log(arr);
-  let byParent = by(arr, 'parent')
   let byId = by(arr, 'id')
   function by(ary, target) {
     let res = {}
