@@ -52,18 +52,18 @@ var mmaxiii = {
   },
 
   flatten: function (array) {
-    return flattenDepth(array)
+    return this.flattenDepth(array)
   },
 
   flattenDeep: function (array) {
-    return flattenDepth(array, Infinity)
+    return this.flattenDepth(array, Infinity)
   },
 
   flattenDepth: function (array, depth = 1) {
 
     return array.reduce((result, item) => {
       if (Array.isArray(item) && depth) {
-        result.push(...flattenDepth(item, depth - 1))
+        result.push(...this.flattenDepth(item, depth - 1))
       } else {
         result.push(item)
       }
@@ -177,7 +177,24 @@ var mmaxiii = {
     }
     return res
   },
-
+  /**
+   * 将zip处理过的数据恢复到zip之前的状态
+   * @param {Array} array 要恢复的数组
+   * @returns 新数组
+   */
+  unzip: function (array) {
+    let res = []
+    let len = array[0].length
+    for (let i = 0; i < len; i++) { // 找出 array 中每项的第 i 个值，组成新数组，并 push 进 res
+      let item = array[j]
+      let temp = []
+      for (let j = 0; j < array.length; j++) {
+        temp.push(item[i])
+      }
+      res.push(temp)
+    }
+    return res
+  },
 
   filter: function (coll, pred) {
     let res = []
@@ -312,7 +329,7 @@ var mmaxiii = {
   ceil: function (number, percision = 0) {
     let base = Math.pow(10, percision)
     number = number * base
-    let n = number % base
+    let n = number % 1
     if (n > 0) number = (number >> 0) + 1
     number = number / base
     return number
@@ -462,5 +479,47 @@ var mmaxiii = {
       }
     }
     return result
-  }
+  },
+  xor: function (...args) {
+    let judger = {}
+    for (let i = 0; i < args.length; i++) {
+      let item = args[i]
+      for (let j = 0; j < item.length; j++) {
+        judger[item[j]] = (judger[item[j]] || (judger[item[j]] = 0)) + 1
+      }
+    }
+    let res = []
+    for (let key in judger) {
+      if (judger[key] === 1) res.push(Number(key))
+    }
+    return res
+  },
+  isEmpty: function (value) {
+    if (Array.isArray(value)) {
+      if (value.length !== 0) return false
+    } else if (typeof value === 'object' && value) {
+      for (let key in value) { // 判断obj
+        return false
+      }
+      if (value.size() !== 0) return false // 判断map和set
+    }
+    return true
+  },
+  min: function (array) {
+    let min = Infinity
+    for (let i = 0; i < array.length; i++) {
+      min = array[i] < min ? array[i] : min
+    }
+    return min
+  },
+
+  round: function (number, percision = 0) {
+    let base = Math.pow(10, percision)
+    number = number * base
+    let n = number % 1
+    number = n < 0.5 ? (number >> 0) : (number >> 0) + 1
+
+    number = number / base
+    return number
+  },
 }
