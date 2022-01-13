@@ -52,18 +52,18 @@ var mmaxiii = {
   },
 
   flatten: function (array) {
-    return flattendepth(array)
+    return flattenDepth(array)
   },
 
   flattenDeep: function (array) {
-    return flattendepth(array, Infinity)
+    return flattenDepth(array, Infinity)
   },
 
   flattenDepth: function (array, depth = 1) {
 
     return array.reduce((result, item) => {
       if (Array.isArray(item) && depth) {
-        result.push(...flattendepth(item, depth - 1))
+        result.push(...flattenDepth(item, depth - 1))
       } else {
         result.push(item)
       }
@@ -211,9 +211,12 @@ var mmaxiii = {
   },
 
   forEach: function (coll, pred) {
+
     for (let key in coll) {
-      pred(coll[key], key, coll)
+      let item = pred(coll[key], key, coll)
+
     }
+    return coll
   },
 
   map: function (coll, pred) {
@@ -240,8 +243,8 @@ var mmaxiii = {
       initial = coll[0]
       start = 1
     }
-    for (let i = start; i < coll.length; i++) {
-      initial = pred(initial, coll[i])
+    for (let key in coll) {
+      initial = pred(initial, coll[key], key, coll)
     }
     return initial
   },
@@ -279,7 +282,7 @@ var mmaxiii = {
   },
 
   isBoolean: function (value) {
-    return value === true || value === false
+    return value === true
   },
 
   isNaN: function (value) {
@@ -384,16 +387,19 @@ var mmaxiii = {
   },
 
   difference: function (...args) {
-    let obj = args[1].reduce((result, element) => {  //练习
-      result[element] = 1
-      return result
-    }, {})
+    let judger = new Set()
     let res = []
-    for (let i = 0; i < args[0].length; i++) {
-      let item = args[0][i]
-      if (!(item in obj)) {
-        res.push(item)
+    for (let i = 1; i < args.length; i++) {
+      let item = args[i]
+      for (let j = 0; j < item.length; j++) {
+        if (!(judger.has(item[j]))) {
+          judger.add(item[j])
+        }
       }
+    }
+    for (let i = 0; i < args[0].length; i++) {
+      let item = args[0]
+      if (!(judger.has(item[i]))) res.push(item[i])
     }
     return res
   },
@@ -411,6 +417,7 @@ var mmaxiii = {
     }
     return res
   },
+
   pull: function (array, ...args) {
     let obj = {}
     for (let i = 0; i < args.length; i++) {
@@ -420,5 +427,40 @@ var mmaxiii = {
       return !(element in obj)
     })
     return res
+  },
+  /**
+   * 检测目标值在数组中要插入的位置
+   * 
+   * @param {Array} array 用来查询的有序数组
+   * @param {Number} value 要插入的值
+   * @returns {Number} 要插入的位置
+   */
+  sortedIndex: function (array, value) {
+    let l = -1
+    let r = array.length
+    while (r - l > 1) {
+      let m = (r + l) >> 1
+      if (array[m] < value) {
+        l = m
+      } else {
+        r = m
+      }
+    }
+    return l + 1
+  },
+
+  union: function (...args) {
+    let judger = new Set()
+    let result = []
+    for (let i = 0; i < args.length; i++) {
+      let item = args[i]
+      for (let j = 0; j < item.length; j++) {
+        if (!(judger.has(item[j]))) {
+          result.push(item[j])
+          judger.add(item[j])
+        }
+      }
+    }
+    return result
   }
 }

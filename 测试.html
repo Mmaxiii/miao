@@ -13,6 +13,13 @@
 </body>
 <script src="lodash/mmaxiii-lodash.js"></script>
 <script>
+  mmaxiii.reduce({ "a": 1, "b": 2, "c": 1 }, (result, value, ley) => {
+
+    (result[value] || (result[value] = [])).push(key)
+    return result
+  }
+
+    , {})
   function level(root) {
     if (root === null) return []
     let stack = []
