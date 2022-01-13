@@ -280,16 +280,7 @@
 </script>
 
 <script>
-  function groupBy1(arr, f) {
-    return arr.reduce((result, it) => {
-      let groupName = f(it)
-      if (!result[groupName]) {
-        result[groupName] = []
-      }
-      result[groupName] = it
-      return result
-    }, {})
-  }
+
   function swap(arr, l, r) {
     let c = arr[l]
     arr[l] = arr[r]
@@ -327,15 +318,14 @@
   }
   var ancestry = JSON.parse(ANCESTRY_FILE)
 
-  function groupBy(array, predicate) {
-    return array.reduce((result, item) => {
-      if (predicate(item)) {
-        let groupName = predicate(item)
-        if (!result[groupName]) {
-          result[groupName] = []
-        }
-        result[groupName].push(item)
+
+  function groupBy1(arr, predicate) {
+    return arr.reduce((result, it) => {
+      let groupName = predicate(it)
+      if (!result[groupName]) {
+        result[groupName] = []
       }
+      result[groupName] = it
       return result
     }, {})
   }

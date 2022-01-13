@@ -11,20 +11,652 @@
 <body>
 
 </body>
+<script src="lodash/mmaxiii-lodash.js"></script>
 <script>
   function level(root) {
-    let curr = root
-    let res = []
+    if (root === null) return []
     let stack = []
-    while (curr || stack.length) {
-      if (!curr) {
-
-      } else {
+    let res = []
+    let curr = root
+    while (curr !== null || stack.length) {
+      if (curr !== null) {
         stack.push(curr)
         curr = curr.left
+      } else {
+        curr = stack.pop
+        res.push(curr.val)
+        curr = curr.right
+      }
+    }
+    return res
+  }
+  function faltten(arr, depth = 1) {
+
+    return arr.reduce((result, item) => {
+      if (Array.isArray(item) && depth) {
+        result.push(...faltten(item, depth - 1))
+      } else {
+        result.push(item)
+      }
+      return result
+    }, [])
+
+  }
+
+  function reduce(arr, f, initial) {
+
+    arr.forEach(it => {
+      initial = f(initial, it)
+    })
+    return initial
+  }
+  function qSortBy(arr, predicate = it => it, start = 0, end = arr.length - 1) { // 比普通快排多穿一个谓语
+    if (start >= end) return arr
+
+    let pivotIdx = (Math.random() * (end - start + 1) + start) >> 0
+    let pivot = arr[pivotIdx]
+
+    swap(arr, pivotIdx, end)
+
+    let i = start
+
+    let k = start
+    for (let j = start; j < end; j++) {
+      if (predicate(arr[j]) < predicate(pivot)) { // 根据谓语取出相应值比较
+        if (k !== i) {
+          swap(arr, i, j)
+        }
+        swap(arr, k, j)
+        i++
+        k++
+      } else if (predicate(arr[j]) === predicate(pivot)) {
+        swap(arr, j, k++)
+      }
+    }
+    swap(arr, end, k)
+
+    qSortBy(arr, predicate, start, i - 1)
+    qSortBy(arr, predicate, k + 1, end)
+
+    return arr
+  }
+  function qSortWith(arr, compare = (a, b) => a - b, start = 0, end = arr.length - 1) {
+    if (start >= end) return arr
+
+    let pivotIdx = (Math.random() * (end - start + 1) + start) >> 0
+    let pivot = arr[pivotIdx]
+
+    swap(arr, pivotIdx, end)
+
+    let i = start
+
+    let k = start
+    for (let j = start; j < end; j++) {
+      if (compare(arr[j]) < compare(pivot)) {
+        if (k !== i) {
+          swap(arr, i, j)
+        }
+        swap(arr, k, j)
+        i++
+        k++
+      } else if (compare(arr[j]) === compare(pivot)) {
+        swap(arr, j, k++)
+      }
+    }
+    swap(arr, end, k)
+
+    qSortWith(arr, compare, start, i - 1)
+    qSortWith(arr, compare, k + 1, end)
+
+    return arr
+  }
+  function flattendepth1(array, depth = 1) {
+    return array.reduce((initial, element) => {
+      let len = array.length
+      if (Array.isArray(element) && depth) {
+
+        return initial.concat(flattendepth1(element, depth - 1))
+
+      } else {
+        return initial.concat(element)
+      }
+      return initial
+    }, [])
+  }
+  flattendepth = function (array, depth) {
+    let res = []
+    let len = array.length
+    for (let i = 0; i < len; i++) {
+
+      if (Array.isArray(array[i]) && depth) {
+
+        let temp = flattendepth(array[i], depth - 1)
+        for (let j = 0; j < temp.length; j++) {
+          res.push(temp[j])
+        }
+
+      } else {
+        res.push(array[i])
+      }
+    }
+    return res
+  }
+  function every(ary, predicate) {
+    return !ary.some(negate(predicate))// 用的js自带some，也可以自己写
+  }
+  function some(ary, f) {
+    return ary.every(negate(f))
+  }
+  function negate(f) {
+    return function (...args) {
+      return !f(...args)
+    }
+  }
+  // function every(ary, f) {
+  //   for (let i = 0; i < ary.length; i++) {
+  //     if (!f(ary[i])) return false
+
+  //   }
+  //   return true
+  // }
+  function mapvalues(obj, mapper) {
+    let res = {}
+    for (let key in obj) {
+
+      res[key] = mapper(obj[key], key, obj)
+    }
+    return res
+  }
+
+
+  function qSort(arr, start = 0, end = arr.length - 1) {
+
+    if (start >= end) return arr // 递归退出条件，只有一个或 0个元素返回
+
+    let pivotIdx = (Math.random() * (end - start + 1) + start) >> 0
+    let pivot = arr[pivotIdx]
+
+    swap(arr, pivotIdx, end)
+
+    let i = start // 小于区间 0  - i-1
+    let j = start // 大于区间 i+1 - r
+
+
+    for (; j < end; j++) { // j 到哨兵元素之前停止
+      if (arr[j] < arr[end]) {
+        swap(arr, j, i++)
+      }
+    }
+    swap(arr, i, end) // 将哨兵元素换到中间（左面是小于区间，右面是大于区间，所以下面哨兵元素不用参与递归排序）
+    qSort(arr, 0, i - 1)
+    qSort(arr, i + 1, end)
+    return arr
+
+  }
+  function margeSort(ary) {
+    if (ary.length < 2) return ary.slice()
+    let l = 0
+    let r = ary.length
+    let m = (l + r) >> 1
+    let left = ary.slice(0, m)
+    let right = ary.slice(m, r)
+
+    left = margeSort(left)
+    right = margeSort(right)
+
+    let i = 0
+    let j = 0
+
+    let res = []
+    while (i < left.length && j < right.length) {
+      if (left[i] < right[j]) {
+        res.push(left[i++])
+      } else {
+        res.push(right[j++])
+      }
+    }
+    while (i < left.length) {
+      res.push(left[i++])
+    }
+    while (j < right.length) {
+      res.push(right[j++])
+    }
+    return res
+  }
+
+  function qSort3(arr, start = 0, end = arr.length - 1) {
+    if (start >= end) return arr
+
+    let pivotIdx = (Math.random() * (end - start + 1) + start) >> 0
+    let pivot = arr[pivotIdx]
+
+    swap(arr, pivotIdx, end)
+
+    let i = start
+    let j = start
+    let k = start
+    for (; j < end; j++) {
+      if (arr[j] < pivot) {
+        if (k !== i) {
+          swap(arr, i, j)
+        }
+        swap(arr, k, j)
+        i++
+        k++
+      } else if (arr[j] === pivot) {
+        swap(arr, j, k++)
+      }
+    }
+    swap(arr, end, k)
+
+    qSort3(arr, start, i - 1)
+    qSort3(arr, k + 1, end)
+
+    return arr
+  }
+
+
+
+
+
+
+  let obj = {
+    name: 'haha',
+    age: 15,
+  }
+  function stringify(obj, x, space) {
+
+    if (!obj) return null
+
+    if (Array.isArray(obj)) {
+      res = '['
+
+    } else {
+      let keyValPairs = []
+
+      for (let key in obj) {
+        let pair = '\"' + key + '\"' + ': '
+        if (typeof obj[key] == 'string') {
+          pair += '\"' + obj[key] + '\"'
+        } else {
+          pair += obj[key]
+        }
+        keyValPairs.push(pair)
+      }
+
+      let result = ''
+
+      for (let i = 0; i < keyValPairs.length; i++) {
+
+        if (i == keyValPairs.length - 1) {
+          result += ' '.repeat(space) + keyValPairs[i]
+        } else {
+          result += ' '.repeat(space) + keyValPairs[i] + ','
+          if (space) result += "\n"
+        }
+      }
+
+      if (space) return '{' + "\n" + result + "\n" + '}'
+      return '{' + result + '}'
+    }
+
+  }
+
+
+
+
+
+  function parseQ(str) {
+    let arr = str.split('&')
+    let obj = {}
+    arr.forEach(element => {
+      let s = element.split('=')
+      obj[s[0]] = s[1]
+    });
+    return obj
+  }
+
+
+  function parseCsv(str) {
+    let lines = str.split('\n')
+    let headLine = lines.shift()
+    let head = headLine.split(',')
+
+    let res = []
+    lines.forEach(ele => {
+      let arr = ele.split(',')
+      let obj = {}
+      for (let i = 0; i < arr.length; i++) {
+        obj[head[i]] = arr[i]
+      }
+      res.push(obj)
+    })
+    return res
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  function ha1(x) {
+    return function ha2(a, b) {
+      return a > b
+    }
+  }
+  function reverseList(head) {
+    if (!head.next) return head
+    let newHead = reverseList(head.next)
+    head.next.next = head
+    head.next = null
+    return newHead
+  }
+  // var findClosestElements = function (arr, k, x) {
+  //   let i = 0
+  //   let l = 0
+  //   let r = arr.length - 1
+
+  //   while (l <= r) {
+  //     let mid = (r + l) >> 1
+  //     if (arr[mid] < x) {
+  //       l = mid + 1
+  //     } else {
+  //       r = mid
+  //     }
+  //   }
+  //   console.log(r)
+  //   i = r
+  //   let j = r - 1
+  //   while (k) {
+  //     if (Math.abs(arr[j] - x) <= (Math.abs(arr[i] - x))) {
+  //       if (j <= 0) {
+  //         i++
+  //       } else {
+  //         j--
+  //       }
+
+
+  //     } else {
+  //       if (i >= arr.length) {
+  //         j--
+  //       } else {
+  //         i++
+  //       }
+  //     }
+  //     k--
+  //   }
+  //   let res = []
+  //   for (let p = j + 1; p < i; p++) {
+  //     res.push(arr[p])
+  //   }
+  //   return res
+  // };
+  // debugger; console.log(findClosestElements([1, 2, 3, 4, 5], 4, -1))
+  // function mergeSort(ary) {
+  //   if (ary.length < 2) return ary
+  //   let mid = ary.length >> 1
+  //   let left = ary.slice(0, mid)
+  //   let right = ary.slice(mid, ary.length)
+  //   mergeSort(left)
+  //   mergeSort(right)
+
+  //   let i = 0
+  //   let j = 0
+  //   let k = 0
+  //   while (i < left.length && j < right.length) {
+  //     if (left[i] < right[j]) {
+  //       ary[k++] = left[i++]
+  //     } else {
+  //       ary[k++] = right[j++]
+  //     }
+  //   }
+
+  //   while (i < left.length) {
+  //     ary[k++] = left[i++]
+  //   }
+  //   while (j < right.length) {
+  //     ary[k++] = right[j++]
+  //   }
+
+  //   return ary
+  // }
+
+
+
+  function selectSort(ary) {
+    for (let i = 0; i < ary.length - 1; i++) {
+
+      let minIndex = i
+
+      for (let j = i + 1; j < ary.length; j++) {
+        minIndex = ary[minIndex] > ary[j] ? j : minIndex
+      }
+      swap(ary, i, minIndex)
+    }
+
+    return ary
+  }
+
+
+  function bubbleSort(ary) {
+    for (let i = ary.length; i >= 0; i--) {
+      let swapped = false
+      for (let j = 0; j < i; j++) {
+        if (ary[j] > ary[j + 1]) {
+          swapped = true
+          swap(ary, j, j + 1)
+        }
+      }
+      if (!swapped) break
+    }
+    return ary
+  }
+
+
+  function isSorted(ary) {
+    let len = ary.length
+    for (let i = 1; i < len; i++) {
+      if (ary[i] < ary[i - 1]) return false
+    }
+    return true
+  }
+  function randomAry(n) {
+    let arr = Array(n)
+    for (let i = 0; i < n; i++) {
+      let num = Math.random() * n | 0
+      arr[i] = num
+    }
+    return arr
+  }
+
+  function insertSort(ary) {
+    for (let i = 1; i < ary.length; i++) {
+      let temp = ary[i]
+
+      for (let j = i - 1; j >= 0; j--) {
+        if (ary[j + 1] < ary[j]) {
+          ary[j + 1] = ary[j]
+        } else {
+          ary[j] = temp
+          break
+        }
+      }
+    }
+    return ary
+  }
+
+
+  function swap(arr, l, r) {
+    let c = arr[l]
+    arr[l] = arr[r]
+    arr[r] = c
+  }
+
+  function xx(h, n) {
+    let j = -1
+    for (let i = 0; i < h.length; i++) {
+      while (j >= 0 && h[i] !== n[j + 1]) {
+        j = next[j]
+      }
+      if (h[i] === n[+ 1]) {
+        j++
+      }
+      if (j === n.length - 1) {
+        return i - n.length + 1
       }
     }
   }
+  function getNext(s) {
+    let next = Array(s.length)
+    let j = -1
+    next[0] = j
+
+    for (let i = 1; i < s.length; i++) {
+      while (j >= 0 && s[i] !== s[j + 1]) {
+        j = next[j]
+      }
+      if (s[i] == s[j + 1]) {
+        j++
+      }
+      next[i] = j
+    }
+    return next
+  }
+
+
+
+  function arrayToList(arr) {
+
+    let temp = null
+    for (let i = arr.length - 1; i >= 0; i--) {
+      let node = {}
+      node.val = arr[i]
+      node.next = temp
+      temp = node
+
+    }
+    return temp
+  }
+  function arrayToListR(arr, i = 0) {
+    if (i == arr.length - 1) {
+      let node = {
+        val: arr[i],
+        next: null
+      }
+      return node
+    }
+    let node = {}
+    node.val = arr[i++]
+    node.next = arrayToListR(arr, i)
+
+    return node
+  }
+
+  function leisToArray(head) {
+    let cur = head
+    let arr = []
+    while (cur) {
+      arr.push(cur.val)
+      cur = cur.next
+    }
+    return arr
+  }
+  function leisToArrayR(head) {
+    if (head == null) return []
+    let arr = leisToArrayR(head.next)
+    arr.unshift(head.val)
+    return arr
+  }
+
+  function prepend(val, head) {
+    let node = {
+      val: val,
+      next: head
+    }
+    return node
+  }
+  function append(val, head) {
+    let cur = head
+    while (cur.next) {
+      cur = cur.next
+    }
+    cur.next = {
+      var: val,
+      next: null
+    }
+    return head
+  }
+  function nth(list, n) {
+
+    if (n == 0) {
+      return list.val
+    }
+    list = list.next
+    return nth(list, n - 1)
+  }
+  function insert(list, n, val) {
+    let node = {
+      val: val,
+      next: null,
+    }
+    if (list.val == null) return node
+    if (n == 0) {
+      node.next = list
+      return node
+    }
+    let cur = list
+    while (n - 1) {
+      cur = cur.next
+      n--
+    }
+    node.next = cur.next
+    cur.next = node
+    return list
+  }
+
+
+  function ListNode(val, next) {
+    this.val = (val === undefined ? 0 : val)
+    this.next = (next === undefined ? null : next)
+  }
+  var mergeTwoLists = function (list1, list2) {
+    let dummy = new ListNode()
+    let current = dummy
+
+    while (list1 && list2) {
+
+      let newNode = new ListNode()
+      if (list1.val < list2.var) {
+        newNode.val = list1.val
+        list1 = list1.next
+      } else {
+        newNode.var = list2.val
+        list2 = list2.next
+      }
+      current.next = newNode
+      current = current.next
+
+    }
+
+    current.next = list1 || list2
+
+    return dummy.next
+  };
 </script>
 
 </html>

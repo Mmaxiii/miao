@@ -59,7 +59,7 @@ var mmaxiii = {
     return flattendepth(array, Infinity)
   },
 
-  flattenDepth=function (array, depth = 1) {
+  flattenDepth: function (array, depth = 1) {
 
     return array.reduce((result, item) => {
       if (Array.isArray(item) && depth) {
@@ -395,6 +395,30 @@ var mmaxiii = {
         res.push(item)
       }
     }
+    return res
+  },
+  intersection: function (...args) {
+    let obj = args[1].reduce((result, element) => {  //练习
+      result[element] = 1
+      return result
+    }, {})
+    let res = []
+    for (let i = 0; i < args[0].length; i++) {
+      let item = args[0][i]
+      if ((item in obj)) {
+        res.push(item)
+      }
+    }
+    return res
+  },
+  pull: function (array, ...args) {
+    let obj = {}
+    for (let i = 0; i < args.length; i++) {
+      obj[args[i]] = 1
+    }
+    let res = this.filter(array, element => {
+      return !(element in obj)
+    })
     return res
   }
 }
