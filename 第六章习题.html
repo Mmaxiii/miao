@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+
+</body>
+
+</html>
+
+<script>
+  class Stack2 {
+    //静态方法
+
+    //构造函数
+    #head = null
+    #length = 0
+    constructor(initials = []) {
+      initials.forEach(it => {
+        this.push(it)
+      })
+    }
+    //原型方法
+    push(val) {
+      let node = {
+        val,
+        next: null,
+      }
+      node.next = this.#head
+      this.#head = node
+      this.#length++
+    }
+    pop() {
+      if (this.#head != null) {
+        let val = this.#head.val
+        this.#head = this.#head.next
+        this.#length--
+        return val
+      }
+    }
+    peek() {
+      return this.#head.val
+    }
+    get size() {
+      return this.#length
+    }
+  }
+  class MySet2 {
+    // 静态方法
+    //构造函数
+    #memory = []
+    constructor() {
+    }
+    //原型方法
+    add(val) {
+      let idx = this.#memory.indexOf(val)
+      if (idx === -1) {
+        this.#memory.push(val)
+      }
+    }
+    delete(val) {
+      let idx = this.#memory.indexOf(val)
+      if (idx >= 0) {
+        this.#memory.splice(idx, 1)
+      }
+    }
+    has(val) {
+      let idx = this.#memory.indexOf(val)
+      if (idx == -1) return false
+      return true
+    }
+    clear() {
+      this.#memory.length = 0
+    }
+    get size() {
+      return this.#memory.length
+    }
+  }
+  class MyMap2 {
+    //静态方法
+
+    //构造函数
+    #keys = []
+    #vals = []
+    constructor() { }
+    //原型方法
+    getIdx(key) {
+      return this.#keys.indexOf(key)
+    }
+    set(key, val) {
+
+      let idx = this.getIdx(key)
+      if (idx == -1) {
+        this.#keys.push(key)
+        this.#vals.push(val)
+      } else {
+        this.#vals[idx] = val
+      }
+    }
+
+    get(key) {
+      let idx = this.getIdx(key)
+      if (idx >= 0) {
+        return this.#vals[idx]
+      }
+    }
+
+    delete(key) {
+      let idx = this.getIdx(key)
+      if (idx >= 0) {
+        this.#keys.splice(idx, 1)
+        this.#vals.splice(idx, 1)
+      }
+    }
+    get size() {
+      return this.#keys.length
+    }
+  }
+  function mySet() {
+    this.memory = []
+
+  }
+  mySet.prototype.add = function (val) {
+    for (let i = 0; i < this.memory.length; i++) {
+      if (val === this.memory[i]) return this
+    }
+    this.memory.push(val)
+    return this
+  }
+
+  mySet.prototype.delete = function (val) {
+    for (let i = 0; i < this.memory.length; i++) {
+      if (val === this.memory[i]) {
+        this.memory.splice(i, 1)
+        return true
+      }
+    }
+    return false
+  }
+  mySet.prototype.has = function (val) {
+    for (let i = 0; i < this.memory.length; i++) {
+      if (val === this.memory[i]) {
+        return true
+      }
+    }
+    return false
+  }
+  mySet.prototype.clear = function () {
+    this.memory.length = 0
+  }
+  Object.defineProperty(mySet.prototype, 'size', {
+    get: function () { return this.memory.length }
+  })
+
+
+  function MyMap() {
+    this.keys = []
+    this.values = []
+
+  }
+
+  MyMap.prototype.set = function (key, val) {
+    let keys = this.keys
+    let len = this.keys.length
+    let _this = this
+    for (let i = 0; i < len; i++) {
+      if (key === keys[i]) {
+        this.values[i] = val
+        return _this
+      }
+    }
+    keys[len] = key
+    this.values[len] = val
+    return this
+  }
+
+  MyMap.prototype.get = function (key) {
+
+    for (let i = 0; i < this.keys.length; i++) {
+      if (key === this.keys[i]) return this.values[i]
+    }
+
+  }
+
+  MyMap.prototype.has = function (key) {
+    for (let i = 0; i < this.keys.length; i++) {
+      if (key === this.keys[i]) return true
+    }
+    return false
+  }
+  MyMap.prototype.clear = function () {
+    this.keys.length = 0
+    this.values.length = 0
+  }
+  MyMap.prototype.delete = function (key) {
+    for (let i = 0; i < this.keys.length; i++) {
+      if (key === this.keys[i]) {
+        this.keys.splice(i, 1)
+        this.values.splice(i, 1)
+        return true
+      }
+    }
+    return false
+  }
+  Object.defineProperty(MyMap.prototype, 'size', {
+    get: function () { return this.keys.length }
+  })
+
+  function Stack(initials) {
+    this.head = null
+    this.length = 0
+    initials.forEach(it => { this.push(it) })
+  }
+
+  Stack.prototype.push = function (val) {
+
+    let node = {
+      val,
+      next: null,
+    }
+    node.next = this.head
+    this.head = node
+    this.length++
+  }
+  Stack.prototype.pop = function () {
+    if (this.length != 0) {
+      let val = this.head.val
+      this.head = this.head.next
+      this.length--
+      return val
+    }
+  }
+  Stack.prototype.peek = function () {
+    if (this.length != 0) {
+      return this.head.val
+    }
+  }
+  Object.defineProperty(Stack.prototype, 'size', {
+    get: function () { return this.length }
+  })
+
+
+  function Queue() {
+    this.head = null
+    this.length = 0
+    this.tail = null
+  }
+  q = new Queue()
+  Queue.prototype.enqueue = function (val) {
+
+    let node = {
+      val,
+      next: null,
+    }
+    if (this.length == 0) {
+      this.head = node
+      this.tail = node
+    } else {
+      this.tail.next = node
+      this.tail = node
+    }
+    this.length++
+  }
+  Queue.prototype.dequeue = function () {
+    if (this.length != 0) {
+      let val = this.head.val
+      this.head = this.head.next
+      this.length--
+      if (this.length == 1) {
+        this.tail = null
+      }
+      return val
+    }
+  }
+  Queue.prototype.peek = function () {
+    return this.head.val
+  }
+
+  Object.defineProperty(Queue.prototype, 'size', {
+    get: function () { return this.length }
+  })
+  Queue.Func = function (val) {
+    this.val = val
+  }
+
+
+
+
+
+
+
+
+
+
+
+  function Vector(x, y) {
+    this.x = x
+    this.y = y
+  }
+  Vector.prototype.plus = function (vector) {
+    let x = this.x + vector.x
+    let y = this.y + vector.y
+    return new Vector(x, y)
+  }
+  Vector.prototype.minus = function (vector) {
+    let x = this.x - vector.x
+    let y = this.y - vector.y
+    return new Vector(x, y)
+  }
+  Object.defineProperty(Vector.prototype, 'length', {
+    get: () => {
+      console.log(this)
+      return this.x
+    }
+
+  })
+
+
+  function Complex(real, imag) {
+    this.real = real
+    this.imag = imag
+  }
+  Complex.prototype.plus = function (num) {
+    let real = this.real + num.real
+    let imag = this.imag + num.imag
+    return new Complex(real, imag)
+  }
+  Complex.prototype.minus = function (num) {
+    let real = this.real - num.real
+    let imag = this.imag - num.imag
+    return new Complex(real, imag)
+  }
+  Complex.prototype.mul = function (num) {
+    let a = this.real
+    let b = this.imag
+    let c = num.real
+    let d = num.imag
+    let real = a * c - b * d
+    let imag = a * d + b * c
+    return new Complex(real, imag)
+  }
+  Complex.prototype.div = function (num) {
+    let a = this.real
+    let b = this.imag
+    let c = num.real
+    let d = num.imag
+    let real = (a * c + b * d) / (c ** 2 + d ** 2)
+    let imag = (b * c - a * d) / (c ** 2 + d ** 2)
+    return new Complex(real, imag)
+  }
+
+
+
+
+  // function TextCell(text) {
+  //   this.lines = text.split('\n')
+  // }
+  // TextCell.prototype.minHeight = function () {
+  //   return this.lines.length
+  // }
+  // TextCell.prototype.minWidth = function () {
+  //   let lens = this.lines.map(it => it.length)
+  //   return Math.max(...lens)
+  // }
+  // TextCell.prototype.draw = function (width, height) {
+  //   let res = []
+  //   for (let i = 0; i < height; i++) {
+  //     let line = this.lines[i] || ''
+  //     res.push(line.padEnd(width, ' '))
+  //   }
+  //   return res
+  // }
+</script>

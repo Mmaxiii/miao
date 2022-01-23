@@ -1,6 +1,5 @@
 
 var mmaxiii = {
-
   chunk: function (array, size) {
     let len = array.length
     let res = []
@@ -14,7 +13,6 @@ var mmaxiii = {
     }
     return res
   },
-
   compact: function (array) {
     let res = []
     let len = array.length
@@ -25,7 +23,6 @@ var mmaxiii = {
     }
     return res
   },
-
   drop: function (array, n = 1) {
     let res = []
     let len = array.length
@@ -34,7 +31,6 @@ var mmaxiii = {
     }
     return res
   },
-
   dropRight: function (array, n = 1) {
     let res = []
     let len = array.length
@@ -43,17 +39,16 @@ var mmaxiii = {
     }
     return res
   },
-
   fill: function (array, filler, start = 0, end = array.length) {
     for (let i = start; i < end; i++) {
       array[i] = filler
     }
     return array
   },
-
   flatten: function (array) {
     return this.flattenDepth(array)
   },
+
 
   flattenDeep: function (array) {
     return this.flattenDepth(array, Infinity)
@@ -186,9 +181,9 @@ var mmaxiii = {
     let res = []
     let len = array[0].length
     for (let i = 0; i < len; i++) { // 找出 array 中每项的第 i 个值，组成新数组，并 push 进 res
-      let item = array[j]
       let temp = []
       for (let j = 0; j < array.length; j++) {
+        let item = array[j]
         temp.push(item[i])
       }
       res.push(temp)
@@ -288,7 +283,7 @@ var mmaxiii = {
   /**
    * @param collection array/Object/string
    * @return length
-   * 
+   *
    */
   size: function (collection) {
     let length = 0
@@ -299,7 +294,7 @@ var mmaxiii = {
   },
 
   isBoolean: function (value) {
-    return value === true
+    return Object.prototype.toString.call(value) === '[object Boolean]'
   },
 
   isNaN: function (value) {
@@ -307,15 +302,15 @@ var mmaxiii = {
   },
 
   isNil: function (value) {
-    return value === null || value === undefined
+    return this.isNull(value) || value === undefined
   },
 
   isNull: function (value) {
-    return value === null
+    return Object.prototype.toString.call(value) === '[object Null]'
   },
 
   isNumber: function (value) {
-    return typeof value === 'number'
+    return Object.prototype.toString.call(value) === '[object Number]'
   },
 
   toArray: function (value) {
@@ -447,7 +442,7 @@ var mmaxiii = {
   },
   /**
    * 检测目标值在数组中要插入的位置
-   * 
+   *
    * @param {Array} array 用来查询的有序数组
    * @param {Number} value 要插入的值
    * @returns {Number} 要插入的位置
@@ -522,4 +517,15 @@ var mmaxiii = {
     number = number / base
     return number
   },
+
+  forOwn: function (obj, iterator) {
+    let hasOwn = Object.prototype.hasOwnProperty
+    for (let key in obj) {
+      if (hasOwn.call(obj, key)) {
+        iterator(obj[key], key)
+      }
+    }
+  }
+
+
 }

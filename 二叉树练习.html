@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+
+</body>
+
+</html>
+
+
+<script>
+  var sortedArrayToBST = function (nums, left = 0, right = nums.length - 1) {
+    if (left > right) return null
+    let mid = Math.floor((right - left + 1) / 2)
+    let root = new TreeNode(nums[mid])
+    root.left = sortedArrayToBST(nums, left, mid - 1)
+    root.right = sortedArrayToBST(nums, mid + 1, right)
+    return root
+  };
+  Object.prototype.toString.call([]) //'[object Array]'
+  function insertBST(root, val) {
+    if (!root) {
+      node = new TreeNode(val)
+      root = node
+    }
+
+    if (val < root.val) {
+      root.left = inserBST(root.left, val)
+    } else {
+      root.right = inserBST(root.right, val)
+    }
+    return root
+  }
+  function inOrder(tree) {
+    let stack = []
+    let current = tree
+    let res = []
+    while (current || stack.length) {
+      if (current) {
+        stack.push(current)
+        current = current.left
+      } else {
+        current = stack.pop()
+        res.push(current.val)
+        current = current.right
+      }
+    }
+    return res
+  }
+  function preOrder(tree) {
+    let stack = [root]
+    let cur = null
+    let res = []
+    while (stack.length) {
+      cur = stack.pop()
+      res.push(cur.val)
+      cur.right && stack.push(cur.right)
+      cur.left && stack.push(cur.left)
+    }
+    return res
+  }
+
+  function inorder(tree) {
+    let res = []
+    inorderT(tree)
+    return res
+  }
+  function inorderT(tree) {
+    if (tree) {
+      inorderT(tree.left)
+      res.push(tree.val)
+      inorderT(tree.right)
+
+    }
+  }
+  function TreeNode(val, left = null, right = null) {
+    this.val = val;
+    this.left = left
+    this.right = right;
+  }
+
+  var serialize = function (root) {
+    if (!root) return ''
+    let queue = [root]
+    let current = null
+    let result = []
+    while (queue.length) {
+      let len = queue.length
+      for (let i = 0; i < len; i++) {
+        current = queue.shift()
+        if (!current) {
+          result.push(null)
+        } else {
+          result.push(current.val)
+          queue.push(current.left)
+          queue.push(current.right)
+        }
+
+      }
+    }
+    return result.join()
+  };
+
+
+  var deserialize = function (data) {
+    if (data == '') return null
+    let ary = data.split(',').map(it => it == '' ? null : Number(it))
+    let root = new TreeNode(ary[0])
+    let queue = [root]
+    let j = 0
+    for (let i = 1; i < ary.length; i++) {
+      let node = queue[j++]
+      let sonNode = null
+      if (ary[i] !== null) {
+        sonNode = new TreeNode(ary[i])
+        queue.push(sonNode)
+      }
+      node.left = sonNode
+
+      i++
+
+      sonNode = null
+      if (ary[i] !== null) {
+        sonNode = new TreeNode(ary[i])
+        queue.push(sonNode)
+
+      }
+      node.right = sonNode
+
+      if (j >= queue.length) break
+    }
+    return root
+  };
+
+
+  var binaryTreePaths = function (root, str = '', res = []) {
+    if (!root) return res
+    if (root.left == null && root.right == null) {
+      str += root.val
+      res.push(str)
+    }
+    str += root.val + '->'
+    binaryTreePaths(root.left, str, res)
+    binaryTreePaths(root.right, str, res)
+    return res
+  };
+
+
+  var postorderTraversal = function (root) {
+    if (root === null) return []
+    let stack = [root]
+    let res = []
+    let cur = null
+    while (stack.length) {
+      cur = stack.pop()
+      res.push(cur.val)
+      cur.left && stack.push(cur.left)
+      cur.right && stack.push(cur.right)
+    }
+
+    return res.reverse()
+  };
+
+
+
+
+
+
+  function preOrderTraversal(root) {
+    let res = []
+    let stack = [root]
+    let current = null
+    while (stack.length) {
+      current = stack.pop()
+      ary.push(current.val)
+      current.right && stack.push(current.right)
+      current.left && stack.push(current.left)
+
+    }
+    return res
+  }
+  function postOrderTraversal(root) {
+    let res = []
+    let stack = [root]
+    let current = null
+    while (stack.length) {
+      current = stack.pop()
+      ary.push(current.val)
+      current.left && stack.push(current.left)
+      current.right && stack.push(current.right)
+    }
+    return res.reverse()
+  }
+
+  function inOrderTraversal(root) {
+    let res = []
+    let stack = []
+    let current = root
+    while (current && stack.length) {
+      stack.push(current)
+      current = current.left
+      if (current === null) {
+        current = stack.pop()
+        res.push(current.val)
+        current = current.right
+      }
+    }
+    return res
+  }
+
+
+  function condensedAryToTree(ary) {
+    let queue = [createTreeNode(ary[0])]
+    let j = 0
+    for (let i = 1; i < ary.length; i++) {
+      let current = queue[j++]
+      let node = null
+      if (ary[i] != null) {
+        node = createTreeNode(ary[i])
+        queue.push(node)
+      }
+      current.left = node
+
+      i++
+
+      node = null
+      if (ary[i] != null) {
+        node = createTreeNode(ary[i])
+        queue.push(node)
+      }
+      current.right = node
+    }
+    return queue[0]
+  }
+  function treeToCondensedAry(root) {
+    if (root == null) return null
+    let queue = [root]
+    let res = []
+    while (queue.length) {
+      let current = queue.shift()
+      if (current) {
+        res.push(current.val)
+        queue.push(current.left, current.right)
+      } else {
+        res.push(null)
+      }
+    }
+    return res
+
+  }
+  function createTreeNode(val) {
+    return {
+      val: val,
+      left: null,
+      right: null,
+    }
+  }
+  function LinkedList() {
+    // debugger
+    // 创建一个内部节点类
+    function Node(data) {
+      this.data = data
+      this.next = null
+    }
+    // 创建属性
+    this.head = null
+    this.length = 0
+
+    // 1.追加方法 append
+    LinkedList.prototype.append = function (data) {
+
+      // 1.1 创建一个新的节点
+      let newNode = new Node(data)
+      if (this.length == 0) {  // 1.2 如果链表长度为 0，将新节点当做第一个节点
+        this.head = newNode
+      } else {                  //1.3 如果链表非空
+        let current = this.head // 1.4 创建一个变量，指向第一个节点
+        while (current.next) {  // 1.5 找到next指向null的节点（最后一个节点）
+          current = current.next
+        }
+        current.next = newNode  // 1.6 将最后一个节点的 next 指向新节点，完成添加操作
+      }
+      this.length += 1
+    }
+
+    // 2. toString 方法
+    LinkedList.prototype.toString = function () {
+
+      // 定义一个变量指向链表首项
+      let current = this.head
+
+      // 定义接收str
+      let listString = ''
+
+      // 取出所有的data，next 为 null 时退出循环
+      while (current) {
+        listString += current.data + " "
+        current = current.next
+      }
+      return listString
+    }
+
+    // 3. insert 方法
+    LinkedList.prototype.insert = function (position, data) {
+
+      // 3.1 边界条件判断
+      if (position < 0 || position > this.length) {
+        return false
+      }
+
+      let newNode = new Node(data)
+      // 3.2 如果插入到链表头部
+      if (position == 0) {
+        newNode.next = this.head
+        this.head = newNode
+      } else {
+
+        // 3.3插入其他部分
+        let index = 0
+        let current = this.head
+        let previous = null
+        while (index < position) {
+          previous = current
+          current = current.next
+          index++
+        }
+        previous.next = newNode
+        newNode.next = current
+      }
+
+      // 插入完成 length + 1
+      this.length++
+
+      return true
+    }
+
+    // 4.get
+    LinkedList.prototype.get = function (position) {
+      // 4.1 越界判断
+      if (position < 0 || position >= this.length) {
+        return null
+      }
+
+      // 4.2 获取相应data
+      let current = this.head
+
+      for (let i = 0; i < position; i++) {
+        current = current.next
+      }
+      return current.data
+
+    }
+
+    // 5.indexOf 根据内容找索引
+    LinkedList.prototype.indexOf = function (data) {
+
+      // 5.1 定义变量
+      let current = this.head
+      let index = 0
+
+      // 5.2 查找内容
+      while (current) {
+        if (current.data == data) {
+          return index
+        }
+        current = current.next
+        index++
+      }
+
+      // 5.3 没找到返回 -1
+      return -1
+    }
+
+    // 6.updata 方法
+    LinkedList.prototype.update = function (position, data) {
+      // 6.1 判断边界条件
+      if (position < 0 || position >= this.length) {
+        return false
+      }
+
+      // 6.2 修改数据
+      let current = this.head
+      let index = 0
+      while (index < position) {
+        current = current.next
+        index++
+      }
+      current.data = data
+      return true
+    }
+
+    // 7.removeAt
+    LinkedList.prototype.removeAt = function (position) {
+
+      // 7.1 判断边界条件
+      if (position < 0 || position >= this.length) {
+        return null
+      }
+
+      let current = this.head // 最后要返回删除值，所以放到外面
+
+      if (position == 0) {  // 7.2 如果删除的是第一个节点
+        this.head = this.head.next
+      } else {  // 7.3 其他情况
+        let index = 0
+        let previous = null
+        while (index < position) {
+          previous = current
+          current = current.next
+          index++
+        }
+
+        // 删除current节点
+        previous.next = current.next
+      }
+      // 7.4 删除节点后要length - 1
+      this.length--
+
+      return current
+    }
+
+    // 8.remove
+    LinkedList.prototype.remove = function (data) {
+      // 根据数据获得索引
+      let position = this.indexOf(data)
+
+      //根据索引删除数据
+      return this.removeAt(position)
+    }
+
+    // 9.isEmpty
+    LinkedList.prototype.isEmpty = function () {
+      return this.length == 0 ? true : false
+    }
+
+    // 10.size
+    LinkedList.prototype.size = function () {
+      return this.length
+    }
+  }
+
+  let list = new LinkedList()
+  let arr = [-10, -3, 0, 5, 9]
+  for (let i = 0; i < arr.length; i++) {
+    list.append(arr[i])
+  }
+
+</script>

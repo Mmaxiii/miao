@@ -280,7 +280,66 @@
 </script>
 
 <script>
+  function gui(ary) {
+    if (ary.length < 2) return ary.slice()
 
+    let m = ary.length >> 1
+    let left = ary.slice(0, m)
+    let right = ary.slice(m)
+
+    left = gui(left)
+    right = gui(right)
+
+    let i = 0
+    let j = 0
+    let res = []
+    while (i < left.length && j < right.length) {
+      if (left[i] < right[j]) {
+        res.push(left[i++])
+      } else {
+        res.push(right[j++])
+      }
+    }
+
+    while (i < left.length) {
+      res.push(left[i++])
+    }
+    while (j < right.length) {
+      res.push(right[j++])
+    }
+    return res
+  }
+  function qs(ary, start = 0, end = ary.length - 1) {
+    if (start == end) return
+    // 随机一个哨兵元素
+    let index = Math.random() * ary.length >> 0
+    let pivot = ary[index]
+    swap(ary, index, end)
+
+    let i = start
+    let j = start
+    while (j < end) {
+      if (ary[j] < pivot) {
+        swap(ary, i, j)
+        i++
+      }
+      j++
+    }
+    swap(ary, i, end)
+    qs(ary, start, i - 1)
+    qs(ary, i + 1, end)
+  }
+
+
+  function groupby(ary, name) {
+    return ary.reduce((initial, it) => {
+      let item = it[name];
+
+      (initial[item] || (initial[item] = [])).push(it)
+
+      return initial
+    }, {})
+  }
   function swap(arr, l, r) {
     let c = arr[l]
     arr[l] = arr[r]
@@ -321,7 +380,7 @@
 
   function groupBy1(arr, predicate) {
     return arr.reduce((result, it) => {
-      let groupName = predicate(it)
+      let groupName = predicate[it]
       if (!result[groupName]) {
         result[groupName] = []
       }
@@ -449,7 +508,7 @@
     }
     return res
   }
-  debugger;
+  // debugger;
   arr.forEach(item => {
     let parentId = item.parent
     if (parentId in byId) {

@@ -9,10 +9,260 @@
 </head>
 
 <body>
-  mmaxiii
+
+  [1,n,2,n,3,4,5,6,n,n,8,n,7]
 </body>
 <script src="lodash/mmaxiii-lodash.js"></script>
 <script>
+  function groupby(arr, f) {
+    arr.reduct((result, item) => {
+      let key = f(item)
+      if (!result[key]) {
+        result[key] = []
+      }
+      result[key].push(item)
+    }, {})
+  }
+  function qsort(ary, L = 0, R = ary.length - 1) {
+    let pviotIdx = Math.random() * (R - L + 1) >> 0
+    swap(ary, pviotIdx, R)
+    let mid = getMid(ary, L, R)
+    let left = mid[0]
+    let right = mid[1]
+    qsort(ary, L, left - 1)
+    qsort(ary, right + 1, R)
+  }
+  function getMid(arr, L, R) {
+    let less = L - 1
+    let more = R
+    while (L < more) {
+      if (arr[L] < arr[R]) {
+        swap(arr, ++less, L++)
+      } else if (arr[L] > arr[R]) {
+        swap(arr, --more, L)
+      } else {
+        L++
+      }
+    }
+    swap(arr, more, R)
+    return [less + 1, more]
+  }
+  function fan(f) {
+    return function (...args) {
+      return !f(...args)
+    }
+  }
+  function every(ary, f) {
+    for (let i = 0; i < ary.length; i++) {
+      if (!f(ary[i])) return false
+    }
+    return true
+  }
+  function some(ary, f) {
+    return every(ary, fan(f))
+  }
+  function flatten(ary, deps) {
+    let res = []
+    for (let i = 0; i < ary.length; i++) {
+      if (Array.isArray(ary[i]) && deps) {
+        res.push(...flatten(ary[i], deps - 1))
+      } else {
+        res.push(ary[i])
+      }
+    }
+    return res
+  }
+
+  function fan(f) {
+    return function (...args) {
+      return !f(...args)
+    }
+  }
+  function fan(f) {
+    return function (...args) {
+      return !f(...args)
+    }
+  }
+  function groupby(ary, name) {
+    return ary.reduce((initial, it) => {
+      let item = it[name];
+      (initial[item] || (ititial[item] = [])).push(it)
+
+      return initial
+    }, {})
+  }
+  function reduce(ary, f, initial) {
+    for (let i = 0; i < ary.length; i++) {
+      initial = f(initial, ary[i])
+    }
+    return initial
+  }
+  function insertIntoBST(root, val) {
+    if (!root) {
+      let node = createTreeNode(val)
+      root = node
+    } else {
+      if (val < root.val) {
+        root.left = insertIntoBST(root.left, val)
+      } else {
+        root.right = insertIntoBST(root.right, val)
+      }
+    }
+    return root
+  }
+  function bstSort(ary) {
+    let root
+    for (let i = 0; i < ary.length; i++) {
+      root = insertIntoBST(root, ary[i])
+    }
+    return inorderTre(root)
+    function inorderTre(root, ary = []) {
+      if (root) {
+        inorderTre(root.left, ary)
+        ary.push(root.val)
+        inorderTre(root.right, ary)
+      }
+      return ary
+    }
+
+  }
+  function insertIntoBST(root, val) {
+    let node = createTreeNode(val)
+    if (!root) {
+      root = node
+    } else {
+      if (root.val > val) {
+        root.left = insertIntoBST(root.left, val)
+      } else {
+        root.right = insertIntoBST(root.right, val)
+      }
+    }
+    return root
+  }
+  var maxDepth = function (root, n = 0) {
+    if (root) {
+      n = n + 1
+    } else {
+      return n
+    }
+
+    return Math.max(maxDepth(root.left, n), maxDepth(root.rigth, n))
+
+  };
+
+  var maxDepth = function (root, n = 0) {
+    if (root) {
+      n = n + 1
+    } else {
+      return n
+    }
+    return Math.max(maxDepth(root.left, n), maxDepth(root.right, n))
+  };
+
+
+  function treeTra(root) {
+    let stack = []
+    let res = []
+    let current = root
+    while (stack.length || current !== null) {
+      if (current !== null) {
+        stack.push(current)
+        current = current.left
+      } else {
+        current = stack.pop()
+        res.push(current.val)
+        current = current.right
+      }
+    }
+    return res
+  }
+  function tree2ca(root) {
+    if (root == null) return null
+    let queue = [root]
+    let res = []
+    while (queue.length) {
+      let current = queue.shift()
+      if (current) {
+        res.push(current.val)
+        queue.push(current.left, current.right)
+      } else {
+        res.push(null)
+      }
+
+    }
+    return res
+  }
+
+  function treeToCondensedAry(tree) {
+    if (root == null) return null
+    let queue = [root]
+    let res = []
+    while (queue.length) {
+      let current = queue.shift()
+      if (current) {
+        res.push(current.val)
+        queue.push(current.left, current.right)
+      } else {
+        res.push(null)
+      }
+    }
+    return res
+
+  }
+
+  function condensedAryToTree(ary) {
+    let queue = [createTreeNode(ary[0])]
+    let j = 0
+    for (let i = 1; i < ary.length; i++) {
+      let current = queue[j++]
+      let node = null
+      if (ary[i]) {
+        node = createTreeNode(ary[i])
+        queue.push(node)
+      }
+      current.left = node
+
+      i++
+
+      node = null
+      if (ary[i]) {
+        node = createTreeNode(ary[i])
+        queue.push(node)
+      }
+      current.right = node
+    }
+    return queue[0]
+  }
+
+  function createTreeNode(val) {
+    return {
+      val: val,
+      left: null,
+      right: null,
+    }
+  }
+
+  function treeToAry(tree, idx = 0, ary = []) {
+
+    if (tree) {
+      ary[idx] = tree.val
+      let leftval = treeToAry(tree.left, idx * 2 + 1, ary)
+      let rithtval = treeToAry(tree.ritht, idx * 2 + 2, ary)
+    }
+    return ary
+  }
+
+  function aryToTree(ary, rootPos = 0) {
+    if (ary[rootPos] == null) return null
+    let node = createTreeNode(ary[rootPos])
+    let leftPos = 2 * rootPos + 1
+    let rightPos = 2 * rootPos + 2
+    node.left = aryToTree(ary, leftPos)
+    node.right = aryToTree(ary, rightPos)
+    return node
+  }
+
+
   mmaxiii.reduce({ "a": 1, "b": 2, "c": 1 }, (result, value, key) => {
 
     (result[value] || (result[value] = [])).push(key)
@@ -152,7 +402,7 @@
     return !ary.some(negate(predicate))// 用的js自带some，也可以自己写
   }
   function some(ary, f) {
-    return ary.every(negate(f))
+    return !ary.every(negate(f))
   }
   function negate(f) {
     return function (...args) {
