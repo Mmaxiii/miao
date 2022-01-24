@@ -16,6 +16,42 @@
 
 
 <script>
+  function inO(root) {
+    let result = []
+    let stack = []
+    let curr = root
+    while (curr || stack.length) {
+      if (curr) {
+        stack.push(curr)
+        curr = curr.left
+      } else {
+        curr = stack.pop()
+        result.push(curr.val)
+        curr = curr.right
+      }
+    }
+    return result
+  }
+  function postOrderT(root, result = []) {
+    if (root) {
+      postOrderT(root.left, result)
+      postOrderT(root.right, result)
+      result.push(root.val)
+    }
+    return result
+  }
+  function postOrder(root) {
+    let stack = [root]
+    let result = []
+    let curr = null
+    while (stack.length) {
+      curr = stack.pop()
+      result.push(curr.val)
+      curr.left && stack.push(curr.left)
+      curr.right && stack.push(curr.right)
+    }
+    return result.reverse()
+  }
   var sortedArrayToBST = function (nums, left = 0, right = nums.length - 1) {
     if (left > right) return null
     let mid = Math.floor((right - left + 1) / 2)

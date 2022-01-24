@@ -1,6 +1,111 @@
 
-var mmaxiii = {
-  chunk: function (array, size) {
+var mmaxiii = function () {
+  // 分隔符，用来判断空位（bind）
+  _ = {}
+
+  //判断函数
+  function iteratee(predicate) {  // 将 predicate 转为函数
+    if (typeof predicate === 'string') {
+      predicate = property(predicate)
+    }
+    if (Array.isArray(predicate)) {
+      predicate = matchesProperty(predicate)
+    }
+    if (typeof predicate === 'object') {
+      predicate = matches(predicate)
+    }
+    return predicate  // 不是以上类型，就返回本身（函数）
+  }
+  function property(str) {  //传入字符串key，返回 key对应的 val (可以看做布尔值 val == true，没找到对应val就返回undefined，undefined == false)
+    return get(obj, str)
+  }
+  function matches(obj) { // 传入对象，返回布尔值
+    return function (it) {
+      for (let key in obj) { //判断obj里面的所有键值对与it里面的是否全部相同
+        if (it[key] !== obj[key]) return false
+      }
+      return true
+    }
+  }
+  // matches 第二种写法
+  // function matches(src) {
+  //   return bind(isMatch, null, _, src)
+  // }
+  function isMatch(obj, src) {
+    for (let key in src) {
+      if (typeof src[key] == 'object') {
+        if (!isMatch(obj[key], src[key])) return false
+      } else {
+        if (obj[key] !== src[key]) return false
+      }
+
+    }
+    return true
+  }
+  function isEqual(value, other) {
+    if (typeof value == 'string') {
+      return value === other
+    } else if (Array.isArray(value)) {
+      for (let i = 0; i < value.length; i++) {
+        if (!isEqual(value[i], other[i])) return false
+      }
+      return true
+    } else if (typeof value == 'object') {
+      for (let key in value) {
+        if (other[key] == 'undefined') return false
+      }
+      for (let key in other) {
+        if (value[key] == 'undefined') return false
+      }
+      for (let key in value) {
+        if (!isEqual(value[key], other[key])) return false
+      }
+    }
+  }
+  function matchesProperty(pair) {// 传入数组，返回布尔值
+    let key = pair[0]  // 第一项是键
+    let val = pair[1]  // 第二项是值
+    return function (it) { // 判断 it里面是否有相同的键值对
+      if (it[key] === val) return true
+      return false
+    }
+  }
+  function get(obj, path) {
+    let keys = toPath(path)
+    return keys.reduce((obj, key) => {
+      return obj == undefined || obj[key]
+    }, obj)
+  }
+  function toPath(path) {
+    if (typeof path == 'string') {
+      return path.split('.')
+        .flatMap(it => it.split(']'))
+        .flatMap(it => it.split('['))
+        .filter(it => it)
+    }
+    return path
+  }
+
+  /**
+   * @param {Function} func  要绑定参数的函数
+   * @param {this} thisArg  要给函数替换的this
+   * @param {参数} fixedArgs  要绑定的参数，空位放 _
+   * @returns {Function} 绑定后的函数
+   */
+  function bind(func, thisArg, ...fixedArgs) {
+    return function (...args) {
+      let bindedArgs = fixedArgs.slice()
+      let j = 0
+      for (let i = 0; i < bindedArgs.length; i++) {
+        if (bindedArgs[i] == _) {
+          bindedArgs[i] = args[j++]
+        }
+      }
+      bindedArgs.push(...args.slice(j))
+      return func.apply(thisArg, bindedArgs)
+    }
+  }
+  function chunk(array, size) {
     let len = array.length
     let res = []
     for (let i = 0; i < len; i += size) {
@@ -12,8 +117,8 @@ var mmaxiii = {
       res.push(temp)
     }
     return res
-  },
-  compact: function (array) {
+  }
+  function compact(array) {
     let res = []
     let len = array.length
     for (let i = 0; i < len; i++) {
@@ -22,116 +127,116 @@ var mmaxiii = {
       }
     }
     return res
-  },
-  drop: function (array, n = 1) {
+  }
+  function drop(array, n = 1) {
     let res = []
     let len = array.length
     for (let i = n; i < len; i++) {
       res.push(array[i])
     }
     return res
-  },
-  dropRight: function (array, n = 1) {
+  }
+  function dropRight(array, n = 1) {
     let res = []
     let len = array.length
     for (let i = 0; i < len - n; i++) {
       res.push(array[i])
     }
     return res
-  },
-  fill: function (array, filler, start = 0, end = array.length) {
+  }
+  function fill(array, filler, start = 0, end = array.length) {
     for (let i = start; i < end; i++) {
       array[i] = filler
     }
     return array
-  },
-  flatten: function (array) {
-    return this.flattenDepth(array)
-  },
+  }
+  function flatten(array) {
+    return flattenDepth(array)
+  }
 
 
-  flattenDeep: function (array) {
-    return this.flattenDepth(array, Infinity)
-  },
+  function flattenDeep(array) {
+    return flattenDepth(array, Infinity)
+  }
 
-  flattenDepth: function (array, depth = 1) {
+  function flattenDepth(array, depth = 1) {
 
     return array.reduce((result, item) => {
       if (Array.isArray(item) && depth) {
-        result.push(...this.flattenDepth(item, depth - 1))
+        result.push(...flattenDepth(item, depth - 1))
       } else {
         result.push(item)
       }
       return result
     }, [])
 
-  },
+  }
 
-  fromPairs: function (array) {
+  function fromPairs(array) {
     let res = {}
     let len = array.length
     for (let i = 0; i < len; i++) {
       res[array[i][0]] = array[i][1]
     }
     return res
-  },
+  }
 
-  head: function (array) {
+  function head(array) {
     return array[0]
-  },
+  }
 
-  indexOf: function (array, val, from = 0) {
+  function indexOf(array, val, from = 0) {
     let len = array.length
     for (let i = from; i < len; i++) {
       if (array[i] == val) return i
     }
     return -1
-  },
+  }
 
-  initial: function (array) {
+  function initial(array) {
     let len = array.length - 1
     let res = []
     for (let i = 0; i < len; i++) {
       res.push(array[i])
     }
     return res
-  },
+  }
 
-  join: function (ary, sep = ',') {
+  function join(ary, sep = ',') {
     let res = ''
     let len = ary.length - 1
     for (let i = 0; i < len; i++) {
       res = res + ary[i] + sep
     }
     return res + ary[len]
-  },
+  }
 
-  last: function (ary) {
+  function last(ary) {
     return ary[ary.length - 1]
-  },
+  }
 
-  lastIndexOf: function (ary, val, from = ary.length - 1) {
+  function lastIndexOf(ary, val, from = ary.length - 1) {
     for (let i = from; i >= 0; i--) {
       if (ary[i] === val) return i
     }
     return -1
-  },
+  }
 
-  reverse: function (ary) {
+  function reverse(ary) {
     let n = ary.length >> 1
     for (let i = 0, j = ary.length - 1; i < n; i++, j--) {
-      this.swap(ary, i, j)
+      swap(ary, i, j)
     }
     return ary
-  },
+  }
 
-  swap: function (ary, i, j) {
+  function swap(ary, i, j) {
     let temp = ary[i]
     ary[i] = ary[j]
     ary[j] = temp
-  },
+  }
 
-  uniq: function (ary) {
+  function uniq(ary) {
     let obj = {}
     let res = []
     for (let i = 0; i < ary.length; i++) {
@@ -141,10 +246,10 @@ var mmaxiii = {
       }
     }
     return res
-  },
+  }
 
-  without: function (ary, ...args) {
-    let obj = this.formkey(args)
+  function without(ary, ...args) {
+    let obj = formkey(args)
     let res = []
     for (let i = 0; i < ary.length; i++) {
       if (!(ary[i] in obj)) {
@@ -152,15 +257,15 @@ var mmaxiii = {
       }
     }
     return res
-  },
-  formkey: function (ary) {
+  }
+  function formkey(ary) {
     let res = {}
     for (let i = 0; i < ary.length; i++) {
       res[ary[i]] || (res[ary[i]] = 1)
     }
     return res
-  },
-  zip: function (...args) {
+  }
+  function zip(...args) {
     let res = []
     let n = args[0].length
     for (let i = 0; i < n; i++) {
@@ -171,13 +276,13 @@ var mmaxiii = {
       res.push(temp)
     }
     return res
-  },
+  }
   /**
    * 将zip处理过的数据恢复到zip之前的状态
    * @param {Array} array 要恢复的数组
    * @returns 新数组
    */
-  unzip: function (array) {
+  function unzip(array) {
     let res = []
     let len = array[0].length
     for (let i = 0; i < len; i++) { // 找出 array 中每项的第 i 个值，组成新数组，并 push 进 res
@@ -189,66 +294,40 @@ var mmaxiii = {
       res.push(temp)
     }
     return res
-  },
+  }
 
-  filter: function (coll, pred) {
-    let res = []
-    if (Array.isArray(pred)) {
-      for (let i = 0; i < coll.length; i++) {
-        if (coll[i][pred[0]] === pred[1]) res.push(coll[i])
-      }
-    } else if (typeof pred === 'object') {
-      for (let i = 0; i < coll.length; i++) {
-        let accord = false
-        for (let key in pred) {
-          if (coll[i][key] === pred[key]) {
-            accord = true
-          } else {
-            accord = false
-            break
-          }
-        }
-        if (accord) res.push(coll[i])
-      }
-    } else if (typeof pred === 'function') {
-      for (let key in coll) {
-        if (pred(coll[key])) res.push(coll[key])
-      }
-    } else {
-      for (let key in coll) {
-        if (coll[key][pred]) res.push(coll[key])
-      }
-    }
-    return res
-  },
+  function filter(coll, pred) {
+    pred = iteratee(pred)
+    let result = []
+    coll.forEach(it => {
+      if (pred(it)) result.push(it)
+    })
+    return result
+  }
 
-  forEach: function (coll, pred) {
+  function forEach(coll, pred) {
 
     for (let key in coll) {
       let item = pred(coll[key], key, coll)
-
     }
     return coll
-  },
+  }
 
-  map: function (coll, pred) {
-    let res = []
-    if (typeof pred === 'function') {
-      for (let key in coll) {
-        let item = pred(coll[key], key, coll)
-        res.push(item)
-      }
-    } else {
-      for (let key in coll) {
-        if (pred in coll[key]) {
-          res.push(coll[key][pred])
-        }
-      }
+  function map(coll, pred) {
+    pred = iteratee(pred)
+    let result = []
+    for (let i = 0; i < coll.length; i++) {
+
+      result.push(pred(coll[i], i, coll))
     }
-    return res
-  },
+    return result
+  }
+  function flatMap(collection, predicate) {
 
-  reduce: function (coll, pred, initial) {
+    return flatten(map(collection, predicate))
+  }
+
+  function reduce(coll, pred, initial) {
     let res = []
     let start = 0
     if (arguments.length == 2) {
@@ -259,14 +338,14 @@ var mmaxiii = {
       initial = pred(initial, coll[key], key, coll)
     }
     return initial
-  },
+  }
 
-  sample: function (coll) {
+  function sample(coll) {
     let n = Math.random() * coll.length >> 0
     return coll[n]
-  },
+  }
 
-  shuffle: function (coll) {
+  function shuffle(coll) {
     let res = Array(coll.length)
     for (let i = 0; i < res.length; i++) {
       res[i] = coll[i]
@@ -275,86 +354,86 @@ var mmaxiii = {
     for (let i = 0; i < n; i++) {
       let temp1 = Math.random() * res.length >> 0
       let temp2 = Math.random() * res.length >> 0
-      this.swap(res, temp1, temp2)
+      swap(res, temp1, temp2)
     }
 
     return res
-  },
+  }
   /**
    * @param collection array/Object/string
    * @return length
    *
    */
-  size: function (collection) {
+  function size(collection) {
     let length = 0
     for (let key in collection) {
       length++
     }
     return length
-  },
+  }
 
-  isBoolean: function (value) {
+  function isBoolean(value) {
     return Object.prototype.toString.call(value) === '[object Boolean]'
-  },
+  }
 
-  isNaN: function (value) {
+  function isNaN(value) {
     return !(value === value)
-  },
+  }
 
-  isNil: function (value) {
-    return this.isNull(value) || value === undefined
-  },
+  function isNil(value) {
+    return isNull(value) || value === undefined
+  }
 
-  isNull: function (value) {
+  function isNull(value) {
     return Object.prototype.toString.call(value) === '[object Null]'
-  },
+  }
 
-  isNumber: function (value) {
+  function isNumber(value) {
     return Object.prototype.toString.call(value) === '[object Number]'
-  },
+  }
 
-  toArray: function (value) {
+  function toArray(value) {
     let res = []
     for (let key in value) {
       res.push(value[key])
     }
     return res
-  },
+  }
 
-  ceil: function (number, percision = 0) {
+  function ceil(number, percision = 0) {
     let base = Math.pow(10, percision)
     number = number * base
     let n = number % 1
     if (n > 0) number = (number >> 0) + 1
     number = number / base
     return number
-  },
+  }
 
-  max: function (array) {
+  function max(array) {
     let maxNum = -Infinity
     for (let i = 0; i < array.length; i++) {
       maxNum = array[i] > maxNum ? array[i] : maxNum
     }
     return maxNum === -Infinity ? undefined : maxNum
-  },
+  }
 
-  sum: function (array) {
+  function sum(array) {
     let sum = 0
     for (let i = 0; i < array.length; i++) {
       sum += array[i]
     }
     return sum
-  },
+  }
 
-  repeat: function (string, n = 1) {
+  function repeat(string, n = 1) {
     let res = ''
     for (let i = 0; i < n; i++) {
       res += string
     }
     return res
-  },
+  }
 
-  range: function (start = 0, end, step = 1) {
+  function range(start = 0, end, step = 1) {
     let res = []
     if (arguments.length === 1) {
       if (arguments[0] < 0) {
@@ -378,27 +457,27 @@ var mmaxiii = {
     }
 
     return res
-  },
+  }
 
-  cloneDeep: function (value) {
+  function cloneDeep(value) {
     let res = null
     if (Array.isArray(value)) {
       res = []
       for (let i = 0; i < value.length; i++) {
-        res.push(this.cloneDeep(value[i]))
+        res.push(cloneDeep(value[i]))
       }
     } else if (typeof value === 'object') {
       res = {}
       for (let key in value) {
-        res[key] = this.cloneDeep(value[key])
+        res[key] = cloneDeep(value[key])
       }
     } else {
       res = value
     }
     return res
-  },
+  }
 
-  difference: function (...args) {
+  function difference(...args) {
     let judger = new Set()
     let res = []
     for (let i = 1; i < args.length; i++) {
@@ -414,8 +493,8 @@ var mmaxiii = {
       if (!(judger.has(item[i]))) res.push(item[i])
     }
     return res
-  },
-  intersection: function (...args) {
+  }
+  function intersection(...args) {
     let obj = args[1].reduce((result, element) => {  //练习
       result[element] = 1
       return result
@@ -428,18 +507,18 @@ var mmaxiii = {
       }
     }
     return res
-  },
+  }
 
-  pull: function (array, ...args) {
+  function pull(array, ...args) {
     let obj = {}
     for (let i = 0; i < args.length; i++) {
       obj[args[i]] = 1
     }
-    let res = this.filter(array, element => {
+    let res = filter(array, element => {
       return !(element in obj)
     })
     return res
-  },
+  }
   /**
    * 检测目标值在数组中要插入的位置
    *
@@ -447,7 +526,7 @@ var mmaxiii = {
    * @param {Number} value 要插入的值
    * @returns {Number} 要插入的位置
    */
-  sortedIndex: function (array, value) {
+  function sortedIndex(array, value) {
     let l = -1
     let r = array.length
     while (r - l > 1) {
@@ -459,9 +538,9 @@ var mmaxiii = {
       }
     }
     return l + 1
-  },
+  }
 
-  union: function (...args) {
+  function union(...args) {
     let judger = new Set()
     let result = []
     for (let i = 0; i < args.length; i++) {
@@ -474,8 +553,8 @@ var mmaxiii = {
       }
     }
     return result
-  },
-  xor: function (...args) {
+  }
+  function xor(...args) {
     let judger = {}
     for (let i = 0; i < args.length; i++) {
       let item = args[i]
@@ -488,8 +567,8 @@ var mmaxiii = {
       if (judger[key] === 1) res.push(Number(key))
     }
     return res
-  },
-  isEmpty: function (value) {
+  }
+  function isEmpty(value) {
     if (Array.isArray(value)) {
       if (value.length !== 0) return false
     } else if (typeof value === 'object' && value) {
@@ -499,16 +578,16 @@ var mmaxiii = {
       if (value.size() !== 0) return false // 判断map和set
     }
     return true
-  },
-  min: function (array) {
+  }
+  function min(array) {
     let min = Infinity
     for (let i = 0; i < array.length; i++) {
       min = array[i] < min ? array[i] : min
     }
     return min
-  },
+  }
 
-  round: function (number, percision = 0) {
+  function round(number, percision = 0) {
     let base = Math.pow(10, percision)
     number = number * base
     let n = number % 1
@@ -516,9 +595,9 @@ var mmaxiii = {
 
     number = number / base
     return number
-  },
+  }
 
-  forOwn: function (obj, iterator) {
+  function forOwn(obj, iterator) {
     let hasOwn = Object.prototype.hasOwnProperty
     for (let key in obj) {
       if (hasOwn.call(obj, key)) {
@@ -526,6 +605,67 @@ var mmaxiii = {
       }
     }
   }
+  return {
+    iteratee,
+    property,
+    matches,
+    isMatch,
+    matchesProperty,
+    get,
+    toPath,
+    bind,
+    chunk,
+    compact,
+    drop,
+    dropRight,
+    fill,
+    flatten,
+    flattenDeep,
+    flattenDepth,
+    fromPairs,
+    head,
+    indexOf,
+    initial,
+    join,
+    last,
+    lastIndexOf,
+    reverse,
+    swap,
+    uniq,
+    without,
+    formkey,
+    zip,
+    unzip,
+    filter,
+    forEach,
+    map,
+    flatMap,
+    reduce,
+    sample,
+    shuffle,
+    size,
+    isBoolean,
+    isNaN,
+    isNil,
+    isNull,
+    isNumber,
+    toArray,
+    ceil,
+    max,
+    sum,
+    repeat,
+    range,
+    cloneDeep,
+    difference,
+    intersection,
+    pull,
+    sortedIndex,
+    union,
+    xor,
+    isEmpty,
+    min,
+    round,
+    forOwn,
+  }
 
-
-}
+}()

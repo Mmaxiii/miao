@@ -14,6 +14,28 @@
 </body>
 <script src="lodash/mmaxiii-lodash.js"></script>
 <script>
+  function group(arr, pre) {
+    return arr.reduce((result, it) => {
+      str
+      let item = it[pre]
+      if (!result[item]) result[item] = []
+      result[it[pre]].push(it)
+      return result
+    }, {})
+  }
+  function fallten(ary, dep) {
+    let result = []
+
+    for (let i = 0; i < ary.length; i++) {
+      if (Array.isArray(ary[i]) && dep) {
+        result.push(...fallten(ary[i], dep - 1))
+      } else {
+        result.push(ary[i])
+      }
+
+    }
+    return result
+  }
   function groupby(arr, f) {
     arr.reduct((result, item) => {
       let key = f(item)
@@ -263,13 +285,13 @@
   }
 
 
-  mmaxiii.reduce({ "a": 1, "b": 2, "c": 1 }, (result, value, key) => {
+  // mmaxiii.reduce({ "a": 1, "b": 2, "c": 1 }, (result, value, key) => {
 
-    (result[value] || (result[value] = [])).push(key)
-    return result
-  }
+  //   (result[value] || (result[value] = [])).push(key)
+  //   return result
+  // }
 
-    , {})
+  // , { })
   function level(root) {
     if (root === null) return []
     let stack = []

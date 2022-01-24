@@ -1,43 +1,174 @@
 <script>
-  let arr = [-4, -1, 0, 3, 10];
-  aa(arr)
-  console.log(arr);
-  function aa(arr) {
+  function memoize(func) {
+    let map = new Map()
+    return function (val) {
+      let result
+      if (map.has(val)) {
+        result = map.get(val)
+      } else {
+        result = func(val)
+        map.set(val, result)
+      }
+      return result
+    }
+  }
+  function before(n, func) {
+    let count = 0
+    let result
+    return function (...args) {
+      if (c < n) {
+        result = func(...args)
+        c++
+      }
+      return result
+    }
 
-    quickSort(arr, 0, arr.length - 1)
-    function quickSort(arr, L = 0, R = n - 1) {
-      if (L < R) {
-        let num = Math.floor(Math.random() * (R - L + 1))
-        swap(arr, L + num, R)
-        let p = partition(arr, L, R)
-        quickSort(arr, L, p[0] - 1)
-        quickSort(arr, p[1] + 1, R)
+  }
+  function flip(func) {
+    return function (...args) {
+
+      return func(...args.reverse())
+    }
+  }
+  function spread(f) {
+    return function (ary) {
+      return f(...ary)
+    }
+  }
+  function negate(f) {
+    return function (...args) {
+      return !f(...args)
+    }
+  }
+  function ary(func, n = func.length) {
+    return function (...args) {
+      let arg = args.slice(0, n)
+      return func.call(this, ...arg) //原来的this在哪？现在的this在哪？
+    }
+  }
+  function unary(func) {
+    return function (...args) {
+      return func(...args.slice(0, 1))
+    }
+  }
+  function unary(func) {
+    return ary(func, 1)
+  }
+  function matchesProperty(pair) {
+    let key = pair[0]
+    let val = pair[1]
+    return function (obj) {
+      return obj[key] === val
+    }
+  }
+  function isMatch(obj, src) {
+    for (let key in src) {
+      if (src[key] && typeof src[key] === 'object') {
+        if (!isMath(obj[key], src[key])) return false
+      } else if (src[key] !== obj[key]) {
+        return false
       }
     }
-    function partition(arr, L, R) {
-      let less = L - 1
-      let more = R
-      while (L < more) {
-        if (arr[L] > arr[R]) {
-          swap(arr, L, --more)
-        } else if (arr[L] < arr[R]) {
-          swap(arr, ++less, L)
-          L++
-        } else {
-          L++
+    return true
+  }
+  function matches(target) {
+    return function (obj) {
+      for (let key in target) {
+        if (obj[key] !== target[key]) {
+          return false
         }
       }
-      swap(arr, more, R)
-      return [less + 1, more]
+      return true
     }
-    function swap(arr, a, b) {
-      let c = 0;
-      c = arr[a];
-      arr[a] = arr[b];
-      arr[b] = c;
-    }
-
-    return arr
   }
+
+  function f(a, b, c) {
+    return a + b * c
+  }
+
+  function bind(func, thisArg, ...fixedArgs) {
+    return function (...args) {
+
+    }
+  }
+
+  function property(name) {
+    return it => it.name
+
+  }
+  function MyQueue() {
+    this.head = null
+    this.tail = null
+    this.length = 0
+  }
+  MyQueue.prototype.push = function (x) {
+    let node = {
+      val: x,
+      next: null,
+    }
+    if (!this.head) {
+      this.head = node
+      this.tail = node
+    } else {
+      this.tail.next = node
+      this.tail = node
+    }
+    this.length++
+  };
+  MyQueue.prototype.pop = function () {
+    if (this.head) {
+      let temp = this.head
+      this.head = this.head.next
+      this.length--
+      temp.next = null
+      if (this.head == null) this.tail = null
+      return temp.val
+    }
+  };
+  MyQueue.prototype.top = function () {
+    return this.head.val
+  };
+  MyQueue.prototype.empty = function () {
+    return this.length === 0
+  };
+  var MyStack = function () {
+    this._stack = new MyQueue()
+  };
+
+  /** 
+   * @param {number} x
+   * @return {void}
+   */
+  MyStack.prototype.push = function (x) {
+    this._stack.push(x)
+  };
+
+  /**
+   * @return {number}
+   */
+  MyStack.prototype.pop = function () {
+    let it = this._stack.tail
+    while (this._stack.head != it) {
+      this._stack.push(this._stack.pop())
+    }
+    this._stack.pop()
+    return it.val
+  };
+
+  /**
+   * @return {number}
+   */
+  MyStack.prototype.top = function () {
+    return this._stack.tail.val
+  };
+
+  /**
+   * @return {boolean}
+   */
+  MyStack.prototype.empty = function () {
+    return this._stack.empty()
+  };
+
+
 
 </script>
