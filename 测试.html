@@ -12,8 +12,10 @@
 
   [1,n,2,n,3,4,5,6,n,n,8,n,7]
 </body>
-<script src="lodash/mmaxiii-lodash.js"></script>
+
 <script>
+  Object.prototype.toString.call(this)
+
   function group(arr, pre) {
     return arr.reduce((result, it) => {
       str

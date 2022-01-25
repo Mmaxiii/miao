@@ -1,7 +1,5 @@
 
 var mmaxiii = function () {
-  // 分隔符，用来判断空位（bind）
-  _ = {}
 
   //判断函数
   function iteratee(predicate) {  // 将 predicate 转为函数
@@ -9,7 +7,7 @@ var mmaxiii = function () {
       predicate = property(predicate)
     }
     if (Array.isArray(predicate)) {
-      predicate = matchesProperty(predicate)
+      predicate = matchesProperty(...predicate)
     }
     if (typeof predicate === 'object') {
       predicate = matches(predicate)
@@ -17,7 +15,8 @@ var mmaxiii = function () {
     return predicate  // 不是以上类型，就返回本身（函数）
   }
   function property(str) {  //传入字符串key，返回 key对应的 val (可以看做布尔值 val == true，没找到对应val就返回undefined，undefined == false)
-    return get(obj, str)
+
+    return bind(get, null, mmaxiii, str) //返回一个绑定了一个值的函数
   }
   function matches(obj) { // 传入对象，返回布尔值
     return function (it) {
@@ -43,14 +42,16 @@ var mmaxiii = function () {
     return true
   }
   function isEqual(value, other) {
-    if (typeof value == 'string') {
-      return value === other
-    } else if (Array.isArray(value)) {
+    if (value === other) return true  // 基础类型
+    if (value !== value && other !== other) return true  // 两边都是NaN
+    if (Array.isArray(value) && (Array.isArray(other))) {
       for (let i = 0; i < value.length; i++) {
         if (!isEqual(value[i], other[i])) return false
       }
       return true
-    } else if (typeof value == 'object') {
+    }
+    // 两边都不是数组，都不是 null，都是对象的情况
+    else if (!Array.isArray(value) && !Array.isArray(other) && value && other && typeof value == 'object' && typeof other == 'object') {
       for (let key in value) {
         if (other[key] == 'undefined') return false
       }
@@ -60,22 +61,39 @@ var mmaxiii = function () {
       for (let key in value) {
         if (!isEqual(value[key], other[key])) return false
       }
+      return true
+    }
+    return false
+  }
+
+  function matchesProperty(path, val) {  //path为路径 ： a.b.c
+    return function (obj) {
+      return isEqual(get(obj, path), val)
     }
   }
-  function matchesProperty(pair) {// 传入数组，返回布尔值
-    let key = pair[0]  // 第一项是键
-    let val = pair[1]  // 第二项是值
-    return function (it) { // 判断 it里面是否有相同的键值对
-      if (it[key] === val) return true
-      return false
-    }
-  }
+  // function matchesProperty(pair) {// 传入数组，返回布尔值
+  //   let key = pair[0]  // 第一项是键
+  //   let val = pair[1]  // 第二项是值
+  //   return function (it) { // 判断 it里面是否有相同的键值对
+  //     if (it[key] === val) return true
+  //     return false
+  //   }
+  // }
+  /**
+   * @param {Object} obj  目标对象
+   * @param {String/ Array} path  要取值的路径
+   * @returns {Value} 要取得值
+   */
   function get(obj, path) {
     let keys = toPath(path)
     return keys.reduce((obj, key) => {
       return obj == undefined || obj[key]
     }, obj)
   }
+  /**
+  * @param {String} path  路径字符串
+  * @returns {Array} 路径数组
+  */
   function toPath(path) {
     if (typeof path == 'string') {
       return path.split('.')
@@ -89,7 +107,7 @@ var mmaxiii = function () {
   /**
    * @param {Function} func  要绑定参数的函数
    * @param {this} thisArg  要给函数替换的this
-   * @param {参数} fixedArgs  要绑定的参数，空位放 _
+   * @param {参数} fixedArgs  空位传 mmaxiii
    * @returns {Function} 绑定后的函数
    */
   function bind(func, thisArg, ...fixedArgs) {
@@ -97,7 +115,7 @@ var mmaxiii = function () {
       let bindedArgs = fixedArgs.slice()
       let j = 0
       for (let i = 0; i < bindedArgs.length; i++) {
-        if (bindedArgs[i] == _) {
+        if (bindedArgs[i] == mmaxiii) {
           bindedArgs[i] = args[j++]
         }
       }
@@ -377,7 +395,7 @@ var mmaxiii = function () {
   }
 
   function isNaN(value) {
-    return !(value === value)
+    return Object.prototype.toString.call(value) === '[object NaN]'
   }
 
   function isNil(value) {
@@ -610,6 +628,7 @@ var mmaxiii = function () {
     property,
     matches,
     isMatch,
+    isEqual,
     matchesProperty,
     get,
     toPath,

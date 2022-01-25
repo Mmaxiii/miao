@@ -1,4 +1,14 @@
 <script>
+  function curry(f, n = f.length) {
+    return function (...args) {
+      n = n - args.length
+      if (n != 0) {
+        return curry(f.bind(null, ...args), n - args.length)
+      } else {
+        return f(...args)
+      }
+    }
+  }
   function memoize(func) {
     let map = new Map()
     return function (val) {
