@@ -338,7 +338,10 @@ var mmaxiii = function () {
   function map(coll, pred) {
     pred = iteratee(pred)
     let result = []
+
     for (let key in coll) {
+      // key 是字符串
+      if (Array.isArray(coll)) key = +key
       result.push(pred(coll[key], key, coll))
     }
     return result
