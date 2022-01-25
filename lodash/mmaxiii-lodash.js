@@ -53,10 +53,10 @@ var mmaxiii = function () {
     // 两边都不是数组，都不是 null，都是对象的情况
     else if (!Array.isArray(value) && !Array.isArray(other) && value && other && typeof value == 'object' && typeof other == 'object') {
       for (let key in value) {
-        if (other[key] == 'undefined') return false
+        if (other[key] == undefined) return false
       }
       for (let key in other) {
-        if (value[key] == 'undefined') return false
+        if (value[key] == undefined) return false
       }
       for (let key in value) {
         if (!isEqual(value[key], other[key])) return false
@@ -84,10 +84,14 @@ var mmaxiii = function () {
    * @param {String/ Array} path  要取值的路径
    * @returns {Value} 要取得值
    */
-  function get(obj, path) {
+  function get(obj, path, defaultValue = undefined) {
     let keys = toPath(path)
     return keys.reduce((obj, key) => {
-      return obj == undefined || obj[key]
+      if (obj == undefined) {
+        return defaultValue
+      } else {
+        return obj[key]
+      }
     }, obj)
   }
   /**
@@ -334,9 +338,8 @@ var mmaxiii = function () {
   function map(coll, pred) {
     pred = iteratee(pred)
     let result = []
-    for (let i = 0; i < coll.length; i++) {
-
-      result.push(pred(coll[i], i, coll))
+    for (let key in coll) {
+      result.push(pred(coll[key], key, coll))
     }
     return result
   }
@@ -346,14 +349,17 @@ var mmaxiii = function () {
   }
 
   function reduce(coll, pred, initial) {
-    let res = []
-    let start = 0
+    let hasInitial = true
     if (arguments.length == 2) {
+      hasInitial = false
       initial = coll[0]
-      start = 1
     }
     for (let key in coll) {
-      initial = pred(initial, coll[key], key, coll)
+      if (!hasInitial) {
+        hasInitial = true
+      } else (
+        initial = pred(initial, coll[key], key, coll)
+      )
     }
     return initial
   }
@@ -364,18 +370,13 @@ var mmaxiii = function () {
   }
 
   function shuffle(coll) {
-    let res = Array(coll.length)
-    for (let i = 0; i < res.length; i++) {
-      res[i] = coll[i]
+    let result = [...coll]
+    let len = result.length
+    for (let i = 0; i < len; i++) {
+      let swapIdx = i + Math.random() * (len - i) >> 0
+      swap(result, i, swapIdx)
     }
-    let n = res.length >> 1
-    for (let i = 0; i < n; i++) {
-      let temp1 = Math.random() * res.length >> 0
-      let temp2 = Math.random() * res.length >> 0
-      swap(res, temp1, temp2)
-    }
-
-    return res
+    return result
   }
   /**
    * @param collection array/Object/string
@@ -395,7 +396,8 @@ var mmaxiii = function () {
   }
 
   function isNaN(value) {
-    return Object.prototype.toString.call(value) === '[object NaN]'
+    // new 出来的 NaN 必须 Number(value) 一下，让其不在是对象.变成判断 NaN == new Number(NaN) 。NaN 与自身不相等
+    return isNumber(value) && value != Number(value);
   }
 
   function isNil(value) {
@@ -598,9 +600,9 @@ var mmaxiii = function () {
     return true
   }
   function min(array) {
-    let min = Infinity
+    let min
     for (let i = 0; i < array.length; i++) {
-      min = array[i] < min ? array[i] : min
+      min = array[i] > min ? min : array[i]   // 可以处理min是undefined情况
     }
     return min
   }
@@ -622,6 +624,7 @@ var mmaxiii = function () {
         iterator(obj[key], key)
       }
     }
+    return obj
   }
   return {
     iteratee,
