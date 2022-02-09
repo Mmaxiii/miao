@@ -359,6 +359,14 @@ var mmaxiii = function () {
     })
     return result
   }
+  function reject(collection, predicate) {
+    let result = []
+    predicate = iteratee(predicate)
+    forEach(collection, it => {
+      if (!predicate(it)) result.push(it)
+    })
+    return result
+  }
 
   function forEach(coll, pred) {
 
@@ -396,6 +404,23 @@ var mmaxiii = function () {
         hasInitial = true
       } else (
         initial = pred(initial, coll[key], key, coll)
+      )
+    }
+    return initial
+  }
+  function reduceRight(collection, predicate, initial) {
+    if (!Array.isArray(collection)) return reduce(collection, predicate, initial)
+    let hasInitial = true
+    if (arguments.length == 2) {
+      hasInitial = false
+      initial = collection[collection.length - 1]
+    }
+
+    for (let i = collection.length - 1; i >= 0; i--) {
+      if (!hasInitial) {
+        hasInitial = true
+      } else (
+        initial = predicate(initial, collection[i], i, collection)
       )
     }
     return initial
@@ -752,6 +777,27 @@ var mmaxiii = function () {
     })
     return result
   }
+  function keyBy(collection, predicate) {
+    let result = {}
+    predicate = iteratee(predicate)
+    forEach(collection, it => {
+      let key = predicate(it)
+      result[key] = it
+    })
+    return result
+  }
+  function partition(collection, predicate) {
+    let result = [[], []]
+    predicate = iteratee(predicate)
+    forEach(collection, it => {
+      if (predicate(it)) {
+        result[0].push(it)
+      } else {
+        result[1].push(it)
+      }
+    })
+    return result
+  }
   return {
     iteratee,
     property,
@@ -788,11 +834,13 @@ var mmaxiii = function () {
     zip,
     unzip,
     filter,
+    reject,
     forEach,
     map,
     flatMap,
     flatMapDepth,
     reduce,
+    reduceRight,
     sample,
     shuffle,
     size,
@@ -825,6 +873,8 @@ var mmaxiii = function () {
     countBy,
     every,
     groupBy,
+    keyBy,
+    partition,
   }
 
 }()
