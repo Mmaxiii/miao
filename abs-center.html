@@ -77,8 +77,10 @@
     }
 
     .center5 {
+      /* 画出一个比父元素大的元素 */
       width: 400px;
       height: 500px;
+      /* shrink 0 使子元素不收缩 */
       flex-shrink: 0;
       border: 2px solid #78e08f;
     }
@@ -116,7 +118,9 @@
   <div class="father father2">
     <img class="center2" src="https://www.12306.cn/index/images/abanner01.jpg" alt="">
   </div>
-  <h4>No.3 子元素是行内块，父元素font-size:0;水平text-align:center，竖直vertical:middle;(与x的中点对齐，父元素字号为0，x大小为零，则正好居中)</h4>
+  <h4>No.3
+    子元素是行内块，父元素font-size:0;水平text-align:center，竖直vertical-align:middle;(与x的中点对齐，父元素字号为0，x大小为零，则正好居中),并且行高设置成与height等高
+  </h4>
   <div class="father father3">
     <img class="center3" src="https://www.12306.cn/index/images/abanner01.jpg" alt="">
   </div>

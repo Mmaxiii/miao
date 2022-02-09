@@ -1,8 +1,7 @@
 <script>
   function curry(f, n = f.length) {
     return function (...args) {
-      n = n - args.length
-      if (n != 0) {
+      if (args.length < n) {
         return curry(f.bind(null, ...args), n - args.length)
       } else {
         return f(...args)

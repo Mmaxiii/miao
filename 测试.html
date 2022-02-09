@@ -9,22 +9,22 @@
 </head>
 
 <body>
-
   [1,n,2,n,3,4,5,6,n,n,8,n,7]
 </body>
 
 <script>
-  Object.prototype.toString.call(this)
 
-  function group(arr, pre) {
+  Object.prototype.toString.call(this)
+  function group(arr, f) {
     return arr.reduce((result, it) => {
-      str
-      let item = it[pre]
-      if (!result[item]) result[item] = []
-      result[it[pre]].push(it)
+      if (!(f(it) in result)) {
+        result[f(it)] = []
+      }
+      result[f(it)].push(it)
       return result
     }, {})
   }
+
   function fallten(ary, dep) {
     let result = []
 
@@ -47,15 +47,7 @@
       result[key].push(item)
     }, {})
   }
-  function qsort(ary, L = 0, R = ary.length - 1) {
-    let pviotIdx = Math.random() * (R - L + 1) >> 0
-    swap(ary, pviotIdx, R)
-    let mid = getMid(ary, L, R)
-    let left = mid[0]
-    let right = mid[1]
-    qsort(ary, L, left - 1)
-    qsort(ary, right + 1, R)
-  }
+
   function getMid(arr, L, R) {
     let less = L - 1
     let more = R

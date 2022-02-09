@@ -166,6 +166,23 @@ var mmaxiii = function () {
     }
     return res
   }
+  function dropRightWhile(array, predicate) {
+    let result = []
+    if (typeof predicate == 'string') {
+      predicate = function (pred) {
+        return function (it) {
+          return pred in it
+        }(predicate)
+      }
+    }
+    predicate = iteratee(predicate)
+    for (let i = 0; i < array.length; i++) {
+      if (!predicate(array[i])) {
+        result.push(array[i])
+      }
+    }
+    return result
+  }
   function fill(array, filler, start = 0, end = array.length) {
     for (let i = start; i < end; i++) {
       array[i] = filler
@@ -501,19 +518,31 @@ var mmaxiii = function () {
   }
 
   function difference(...args) {
+    return differenceBy(...args)
+  }
+  function differenceBy(...args) {
+    let pred = args[args.length - 1]
+    if (!Array.isArray(pred)) {
+      pred = iteratee(pred)
+      args.length = args.length - 1
+    } else {
+      pred = it => it
+    }
+
     let judger = new Set()
     let res = []
     for (let i = 1; i < args.length; i++) {
-      let item = args[i]
-      for (let j = 0; j < item.length; j++) {
-        if (!(judger.has(item[j]))) {
-          judger.add(item[j])
-        }
+      let temp = args[i]
+      for (let j = 0; j < temp.length; j++) {
+        judger.add(pred(temp[j]))
       }
     }
-    for (let i = 0; i < args[0].length; i++) {
-      let item = args[0]
-      if (!(judger.has(item[i]))) res.push(item[i])
+
+    let temp = args[0]
+    for (let i = 0; i < temp.length; i++) {
+      if (!judger.has(pred(temp[i]))) {
+        res.push(temp[i])
+      }
     }
     return res
   }
@@ -643,6 +672,7 @@ var mmaxiii = function () {
     compact,
     drop,
     dropRight,
+    dropRightWhile,
     fill,
     flatten,
     flattenDeep,
@@ -682,6 +712,7 @@ var mmaxiii = function () {
     range,
     cloneDeep,
     difference,
+    differenceBy,
     intersection,
     pull,
     sortedIndex,

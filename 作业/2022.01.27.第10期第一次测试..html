@@ -1,0 +1,1656 @@
+01. 列出至少 7 个常用 Linux 命令及其基本使用方法
+```
+
+```
+02. 什么是 html 实体？常见 html 实体有哪些？
+```
+
+```
+03. 计算机为什么使用二进制？
+```
+
+```
+04. 什么是 Unicode？如何表示，有什么作用？最通用的 Unicode 实现是？
+```
+
+```
+05. 什么是 GUI，什么是 CLI，什么是接口/界面？现实生活中有哪些例子？
+```
+
+```
+06. 在什么情况下 html 标签可以不需要闭合？
+```
+
+```
+07. 在一些情况下某些非自闭合标签的结束标签可以省略的原因是什么？
+```
+
+```
+08. 什么是费茨定律？它有哪些应用？
+```
+
+```
+09. WHY English is IMPORTANT for programmers?
+```
+
+```
+10. 将二进制 `10010` 数转换为十进制数
+```
+
+```
+11. 将十六进制数 `ABCDEF` 转换为十进制数
+```
+
+```
+12. 将十进制数 `435` 分别转换成二进制数和十六进制数
+```
+
+```
+13. 列出 HTML 中常见的全局属性
+```
+
+```
+14. 什么是操作系统的路径（Path）？它的作用及应用场景是？
+```
+
+```
+15. 什么是文本文件？什么是二进制文件？它们最明显的区别是？
+```
+
+```
+16. 为什么说 html 与数学公式有诸多相似之处？
+```
+
+```
+17. 几种常见图片格式有什么区别和特点？
+```
+
+```
+18. `data-*` 属性一般是用来干嘛？
+```
+
+```
+19. 有没有办法扩大一个 checkbox 的可点击区域？
+```
+
+```
+20. 什么是 MIME Type？
+```
+
+```
+21. 哪些标签可以使用 target 属性？哪些标签可以使用 href 属性？
+```
+
+```
+22. 什么是 BOM 头？
+```
+
+```
+23. group（分组）类型的标签有哪些？
+```
+
+```
+24. 什么是 SEO？
+```
+
+```
+25. 分别列出每种常见浏览器的内核名称（自己查）。
+```
+
+```
+26. 列表类标签有哪些？分别如何使用？需要注意些什么？
+```
+
+```
+27. 为什么不同类型的标签的 fallback 内容要以不同的形式提供？如iframe的fallback需要写在其内部，而script和frame标签的fallback需要写在其外部。
+```
+
+```
+28. 分别写出在 head 中设定页面编码，设定 icon，引入样式表的标签
+```
+
+```
+29. 什么叫做可访问性，html 中为此做了什么工作？
+```
+
+```
+30. 写出以下几个符号的 ASCII 码：`a，A，0，CR，LF，空格，NBSP`。
+```
+
+```
+31. 中英互翻
+```
+
+```
+    * geek
+    * nerd
+    * hacker
+    * edge
+    * bleeding/cutting edge 前沿/尖端/可能存在风险的技术
+    * HTML 实体
+    * coordinate
+    * polygon
+    * bit
+    * byte
+    * alternative
+    * 属性
+    * obsolate
+    * 二进制
+    * 十进制
+    * 十六进制
+    * octal
+    * deprecate
+    * loop
+    * 行
+    * 列
+    * horizontal
+    * 语义化
+    * 可访问性
+
+
+32. 用文字描述如下选择器将选择哪些（个）元素，并给出其优先级
+```
+
+```
+  ```css
+  div, h1 {}
+  div[class] [id="abc"] {}
+  div:hover ul li > div {}
+  body :active {}
+  div:hover::after {}
+  div:hover ::after {}
+  ::selection {}
+  :target {}
+  input + ul + p ~ span {}
+  * * * {}
+  div * span {}
+  div[title] {}
+  fieldset legend + input {}
+  #some #thing .not:hover .abc:hover {}
+    ```
+
+33. `em,px,rem,vw,vh` 分别代表多长？
+```
+
+```
+34. 显示器的物理分辨率为 `1920x1080`，操作系统设置的分辨率为 `1280x720`，网页的放大倍数为 `110%`，请计算一个 CSS 像素对应多少个显示器物理像素（面积与长度）？
+```
+
+```
+35. 写出如下代码显示在浏览器后**每个单词**的字号
+```
+
+```
+    ```html
+    <style>
+      html {
+        font-size: 20px;
+      }
+      section {
+        font-size: 10rem;
+      }
+      p {
+        font-size: 24px;
+      }
+      span {
+        font-size: 150%;
+      }
+      .sucks {
+        font-size: inherit;
+      }
+    </style>
+    <body>
+      <section>
+        <h2>Brown</h2>
+        <p>quick</p>
+        <p>jumps <span>over <span>lazy</span> dog</span></p>
+        <p class="sucks">sucks</p>
+      </section>
+    </body>
+    ```
+
+36. 如何给css添加注释
+```
+
+```
+37. 指出如下css代码中的错误
+```
+
+```
+    ```
+    p,h1,{
+
+        background-color: rgba:(abc)
+        font-varient; abc;
+        colr: #ff048;
+        font: "serif" 25px;
+    }
+    ```
+
+38. 写出如下结构中div元素的所有后代/祖先/子/父/兄弟元素
+```
+
+```
+    ```html
+    <section>
+      <h1><span></span></h1>
+      <main>
+        <h2></h2>
+        <div>
+          <ul>
+            <li><a href=""><img src="" alt=""></a></li>
+          </ul>
+        </div>
+        <aside>
+          <h3></h3>
+        </aside>
+      </main>
+    </section>
+    ```
+
+39. 常见的替换元素有哪些？它们与非替换元素最大的区别什么？
+```
+
+```
+40. 让 CSS 在 HTML 页面上生效有哪些方法，分别写出来。
+```
+
+```
+41. 如何让页面打印时应用不同的效果？
+```
+
+```
+42. 假设 index.html 的路径为 http://user.coding.me/task/index.html ，如下引用的a.css和b.css路径分别为？
+```
+
+```
+    ```html
+    <!-- index.html的内容 -->
+    <style>
+        @import "/foo/bar/.././a.css";
+    </style>
+    ```
+    ```css
+    /* a.css的内容 */
+    @import "./foo/b.css";
+    ```
+
+43. 写出满足如下条件的选择器
+```
+
+```
+    * 第  8个子结点之后，倒数第 5 个子结点之前的li结点
+    * 【类名】以“damiao-”开头的元素
+    * rel 属性中有 nofollow 这个单词的标签
+44. 链接伪类的几种状态书写的顺序是什么？为什么？
+```
+
+```
+45. 如下 font 属性的值哪一个是书写正确的？
+```
+
+```
+    * font: serif 24px;
+    * font: serif bold 24px/1.2;
+    * font: bold 24px/1.2 serif;
+46. 详述你对盒模型的理解。
+```
+
+```
+47. 元素的高度写百分比在什么情况下【无效】，为什么？在什么情况下【有效】，有效时是以哪个元素的高度为基准值？
+```
+
+```
+48. 字体的 italic 与 obsolete 的区别是？
+```
+
+```
+49. 什么是模拟信号？什么是数字信号？它们的区别是？
+```
+
+```
+50. 将如下 markdown 转换成 html
+```
+
+```
+    ```md
+    ## 四季变换
+
+    一年有四季，
+    四季有其对应的节气
+
+    * 春
+        - 立春
+        - 惊蛰
+        - 元宵
+    * 夏
+        - **小米**发布会
+        - 华为发布会
+    * 秋
+        - 开学了
+        - 军训了
+    * 冬
+        - 下雪了
+            + 打雪仗了
+        - 来暖气了
+        - 开空调了
+
+    > 知识就是力量，法国就是培根。
+
+    [春](http://baike.baidu.com/item/%E6%98%A5/6983693)
+    ![春](https://www.google.com.hk/images/nav_logo242_hr.png)
+    ```
+
+51. 如下表单提交后将跳转到什么地址
+```
+
+```
+    ```html
+    <form action="https://www.baidu.com/s" target="_blank">
+      <input type="text" value="bb" name="a">
+      <input type="checkbox" name="b" id="b" value="123" checked>
+      <input type="checkbox" name="b" id="b" value="456" checked>
+      <input type="checkbox" name="b" id="b" value="789">
+      <input type="radio" name="c" id="c" value="a2">
+      <input type="radio" name="c" id="c" value="a5" checked>
+      <input type="radio" name="c" id="c" value="a4">
+      <select name="select">
+        <option value="01">0001</option>
+        <option value="02">0002</option>
+        <option value="03" selected>0003</option>
+        <option value="04">0004</option>
+        <option value="05">0005</option>
+      </select>
+      <button>提交</button>
+    </form>
+    ```
+
+52. 列出 input 的 type 有哪些值，以及为各个值时分别需要怎么使用。
+```
+
+```
+53. 想要让一个文本输入框在页面打开后自动获得光标要怎么办？
+```
+
+```
+54. 如何在文本框里放置提示性文字？
+```
+
+```
+55. option 标签的主体内容太长影响用户体验，你会如何解决？
+```
+
+```
+56. 想要在 textarea 标签中默认显示一段 html 代码最安全的做法是什么？
+```
+
+```
+57. 如何禁用一组输入框？
+```
+
+```
+58. 如下表格渲染出来后是什么效果？不要直接将代码贴入jsbin中看效果
+```
+
+```
+    ```html
+    <table border=1>
+      <caption>美国队长</caption>
+      <col>
+      <col bgcolor=red>
+      <col>
+      <colgroup bgcolor=pink>
+        <col>
+        <col>
+        <col bgcolor=brown>
+      </colgroup>
+      <thead>
+        <tr>
+          <th>01</th>
+          <th>02</th>
+          <th>03</th>
+          <th>04</th>
+          <th>05</th>
+          <th>06</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>abc</td>
+          <td colspan=3 rowspan=2>abc</td>
+          <td>abc</td>
+          <td>abc</td>
+        </tr>
+        <tr>
+          <td>abc</td>
+          <td colspan=2 rowspan=3>abc</td>
+        </tr>
+        <tr bgcolor=lightgreen>
+          <td colspan=2 rowspan=2>abc</td>
+          <td>abc</td>
+          <td>abc</td>
+        </tr>
+        <tr>
+          <td>abc</td>
+          <td>abc</td>
+        </tr>
+      </tbody>
+    </table>
+    ```
+
+59. 写出如下标签或属性值的英文全称
+```
+
+```
+
+    标签：html,div,p,a,em,tr,th,td,col,ul,ol,li,dl,dt,dd,pre,nav
+
+    属性：coord,rect,poly,href,src
+
+60. 请说出你对命令行程序的理解，以及其与 GUI 程序的区别
+```
+
+```
+61. 请确认以下标签分别属性什么类别（Content Category）？
+```
+
+```
+
+    p, meta, h1, fieldset, option, input, area
+
+62. 解释 box-sizing 可以取哪些值，以及每个值的意义
+```
+
+```
+63. 简述 ie7 市场份额比 ie6 低的原因并在网络上找出目前各大浏览器在中国和全球的市场份额
+```
+
+```
+64. 画出如下代码中 div 及其子元素的渲染结果，并指出 p 标签中【每个行内元素的，内容区，行内框的范围】，p 元素的行框，并指明理论的行框高度。有尺子的可以以 1mm 为 2px 来绘制。
+```
+
+```
+    ```html
+    <!DOCTYPE html>
+    <html>
+    <head>
+      <meta charset="utf-8">
+      <title>JS Bin</title>
+      <style>
+        p {
+          font-size: 20px;
+          line-height: 120%;
+          margin: 30px;
+          margin-left: auto;
+          margin-right: -20px;
+          width: 300px;
+          background-color: tan;
+        }
+
+        .a {
+          display: inline-block;
+        }
+
+        .b {
+          font-size: 30px;
+          vertical-align: 15px;
+        }
+
+        .c {
+          display: inline-block;
+          width: 60px;
+          height: 60px;
+          background-color: pink;
+          margin: 8px;
+        }
+
+        img {
+          box-sizing: border-box;
+          width: 50px;
+          height: 50px;
+          border: 2px solid;
+          margin: 4px;
+          vertical-align: -10px;
+          margin-bottom: -5px;
+        }
+        div {
+          width: 400px;
+          border: 1px dotted;
+        }
+      </style>
+    </head>
+    <body>
+      <div>
+        <p>
+          <span class=a>foo</span>
+          <span class=b>bar</span>
+          <span class=c></span>
+          <img src="https://drscdn.500px.org/photo/205228769/m%3D1170_k%3D1/d721302d063d447aa3bd6301dc1cba87" alt="">
+        </p>
+      </div>
+    </body>
+    </html>
+    ```
+
+65. vertical-align 取 middle 时元素如何对齐？
+```
+
+```
+66. 什么是 baseline？
+```
+
+```
+67. 解释 position 可以取哪些值以及这些值的意义
+```
+
+```
+68. 被定位的元素（即想要定位的那个元素）的定位原点是其哪个 box？
+```
+
+```
+69. 说出级联菜单的大体实现思路
+```
+
+```
+70. 如下结构中，div 有两个伪元素，分别标出伪元素的位置，用 `<before></before>` 表示 `::before` 伪元素，用 `<after></after>` 表示 `::after` 伪元素
+```
+
+```
+    ```html
+    <div>
+      <h1>The article</h1>
+      <p>the quick brown fox</p>
+    </div>
+    ```
+71. 如何在伪元素中插入换行符？如何让这个换行符在页面中生效？
+```
+
+```
+72. 有坐标点 `(1, 2), (3, 4), (3, 0), (8, 1)`，画出它的大致Beizer曲线。可查维基百科。
+```
+
+```
+73. 可渐变与不可渐变属性的最大的区别是什么？
+```
+
+```
+74. 想要让一个元素对鼠标完全不可点击，用什么办法？
+```
+
+```
+75. 页面有无 `doctype` 声明会有什么区别？
+```
+
+```
+76. HTML 的 `aria-*` 与 `role` 属性的作用是？
+```
+
+```
+77. 中英互翻
+```
+
+```
+    omit，multiple，驼峰式，中划线式，layout，typo，code review，半径，config，集合，矩形，binaryx，decimal，十六进制，八进制，SEO，HTML实体，语义化，兼容性，quirk，reference，大小写敏感，别名
+
+78. 有一张高为 80 宽为 50 的图片，中心有一个直径为 40 的圆，其做为一个 150x200 的元素的背景图片，background-size 为 contain 和 cover 时，圆的直径分别为多少？
+```
+
+```
+79. 画出以下代码的布局，并标出关键位置的尺寸。
+```
+
+```
+    ```html
+    <style>
+    .b {
+      position: relative;
+      margin: 10px 15px 30px;
+      border: 20px solid;
+      padding: 5px 20px 10px 35px;
+      width: 565px;
+      height: 400px;
+      box-sizing: border-box;
+    }
+    .c {
+      width: 198px;
+      height: 200px;
+      background-color: #fff;
+      position: absolute;
+      left: 52px;
+      bottom: 45px;
+    }
+    .a {
+      position: absolute;
+      margin: 8px 9px;
+      border: 6px solid;
+      border-right-width: 14px;
+      padding: 13px 17px;
+      width: 100px;
+      height: 100px;
+    }
+    </style>
+    <div class=b>
+      <div class=c>
+        <div class=a></div>
+      </div>
+    </div>
+    ```
+80. 写出实现小米首页 logo 返回主页的动画效果的代码。
+```
+
+```
+81. 清除浮动与闭合浮动分别是什么？它们的区别和联系是什么？
+```
+
+```
+82. 解释如下代码渲染结果的成因：https://jsbin.com/nigucupoju/edit?html,css,output
+```
+
+```
+83. 什么是 CSS Sprite？为什么要使用 CSS Sprite？它有哪些优缺点？
+```
+
+```
+84. 如何理解 display 为 inline-block,inline-table,inline-flex 等inline类型的元素？它它有什么需要注意的地方？
+```
+
+```
+85. color 这个属性有什么需要注意的地方？
+```
+
+```
+86. 简述 em 框，内容区，行内框，行框的构成以及其需要注意的问题。
+```
+
+```
+87. 如何确定一个行内框的baseline及其最高点和最低点？
+```
+
+```
+88. 表格布局中各层的层次顺序是什么？
+```
+
+```
+89. 找出如下代码中的错误
+```
+
+```
+    ```
+    <style>
+      div::after：hover {
+        opacity: 85%；
+        transition: opactiy .3s step(5,end);
+      }
+      a:visited {
+        font-size: 28px;
+      }
+    </style>
+    <div>
+      <a href="jd.com”>京东商场<a>
+      <a href="mi.com”>小米网<a>
+    </div>
+    ```
+
+90. 如下内容渲染在【同一行】中，请计算那一行的理论行高
+```
+
+```
+    ```html
+    <!DOCTYPE html>
+    <html>
+    <head>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width">
+      <title>JS Bin</title>
+      <style>
+        div {
+          margin: 80px;
+          background-color: violet;
+        }
+        span {
+          display: inline-block;
+          border: 1px dotted;
+          background-color: pink;
+        }
+
+        .a {
+          vertical-align: -15px;
+          width: 30px;
+          height: 30px;
+        }
+        .b {
+          margin-top: -50px;
+          width: 30px;
+          height: 30px;
+          vertical-align: top;
+        }
+        .c {
+          margin-bottom: 10px;
+          vertical-align: middle;
+        }
+        .d {
+          width: 30px;
+          height: 30px;
+        }
+      </style>
+    </head>
+    <body>
+      <div>
+        x<span class="a">foo</span>
+        <span class="b">bar</span>
+        <span class="c">baz</span>
+        <span class="d"></span>
+      </div>
+    </body>
+    </html>
+    ```
+
+91. `vertical-align` 取值为 `baseline` 时在不同情况下分别是如何对齐的？
+```
+
+```
+92. 解释如下代码渲染结果的成因：https://jsbin.com/dimaxip/1
+```
+
+```
+93. 说出至少三种闭合浮动的方案，并解释原理
+```
+
+```
+94. 默写与表格布局相关的 CSS 属性，并说明相关属性的作用
+```
+
+```
+95. 在各种情况下，一个元素的包含块分别是什么？
+```
+
+```
+96. 解释常规流与包含块的概念
+```
+
+```
+97. 写出与背景相关的属性并说明每个属性的作用和会产生的效果
+```
+
+```
+98. 如何实现单方向的盒子阴影？
+```
+
+```
+99. `visibility:hidden`，`display:none`，`opacity:0`分别有什么不同？
+```
+
+```
+00. 表单元素有哪些伪类选择器？
+```
+
+```
+01. 为什么要在文件的最后一行加一个回车？
+```
+
+```
+02. `:nth-of-type()`，`:nth-last-of-type()`，`:first-of-type`，`:last-of-type` 这一组伪类选择器有什么需要注意的地方？
+```
+
+```
+03. 给写以下结构，写出只选中第一个p标签的选择器
+```
+
+```
+  ```html
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+      <meta charset="UTF-8">
+      <title>Document</title>
+    </head>
+    <body>
+      <div></div>
+      <p></p>
+      <p></p>
+      <p></p>
+    </body>
+    </html>
+  ```
+04. 写出至少两种三栏等高自适应布局的代码
+```
+
+```
+05. 表布局中边框合并的原则是什么？
+```
+
+```
+06. 如何让一个元素可被 focus？如何去掉其被 focus 时的虚框？
+```
+
+```
+07. IE hack 是什么，如何使用？vendor prefix 又是什么，它的意义是什么？条件注释的语法是什么，它有什么用处？
+```
+
+```
+08. CSS 中一般为何不使用 `cm`，`mm` 等长度单位？
+```
+
+```
+
+09. display 属性有哪些值可选？
+```
+
+```
+10. 画出如下代码的渲染结果
+```
+
+```
+  ```html
+    <!DOCTYPE html>
+    <html>
+    <head>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width">
+      <title>JS Bin</title>
+      <style>
+        div {
+          background-color: brown;
+          width: 200px;
+          height: 150px;
+          margin: 20px;
+          padding: 1px;
+        }
+
+        span {
+          background-color: pink;
+          margin: 1px;
+        }
+
+        [a1] {
+          width: 50px;
+          height: 40px;
+          float: left;
+        }
+        [a2] {
+          width: 20px;
+          height: 50px;
+          float: left;
+        }
+        [a3] {
+          width: 20px;
+          height: 70px;
+          float: right;
+        }
+        [a4] {
+          width: 30px;
+          height: 30px;
+          float: left;
+          clear: both;
+        }
+        [a5] {
+          width: 60px;
+          height: 190px;
+          float: right;
+        }
+
+        [b1] {
+          width: 30px;
+          height: 30px;
+          float: left;
+        }
+        [b2] {
+          width: 40px;
+          height: 40px;
+          float: right;
+        }
+        [b3] {
+          width: 50px;
+          height: 90px;
+          clear: both;
+          float: left;
+        }
+      </style>
+    </head>
+    <body>
+      <div a>
+        <span a1>a1</span>
+        <span a2>a2</span>
+        <span a3>a3</span>
+        <span a4>a4</span>
+        <span a5>a5</span>
+        lorem
+      </div>
+      <div b>
+        <span b1>b1</span>
+        <span b2>b2</span>
+        <span b3>b3</span>
+      </div>
+    </body>
+    </html>
+  ```
+11. reset.css与normalize.css分别是什么，区别是什么，何种场景会使用到？现在更流行哪一种？
+```
+
+```
+12. 如何让背景图片从元素的左下角向上偏移5像素，往右偏移3像素；图片不重复平铺？写出代码。
+```
+
+```
+13. `td` 元素的 `headers` 属性是干嘛的？
+```
+
+```
+14. 写出创建如下目录结果的命令行脚本（注：有扩展名的为文件，没有扩展名的为文件夹）。
+```
+
+```
+    ```
+    a
+    │  readme.md
+    │
+    ├─foo
+    │  └─c
+    └─bar
+        │  a.txt
+        │  b.txt
+        │
+        └─y
+                a.js
+    ```
+
+15. https://www.example.com/foo/bar/product.html 页面中有如下代码
+```
+
+```
+    ```html
+    <link rel="stylesheet" href="//test.example.com/assets/../the/../path/bbc/ccd.css">
+    ```
+    请问最终引入的c.css的完整路径是什么？
+16. 把如下公式【等号右边反A左边】转换为通过函数名来表达数学符号的单行纯文本表达式形式
+```
+
+```
+
+    ![formule](https://wikimedia.org/api/rest_v1/media/math/render/svg/467cf813e1be327172fa6def9ed61afb54f37f19)
+
+    * 用 `sigma(s,e,f)` 函数表示函数 `f(x)` 在 `x` 从 `s` 到 `e` 范围的和：
+        * 即如果 `f(x) = x*x` ，则 `sigma(1,10,f)` 将得到 1 到 10 的平方和
+    * 用 `factorial(x)` 表示 `x` 的阶乘
+    * 用 `pow(x,y)` 表示 `x` 的 `y` 次方
+    * 用 `division(x,y)` 表示 `x` 除以 `y`（`x/y`）
+    * 用 `add(x,y)` 表示 `x` 加 `y`
+    * 用 `mul(x,y)` 表示 `x` 乘以 `y`
+
+    例如等差数列前 n 项和的公式可以表达为如下形式 `division(mul(n,add(n,1)),2)`
+17. 如下代码中，div 元素设置了多列布局，如何让 h2 标签跨越多列显示？
+```
+
+```
+    ```html
+    <div>
+        <h2>Lorem ipsum dolor sit amet.</h2>
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing 18. Mollitia, 19. Harum atque quaerat recusandae quibusdam.</p>
+        ```
+
+        ```
+        ```
+
+        ```
+        <p>Aliquid unde perferendis illo consectetur, magni corporis placeat, impedit ullam minus illum 20. Expedita, ipsa!</p>
+        ```
+
+        ```
+        <p>Expedita, magni sed accusantium quaerat mollitia doloribus, cum! Possimus nostrum ratione autem aut, laborum doloremque!</p>
+        <h2>Lorem ipsum dolor sit amet, consectetur.</h2>
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing 21. Cupiditate adipisci, esse? Cupiditate?</p>
+        ```
+
+        ```
+        <p>Mollitia doloribus nihil dolor ipsam ab, nesciunt cupiditate, aut iste aspernatur reprehenderit.</p>
+        <p>Veniam necessitatibus, doloremque iusto eveniet nisi illo! Excepturi facilis autem similique tempore!</p>
+    </div>
+    ```
+
+22. 写出如下选择器选中哪些元素
+```
+
+```
+    - :only-child
+    - :only-of-type
+    - :first-of-type
+    - :last-of-type
+    - :nth-of-type
+    - :nth-last-of-type
+    - :not()
+    - :checked
+    - :disabled
+    - :enabled
+    - :valid
+    - :invalid
+    - ::selection
+
+23. 实现当页面内容很少时，页面的footer也处于视口的底部；当页面内容较多时（多于视口大小），footer显示在页面的尾部。
+```
+
+```
+  效果页面：https://getbootstrap.com/examples/sticky-footer-navbar/
+  调节视口高度即可观察到效果（当视口过高时，footer总是处于视口底部，当视口高度过小时，footer部分处于内容区域的尾部）
+24. 给定如下html结构，为书名加书名号（《》）。为章节加上章节编号，为章节中的段落加上段落编号。为每个段落执行两个文字左右的缩进。并为每章（回）的第一段实现首字下沉效果（类似于报纸杂志的第一个字特大的效果）。
+```
+
+```
+    ```html
+    <h1>红楼梦</h1>
+    <h2>甄士隐梦幻识通灵  贾雨村风尘怀闺秀</h2>
+    <p>——此开卷第一回也。作者自云：曾历过一番梦幻之后，故将真事隐去，而借
+  通灵说此《石头记》一书也，故曰“甄士隐”云云。……</p>
+    <p>看官你道此书从何而起?说来虽近荒唐，细玩颇有趣味。却说那女娲氏炼石补
+  天之时，于大荒山无稽崖炼成高十二丈、见方二十四丈大的顽石三万六千五百零一
+  块。那娲皇只用了三万六千五百块，单单剩下一块未用，弃在青埂峰下。</p>
+    <h2>贾夫人仙逝扬州城  冷子兴演说荣国府</h2>
+    <p>甲：此回亦非正文，本旨只在冷子兴一人，即俗谓“冷中出热，无中生有”也。其演说荣府一篇者，盖因族大人多，若从作者笔下一一叙出，尽一二回不能得明，则成何文字？故借用冷子一人，略出其大半，使阅者心中，已有一荣府隐隐在心，然后用黛玉、宝钗等两三次皴染，则耀然于心中眼中矣。此即画家三染法也。</p>
+    <p>未写荣府正人，先写外戚，是由远及近、由小至大也。若使先叙出荣府，然后一一叙及外戚，又一一至朋友、至奴仆，其死板拮据之笔，岂作“十二钗”人手中之物也？今先写外戚者，正是写荣国一府也。故又怕闲文赘累，开笔即写贾夫人已死，是特使黛玉入荣之速也。</p>
+    <h2>托内兄如海荐西宾  接外孙贾母惜孤女</h2>
+    <p>却说雨村忙回头看时，不是别人，乃是当日同僚一案参革的张如圭。他系此地
+  人，革后家居，今打听得都中奏准起复旧员之信，他便四下里寻情找门路，忽遇见
+  雨村，故忙道喜。二人见了礼，张如圭便将此信告知雨村，雨村欢喜，忙忙叙了两
+  句，各自别去回家。</p>
+    <p>那女学生原不忍离亲而去，无奈他外祖母必欲其往，且兼如海说：“汝父年已
+  半百，再无续室之意，且汝多病，年又极小，上无亲母教养，下无姊妹扶持。今去
+  依傍外祖母及舅氏姊妹，正好减我内顾之忧，如何不去？”黛玉听了，方洒泪拜别，
+  随了奶娘及荣府中几个老妇登舟而去。雨村另有船只，带了两个小童，依附黛玉而
+  行。</p>
+    <h2>薄命女偏逢薄命郎  葫芦僧判断葫芦案</h2>
+    <p>卻說黛玉衕姐妹們至王夫人處，見王夫人正和兄嫂處的來使計議家務，又說姨母家遭人命官司等語。因見王夫人事情冗雜，姐妹們遂出來，至寡嫂李氏房中來了。原來這李氏即賈珠之妻。珠雖夭亡，幸存一子，取名賈蘭，今方五歲，已入學攻書。這李氏亦系金陵名宦之女，父名李守中，曾為國子祭酒；族中男女無不讀詩書者。</p>
+    <p>如今且說賈雨村授了應天府，一到任就有件人命官司詳至案下，卻是兩家爭買一婢，各不相讓，以致毆傷人命。</p>
+    ```
+
+25. transition-property 写成 all 可能会造成什么问题？
+```
+
+```
+26. 如何让一个元素的大小正合适？
+```
+
+```
+
+27. 在 Twitter 点赞的动画中，为什么让动画以 `0.4666` 且以 `linear` 的方式进行，就可以正确观察到动画了？
+```
+
+```
+28. 缓动函数 steps(10, end) 表现出什么样的行为？
+```
+
+```
+
+29. 给出至少 5 种水平垂直居中的方案。
+```
+
+```
+30. sourcemap是什么？
+```
+
+```
+31. 用svg画现一个小米的logo，给出svg源代码。
+```
+
+```
+32. 何为缓动函数（即 transition-timing-function）？它有哪些内置值？如何自定义一个缓动函数？
+```
+
+```
+33. 为什么 if ([]) {} 能进if分支，但 [] == false 却为真？
+```
+
+```
+34. 请尽量多的列出JS语言的运算符。
+```
+
+```
+35. 常见缓动函数有哪些，画出其【典型的】【时间-距离】图像。
+```
+
+```
+36. 使用css3 animation实现marquee标签的效果
+```
+
+```
+37. 简述字体图标的原理及其优缺点
+```
+
+```
+38. 说出 viewport 声明的意义，及如何适配移动端页面，分别给出不同情况下的解决方案
+```
+
+```
+    - 不同的浏览器环境
+        + 安卓 5.0 以上
+        + 安卓 5.0 以下
+    - 不同的设计需求
+        + 严格按比例还原视觉稿布局
+        + 页面内容与屏幕大小呈正相关
+39. 什么是 FOUC 以及 FOUT？如何产生的？如何避免？
+```
+
+```
+40. 如何实现文字溢出后显示为省略号，写出完整代码
+```
+
+```
+41. 如何禁用 textarea 元素默认的可缩放行为？
+```
+
+```
+42. 用 CSS 画出一个半圆形，分别给出实心与空心的的画法。
+```
+
+```
+43. 解释什么是 reflow 与 repaint 以及它们各自的特点以及会造成的问题并给出应对方案。
+```
+
+```
+44. transition-delay及animation-delay为负表现出什么样的行为？
+```
+
+```
+45. 指出如下程序中存在的【所有错误】
+```
+
+```
+    ```
+    var x = (5 + 8 *( 9+2(4+5*(2*5(3(4+0)*7)%2)/2)*4.5)/9，
+    var y = foobar
+    var fruit = 'apple'
+
+    for (var i = 0; i<10, i++) {
+      console.log(i)
+    }
+
+    if (x => 25) {
+      console.log(3)
+    } else if (x =< 30) {
+      console.log(2)
+    } else if {
+      console.log(2)
+    } else {
+      console.log(2)
+    } else
+      console.log(2)
+    }
+    ```
+
+46. 假设如下【重新定义】闰年，写出判断闰年的函数isLeapYear
+```
+
+```
+    - 4的倍数
+    - 100的倍数不是
+    - 400的倍数是
+    - 3200的倍数不是
+47. 分别用flex，float，定位，表格等写出三栏等高自适应布局的实现代码
+```
+
+```
+48. 读程序写结果
+```
+
+```
+    ```
+    var sum
+    for (var i = 45; i >= -5; i-=2) {
+      sum += i
+    }
+    console.log(sum)
+    ```
+
+49. JS程序不加分号的话在哪些特殊情况下要加？
+```
+
+```
+50. 读程序写结果
+```
+
+```
+    ```js
+    var x = 0
+    var i = -8, j = 42
+    var count = 0
+    while (x < 10) {
+      for(i = x; i<42;i++) {
+        do {
+          count++
+          j--
+        } while (j > 37)
+      }
+      x++
+    }
+    console.log(count)
+    ```
+51. CSS3 的 @font-face 除了可以用来做字体图标外，还可以如何使用以提高代码的可维护性？
+```
+
+```
+52. CSS3 Media Query 可以在查询媒体的哪些方面以实现不同情况下让不同的CSS代码生效？
+```
+
+```
+53. 写出使用8位二进制表示168与-200时的形式。然后计算它们进行按位与，按位或，按位非，按位异或的结果
+```
+
+```
+54. 请解释什么是“不动点理论”
+```
+
+```
+55. 当页面中出现表示时间的文字但表意不明确时，比较优雅且富有语义的做法是什么？
+```
+
+```
+56. JS 代码在什么情况下会发生（隐式/自动）类型转换？
+```
+
+```
+57. 能否使用 for 做为变量的名字？为什么？
+```
+
+```
+58. break 关键字可以用在哪些语句里？
+```
+
+```
+59. c++ 与 ++c 有什么区别？
+```
+
+```
+60. 请把【foo"'\\n//】这10个符号表示为js中的字符串（不含两个【】符号）。
+```
+
+```
+61. 请用自己的话列出数组和字符串的常用函数/方法的使用方式，即函数名及接收参数与返回的值。
+```
+
+```
+62. 请【手动】调整如下代码的缩进及格式
+```
+
+```
+    ```js
+    var primeList = [2,3,5,7,11,13,17,19,23]
+
+    function isPrime(n) {
+        var sn = Math.sqrt(n)
+
+    for(var i = 0; primeList[i] <= sn; i++) {
+        if (n % primeList[i] === 0) {
+  return false
+            }}
+    return true
+      }
+
+    function countPrimes(n) {
+      var count = 1
+      for(var i = 3; i < n; i+=2) {
+    if (   isPrime(i)) {
+            primeList.push(i)
+  count++
+           }
+      }return count
+  }
+
+
+    ```
+
+
+63. 什么是死循环？什么情况下会触发死循环？
+```
+
+```
+64. 如何调试JS代码？调试功能最主要的目的是什么？
+```
+
+```
+65. switch/case语句有哪些需要注意的问题？
+```
+
+```
+66. while语句和do while语句的区别是什么？
+```
+
+```
+67. 为什么判断一个数是否为素数只需要拿它除以小于等于它平方根的所有素数就可以了？推导整个过程
+```
+
+```
+68. 解释一下数学中映射的意义及其在编程语言中对应的概念
+```
+
+```
+69. JS语言有哪些基本的数据类型？相同及不同数据类型的值分别可以做什么类型的运算？
+```
+
+```
+70. 解释函数声明语句的语法为什么不能直接被调用
+```
+
+```
+71. 使用var与使用let声明变量有什么区别？
+```
+
+```
+72. 中英互翻
+```
+
+```
+    * graceful degrade
+    * shrink
+    * alternative
+    * render
+    * surprisingly
+    * convention
+    * trigger
+    * syntax
+    * pixel ratio
+    * linear
+    * series
+    * chain
+    * keyframe
+    * unique
+    * maintainable
+    * dppx
+    * dpi
+    * instant
+    * precede
+    * counterparts
+    * immediately
+    * shape
+    * horizontal
+    * feature
+    * incredibly
+    * cpu-intensive
+    * hardware acceleration
+    * available
+    * situation
+    * case
+    * scenario
+    * shorthand
+    * vertical
+    * compose
+    * vender
+    * prefix
+    * subsequent
+    * illustrate
+    * dpcm
+    * resolution
+    * square
+    * cinematic
+    * multiple
+    * bulletproof
+    * address
+    * issue
+    * workaround
+    * introduce
+    * model
+    * hexadecimal
+    * combine
+    * quartet
+    * perspective
+    * prime
+    * torture
+    * evenly
+    * shift
+    * offset
+    * implement
+    * 字体子集
+    * axis
+    * viewport
+    * develop
+    * development
+    * attribute selector
+    * siblings
+    * ajacent
+    * cartesian coordinate system
+    * dimensional
+    * inherit
+    * output
+    * input
+    * default
+    * restrict
+    * certain
+    * circumstance
+    * sceneario
+    * 伪元素
+    * 伪类
+    * structue
+    * infinite
+    * intensive
+    * torture
+    * palette
+    * reduce
+    * ellipse
+    * ellipsis
+    * currency
+    * quirk
+    * portrait
+    * landscape
+    * orientation
+    * credentials
+    * origin
+    * gradient
+    * distort
+    * cubic
+    * implicit
+    * explicit
+    * decoration
+
+73. 以下两种定义函数的方式有何种区别？
+```
+
+```
+    ```
+    var f = function(x) {
+        return x * x
+    }
+
+    function g(x) {
+        return x * x * x
+    }
+    ```
+74. 对象与数组有何种相似与不同之处？
+```
+
+```
+75. 读程序写结果
+```
+
+```
+    ```js
+    var a = 3
+    var b = 9
+    console.log(function(n){return [2,3,a,b,a+b,a*b,n]}(7)[Math.round(Math.sin(3.14))+3])
+    ```
+76. 递归函数能正确运算的两个必要条件是什么？实现递归函数时应该以何种思路来实现？编写递归代码时需要注意些什么？
+```
+
+```
+77. 完成以下递归函数以实现输出汉诺塔（http://www.7k8k.com/h5/5675_swf.html）游戏的解题/操作过程。建议先自己多玩几局这个游戏，找到套路后再写代码，玩法可以自行百度。
+```
+
+```
+    ```js
+      /*
+         n 为最上面的若干层，默认为6，相当于游戏的第4关
+         from 为将这些层当前的位置
+         to 为这些层的目标位置
+         游戏开始时所有塔在一号杆，需要移到三号杆，所以from默认为1，to默认为3
+         按顺序输出每一步应该如何操作，console.log('请将x号杆最上面的塔移到y号杆')
+      */
+      function hanoi(n = 6, from = 1, to = 3) {
+
+      }
+    ```
+78. 如下表达式的求值结果是多少？
+```
+
+```
+    ```js
+    Math.max(...([1,2,3,[4,5,6],[5,6,7]][3]))
+    ```
+79. 如下代码的输出是什么？并解释原因
+```
+
+```
+    ```js
+    var str = 'hello world'
+    str.a = 8
+    console.log(str.a)
+    str.length = 5
+    console.log(str)
+    var num = 8
+    num.value = 9
+    console.log(num)
+    var arr = [1,2,3,4,5]
+    arr.length = 3
+    console.log(arr)
+    ```
+80. 解释一下什么是词法作用域与动态作用域以及它们会如何影响程序的执行
+```
+
+```
+81. 为什么不带参数调用Math.max返回的是-Infinity？
+```
+
+```
+82. 书写对象时，属性名在什么情况下需要加引号，什么情况下不需要加？
+```
+
+```
+83. obj.x与obj[x]有何不同，什么情况下是相同的？
+```
+
+```
+84. 读程序写结果
+```
+
+```
+    ```js
+    function foo(a, b, c) {
+        a = {
+            name: 'damiao'
+        }
+        b.teacher = 'xieran'
+        c.radix = 16
+        console.log(c.radix)
+    }
+
+    var company = {
+        name: 'xiaomi'
+    }
+    var person = {
+        teacher: 'xiedamiao'
+    }
+    var c = 99
+    foo(company, person, c)
+    console.log(company, person, c)
+    ```
+85. 读程序写结果
+```
+
+```
+    ```js
+    var a = 1
+    function foo() {
+        var a = 4
+        var o = {
+            bar: function() {
+                window.a = 99
+                console.log(a)
+            }
+        }
+        return o
+    }
+
+    var b = foo()
+    b.baar = function() {
+        console.log(a)
+    }
+    b.bar()
+    b.baar()
+    ```
+86. 简述 2d 矩阵变幻的原理计算方式。并说出对一个元素执行 matrix(1,0,0,2,10,20) 会对元素做怎样的变幻？
+```
+
+```
+87. 请区分调用栈，闭包，词法作用域几个概念，以及它们会如何影响程序的执行？
+```
+
+```
+88. 如何探测调用栈的深度？如何得知当前函数在递归的第几层？
+```
+
+```
+89. 简述什么是随机算法及其基本思想，并设计算法计算派（π）的近似值
+```
+
+```
+
+90. 完成以下代码使其能够输出数组中去掉一个最大值和最小值后的平均值，【并精确到小数点后两位】
+```
+
+```
+    ```js
+    [3,5,2,7,8,1,4,9]
+    .reduce(function(memo, value, index, array){
+
+    })
+    ```
+
+91. 如下招租广告中租金和房东的电话分别是多少？
+```
+
+```
+    ```
+    // 五道口三居室精装修电梯房xxxx元一个月
+    // 空调暖气热水器，三房两卫大阳台
+    // 千兆光纤免费用，卧室全部都朝南
+    // 但是只租程序员，！！！！！！！
+    // 租房还配米家扫地机器人！
+    // 房东非北京本地人，长年在外地，人品好，性格好，只为找个好租客
+    // 租金及房东电话号码从以下程序中得出
+    // 联系我时请说明是在知乎上看到的
+    var td = [1, 0, 5, 6, 7, 8]
+    var dm = [4, 4, 5, 2, 4, 1, 0, 0, 3, 5, 0]
+    var 月租金 = [1,2,3,4,5,6,7,8,9,10].filter(isNotPrime).reduce((a,b)=>a*b, 1.5)
+    var 房东电话 = dm.map(i => td[i]).reverse().join()
+
+    // 注：相关真实事件地址：http://www.phpjyz.com/article-1065.html
+    ```
+92. 高阶函数的定义是什么？它能给编程人员带来什么便利/好处？
+```
+
+```
+93. 读程序写结果
+```
+
+```
+    ```js
+    var foo = function(){
+        return 9
+    }
+
+    var obj = {
+        foo: function(){
+            return 8
+        }
+    }
+
+    function bar(f) {
+        console.log(f())
+    }
+
+    bar(obj.foo)
+    ```
+
+94. 算法复杂度中的大O符号的具体定义是什么？
+```
+
+```
+95. for in循环与for of循环的区别是什么？for in循环有什么需要注意的问题？in运算符有什么需要注意的问题？
+```
+
+```

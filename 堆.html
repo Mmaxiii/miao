@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+
+</body>
+
+</html>
+<script>
+  class PriorityQueue {
+    constructor() {
+      this.elements = []
+    }
+    #swap(i, j) {
+      let temp = this.elements[i]
+      this.elements[i] = this.elements[j]
+      this.elements[j] = temp
+    }
+    push(val) {
+      let idx = this.elements.push(val) - 1
+      this.heapUp(idx)
+      return this
+    }
+    pop() {
+      this.#swap(0, this.elements.length - 1)
+      let result = this.elements.pop()
+      this.heapDown(0)
+      return result
+    }
+    peek() {
+      return this.elements[0]
+    }
+    heapUp(idx) {
+      while (idx > 0) {
+        let pIdx = (idx - 1) >> 1
+        if (this.elements[idx] > this.elements[pIdx]) {
+          this.#swap(idx, pIdx)
+          idx = pIdx
+        } else {
+          break
+        }
+      }
+    }
+    heapDown(idx) {
+      while (true) {
+        let leftIdx = idx * 2 + 1
+        let rightIdx = leftIdx + 1
+        let maxIdx = idx
+        if (leftIdx < this.elements.length && this.elements[leftIdx] > this.elements[maxIdx]) {
+          maxIdx = leftIdx
+        }
+        if (rightIdx < this.elements.length && this.elements[rightIdx] > this.elements[maxIdx]) {
+          maxIdx = rightIdx
+        }
+        if (maxIdx !== idx) {
+          this.#swap(idx, maxIdx)
+          idx = maxIdx
+        } else {
+          return
+        }
+      }
+    }
+  }
+
+  function swap(ary, i, j) {
+    let temp = ary[i]
+    ary[i] = ary[j]
+    ary[j] = temp
+  }
+  function heapUp(ary, idx) {
+    while (idx > 0) {
+      let pIdx = (idx - 1) >> 1
+      if (ary[idx] > ary[pIdx]) {
+        swap(idx, pIdx)
+        idx = pIdx
+      } else {
+        break
+      }
+    }
+  }
+  function heapDown(ary, idx, stop = ary.length) {
+    while (true) {
+      let leftIdx = idx * 2 + 1
+      let rightIdx = leftIdx + 1
+      let maxIdx = idx
+      if (leftIdx < stop && ary[leftIdx] > ary[maxIdx]) {
+        maxIdx = leftIdx
+      }
+      if (rightIdx < stop && ary[rightIdx] > ary[maxIdx]) {
+        maxIdx = rightIdx
+      }
+      if (maxIdx !== idx) {
+        swap(ary, idx, maxIdx)
+        idx = maxIdx
+      } else {
+        return
+      }
+    }
+  }
+  function heapify(ary) {
+    let start = (ary.length - 1) >> 1
+    for (let i = start; i >= 0; i--) {
+      heapDown(ary, i)
+    }
+    return ary
+  }
+  function heapSort(ary) {
+    heapify(ary)
+    for (let i = ary.length - 1; i > 0; i--) {
+      swap(ary, 0, i)
+      heapDown(ary, 0, i)
+    }
+    return ary
+  }
+</script>

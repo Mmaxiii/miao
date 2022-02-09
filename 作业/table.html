@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link rel="stylesheet" href="">
+</head>
+
+<body>
+
+</body>
+
+</html>
+
+<script>
+  let arr = [
+    { name: 'zang', zong: 120, yuwen: 81, shuxue: 90 },
+    { name: 'wang', zong: 95, yuwen: 80, shuxue: 90 },
+    { name: 'leei', zong: 120, yuwen: 85, shuxue: 90 },
+    { name: 'zhao', zong: 120, yuwen: 85, shuxue: 60 },
+    { name: 'dong', zong: 105, yuwen: 80, shuxue: 90 },
+  ]
+  let header = { '(index)': '(index)' }
+  arr.forEach(it => {
+    for (let key in it) {
+      if (!(key in header)) header[key] = key
+    }
+  })
+
+  function aryToTable(ary) {
+    let result = ''
+    result += `
+        <div class='row'>
+          ${cellByHeader(header, header, '(index)')}
+        </div >
+        `
+
+    for (let i = 0; i < ary.length; i++) {
+      result += `
+        <div class='row'>
+          ${cellByHeader(ary[i], header, i)}
+        </div >
+        `
+    }
+    return result
+  }
+
+  function cellByHeader(people, header, idx) {
+    let result = ''
+    for (let key in header) {
+      if (key == '(index)') {
+        result += `<div>${idx}</div>`
+      } else {
+        let content = people[key]
+        let temp
+        if (typeof content == 'number') {
+          temp = `<div class='number'>${content ?? ''}</div >`
+        } else if (typeof content == 'string' && typeof idx == 'number') {
+          temp = `<div class='str'>${"'" + content + "'" ?? ''}</div >`
+        } else {
+          temp = `<div>${content ?? ''}</div >`
+        }
+        result += temp
+      }
+    }
+    return result
+  }
+  document.write(aryToTable(arr))
+</script>
+
+<style>
+  .row {
+    display: flex;
+    height: 100px;
+    width: 100%;
+  }
+
+  .row div {
+    flex: 1;
+    text-align: center;
+    line-height: 100px;
+  }
+
+  .number {
+    color: blue;
+  }
+
+  .str {
+    color: orange;
+  }
+</style>

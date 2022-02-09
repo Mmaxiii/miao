@@ -16,105 +16,50 @@
 
 
 <script>
-  function inO(root) {
-    let result = []
-    let stack = []
-    let curr = root
-    while (curr || stack.length) {
-      if (curr) {
-        stack.push(curr)
-        curr = curr.left
+  function heapDown(ary, idx) {
+    while (true) {
+      let left = idx * 2 + 1
+      let right = left + 1
+      let maxIdx = idx
+      if (left < ary.length && ary[left] > ary[maxIdx]) {
+        maxIdx = left
+      }
+      if (right < ary.length && ary[right] > ary[maxIdx]) {
+        maxIdx = right
+      }
+      if (maxIdx != idx) {
+        swap(ary, maxIdx, idx)
+        idx = maxIdx
       } else {
-        curr = stack.pop()
-        result.push(curr.val)
-        curr = curr.right
+        return
       }
     }
-    return result
   }
-  function postOrderT(root, result = []) {
-    if (root) {
-      postOrderT(root.left, result)
-      postOrderT(root.right, result)
-      result.push(root.val)
-    }
-    return result
-  }
-  function postOrder(root) {
+
+
+
+
+  function PerO(root) {
     let stack = [root]
-    let result = []
-    let curr = null
+    let curr
+    let res = []
     while (stack.length) {
       curr = stack.pop()
-      result.push(curr.val)
-      curr.left && stack.push(curr.left)
-      curr.right && stack.push(curr.right)
-    }
-    return result.reverse()
-  }
-  var sortedArrayToBST = function (nums, left = 0, right = nums.length - 1) {
-    if (left > right) return null
-    let mid = Math.floor((right - left + 1) / 2)
-    let root = new TreeNode(nums[mid])
-    root.left = sortedArrayToBST(nums, left, mid - 1)
-    root.right = sortedArrayToBST(nums, mid + 1, right)
-    return root
-  };
-  Object.prototype.toString.call([]) //'[object Array]'
-  function insertBST(root, val) {
-    if (!root) {
-      node = new TreeNode(val)
-      root = node
-    }
-
-    if (val < root.val) {
-      root.left = inserBST(root.left, val)
-    } else {
-      root.right = inserBST(root.right, val)
-    }
-    return root
-  }
-  function inOrder(tree) {
-    let stack = []
-    let current = tree
-    let res = []
-    while (current || stack.length) {
-      if (current) {
-        stack.push(current)
-        current = current.left
-      } else {
-        current = stack.pop()
-        res.push(current.val)
-        current = current.right
-      }
-    }
-    return res
-  }
-  function preOrder(tree) {
-    let stack = [root]
-    let cur = null
-    let res = []
-    while (stack.length) {
-      cur = stack.pop()
-      res.push(cur.val)
-      cur.right && stack.push(cur.right)
-      cur.left && stack.push(cur.left)
+      res.push(curr.val)
+      root.right && stack.push(root.right)
+      root.left && stack.push(root.left)
     }
     return res
   }
 
-  function inorder(tree) {
-    let res = []
-    inorderT(tree)
-    return res
-  }
-  function inorderT(tree) {
-    if (tree) {
-      inorderT(tree.left)
-      res.push(tree.val)
-      inorderT(tree.right)
 
+  function perorder(root, res = []) {
+    if (root) {
+      res.push(root.val)
+      inorder(root.left, res)
+      inorder(root.right, res)
     }
+    return res
   }
   function TreeNode(val, left = null, right = null) {
     this.val = val;
