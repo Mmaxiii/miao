@@ -168,17 +168,22 @@ var mmaxiii = function () {
   }
   function dropRightWhile(array, predicate) {
     let result = []
-    if (typeof predicate == 'string') {
-      predicate = function (pred) {
-        return function (it) {
-          return pred in it
-        }(predicate)
+    predicate = iteratee(predicate)
+    for (let i = array.length - 1; i >= 0; i--) {
+      if (!predicate(array[i])) {
+        result = array.slice(0, i + 1)
+        break
       }
     }
+    return result
+  }
+  function dropWhile(array, predicate) {
+    let result = []
     predicate = iteratee(predicate)
     for (let i = 0; i < array.length; i++) {
       if (!predicate(array[i])) {
-        result.push(array[i])
+        result = array.slice(i)
+        break
       }
     }
     return result
@@ -286,7 +291,18 @@ var mmaxiii = function () {
     }
     return res
   }
-
+  function uniqBy(array, predicate) {
+    let judger = new Set()
+    let result = []
+    predicate = iteratee(predicate)
+    forEach(array, it => {
+      if (!judger.has(predicate(it))) {
+        result.push(it)
+        judger.add(predicate(it))
+      }
+    })
+    return result
+  }
   function without(ary, ...args) {
     let obj = formkey(args)
     let res = []
@@ -364,10 +380,11 @@ var mmaxiii = function () {
     return result
   }
   function flatMap(collection, predicate) {
-
-    return flatten(map(collection, predicate))
+    return flatMapDepth(collection, predicate, depth = 1)
   }
-
+  function flatMapDepth(collection, predicate, depth = 1) {
+    return flattenDepth(map(collection, predicate), depth)
+  }
   function reduce(coll, pred, initial) {
     let hasInitial = true
     if (arguments.length == 2) {
@@ -606,6 +623,20 @@ var mmaxiii = function () {
     }
     return result
   }
+  function unionBy(...args) {
+    predicate = iteratee(args.pop())
+    let judger = new Set()
+    let result = []
+    forEach(args, item => {
+      forEach(item, it => {
+        if (!judger.has(predicate(it))) {
+          result.push(it)
+          judger.add(predicate(it))
+        }
+      })
+    })
+    return result
+  }
   function xor(...args) {
     let judger = {}
     for (let i = 0; i < args.length; i++) {
@@ -658,6 +689,69 @@ var mmaxiii = function () {
     }
     return obj
   }
+  function find(collection, predicate) {
+    predicate = iteratee(predicate)
+    for (let key in collection) {
+      let item = collection[key]
+      if (predicate(item)) {
+        return item
+      }
+    }
+  }
+  function findIndex(array, predicate) {
+    predicate = iteratee(predicate)
+    for (let i = 0; i < array.length; i++) {
+      let item = array[i]
+      if (predicate(item)) {
+        return i
+      }
+    }
+    return -1
+  }
+  function findIndex(array, predicate) {
+    predicate = iteratee(predicate)
+    for (let i = array.length - 1; i >= 0; i--) {
+      let item = array[i]
+      if (predicate(item)) {
+        return i
+      }
+    }
+    return -1
+  }
+  function countBy(collection, predicate) {
+    let result = {}
+    predicate = iteratee(predicate)
+    forEach(collection, it => {
+      if (predicate(it) in result) {
+        result[predicate(it)]++
+      } else {
+        result[predicate(it)] = 1
+      }
+    })
+    return result
+  }
+  function every(collection, predicate) {
+    predicate = iteratee(predicate)
+    for (let key in collection) {
+      let item = collection[key]
+      if (!predicate(item)) {
+        return false
+      }
+    }
+    return true
+  }
+  function groupBy(collection, predicate) {
+    let result = {}
+    predicate = iteratee(predicate)
+    forEach(collection, it => {
+      let item = predicate(it)
+      if (!(item in result)) {
+        result[item] = []
+      }
+      result[item].push(it)
+    })
+    return result
+  }
   return {
     iteratee,
     property,
@@ -673,6 +767,7 @@ var mmaxiii = function () {
     drop,
     dropRight,
     dropRightWhile,
+    dropWhile,
     fill,
     flatten,
     flattenDeep,
@@ -687,6 +782,7 @@ var mmaxiii = function () {
     reverse,
     swap,
     uniq,
+    uniqBy,
     without,
     formkey,
     zip,
@@ -695,6 +791,7 @@ var mmaxiii = function () {
     forEach,
     map,
     flatMap,
+    flatMapDepth,
     reduce,
     sample,
     shuffle,
@@ -717,11 +814,17 @@ var mmaxiii = function () {
     pull,
     sortedIndex,
     union,
+    unionBy,
     xor,
     isEmpty,
     min,
     round,
     forOwn,
+    find,
+    findIndex,
+    countBy,
+    every,
+    groupBy,
   }
 
 }()
