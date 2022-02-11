@@ -492,15 +492,11 @@ var mmaxiii = function () {
   }
 
   function max(array) {
-    let maxNum = -Infinity
-    for (let i = 0; i < array.length; i++) {
-      maxNum = array[i] > maxNum ? array[i] : maxNum
-    }
-    return maxNum === -Infinity ? undefined : maxNum
+    return maxBy(array, it => it)
   }
   function maxBy(collection, predicate) {
-
     predicate = iteratee(predicate)
+
     return reduce(collection, (result, it) => {
       result = predicate(result) > predicate(it) ? result : it
       return result
@@ -508,13 +504,16 @@ var mmaxiii = function () {
   }
 
   function sum(array) {
-    let sum = 0
-    for (let i = 0; i < array.length; i++) {
-      sum += array[i]
-    }
-    return sum
-  }
 
+    return sumBy(array, it => it)
+  }
+  function sumBy(collection, predicate) {
+    predicate = iteratee(predicate)
+    return reduce(collection, (result, it) => {
+      result += predicate(it)
+      return result
+    }, 0)
+  }
   function repeat(string, n = 1) {
     let res = ''
     for (let i = 0; i < n; i++) {
@@ -939,6 +938,7 @@ var mmaxiii = function () {
     max,
     maxBy,
     sum,
+    sumBy,
     repeat,
     range,
     cloneDeep,
