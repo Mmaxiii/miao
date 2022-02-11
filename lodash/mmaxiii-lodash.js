@@ -381,8 +381,6 @@ var mmaxiii = function () {
     let result = []
 
     for (let key in coll) {
-      // key 是字符串
-      if (Array.isArray(coll)) key = +key
       result.push(pred(coll[key], key, coll))
     }
     return result
@@ -409,18 +407,20 @@ var mmaxiii = function () {
     return initial
   }
   function reduceRight(collection, predicate, initial) {
-    if (!Array.isArray(collection)) return reduce(collection, predicate, initial)
+    let keys = Object.keys(collection)
+    // object的key不会按照输入的顺序遍历出来，会按照object内部保存key的顺序。如果key是整数（非负）（如：123）或者整数类型的字符串（如：“123”），那么会按照从小到大的排序。除此之外，其它数据类型，都安装对象key的实际创建顺序排序。
+    reverse(keys)
     let hasInitial = true
     if (arguments.length == 2) {
       hasInitial = false
       initial = collection[collection.length - 1]
     }
 
-    for (let i = collection.length - 1; i >= 0; i--) {
+    for (let value of keys) {
       if (!hasInitial) {
         hasInitial = true
       } else (
-        initial = predicate(initial, collection[i], i, collection)
+        initial = predicate(initial, collection[value], value, collection)
       )
     }
     return initial
@@ -497,6 +497,14 @@ var mmaxiii = function () {
       maxNum = array[i] > maxNum ? array[i] : maxNum
     }
     return maxNum === -Infinity ? undefined : maxNum
+  }
+  function maxBy(collection, predicate) {
+
+    predicate = iteratee(predicate)
+    return reduce(collection, (result, it) => {
+      result = predicate(result) > predicate(it) ? result : it
+      return result
+    })
   }
 
   function sum(array) {
@@ -765,6 +773,14 @@ var mmaxiii = function () {
     }
     return true
   }
+  function some(collection, predicate) {
+    predicate = iteratee(predicate)
+    for (let key in collection) {
+      let temp = predicate(collection[key])
+      if (temp) return true
+    }
+    return false
+  }
   function groupBy(collection, predicate) {
     let result = {}
     predicate = iteratee(predicate)
@@ -798,6 +814,75 @@ var mmaxiii = function () {
     })
     return result
   }
+  function sortBy(collection, iteratees) {
+    let result = []
+    let keys = Object.keys(collection)
+    for (let i = iteratees.length - 1; i >= 0; i--) {//iteratees中靠前的优先级高，所以从后向前
+      sort(keys, iteratees[i])
+    }
+    forEach(keys, it => result.push(collection[it]))
+
+    return result
+
+    function sort(keys, predicate) {
+      // 要求稳定，所以选择归并排序(原地版)
+      if (keys.length < 2) return keys
+      let mid = keys.length >> 1
+      let left = keys.slice(0, mid)
+      let right = keys.slice(mid)
+      sort(left, predicate)
+      sort(right, predicate)
+      predicate = iteratee(predicate)
+      let i = 0
+      let j = 0
+      let k = 0
+      while (i < left.length && j < right.length) {
+        let kl = left[i]
+        let kr = right[j]
+        if (predicate(collection[kl]) <= predicate(collection[kr])) {
+          keys[k++] = kl
+          i++
+        } else {
+          keys[k++] = kr
+          j++
+        }
+      }
+      while (i < left.length) {
+        let kl = left[i]
+        keys[k++] = kl
+        i++
+      }
+      while (j < right.length) {
+        let kr = right[j]
+        keys[k++] = kr
+        j++
+      }
+    }
+  }
+  function defer() { }
+  function delay() { }
+  function isArgumengts(value) {
+    return Object.prototype.toString.call(value) == '[object Arguments]'
+  }
+  function isArray(value) {
+    return Object.prototype.toString.call(value) == '[object Array]'
+  }
+  function isDate(value) {
+    return Object.prototype.toString.call(value) == '[object Date]'
+  }
+  function isElement(value) {
+    return Object.prototype.toString.call(value) == '[object HTMLBodyElement]'
+  }
+  function isObject(value) {
+    return Object.prototype.toString.call(value) == '[object Object]'
+  }
+  function isString(value) {
+    return Object.prototype.toString.call(value) == '[object String]'
+  }
+  function isRegExp(value) {
+    return Object.prototype.toString.call(value) == '[object RegExp]'
+  }
+
   return {
     iteratee,
     property,
@@ -852,6 +937,7 @@ var mmaxiii = function () {
     toArray,
     ceil,
     max,
+    maxBy,
     sum,
     repeat,
     range,
@@ -872,9 +958,20 @@ var mmaxiii = function () {
     findIndex,
     countBy,
     every,
+    some,
     groupBy,
     keyBy,
     partition,
+    sortBy,
+    defer,
+    delay,
+    isArgumengts,
+    isArray,
+    isDate,
+    isElement,
+    isObject,
+    isString,
+    isRegExp,
   }
 
 }()
