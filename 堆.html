@@ -15,8 +15,10 @@
 </html>
 <script>
   class PriorityQueue {
-    constructor() {
+    constructor(compare) {
       this.elements = []
+      this.length = 0
+      this.compare = compare
     }
     #swap(i, j) {
       let temp = this.elements[i]
@@ -39,10 +41,10 @@
     }
     heapUp(idx) {
       while (idx > 0) {
-        let pIdx = (idx - 1) >> 1
-        if (this.elements[idx] > this.elements[pIdx]) {
-          this.#swap(idx, pIdx)
-          idx = pIdx
+        let parentIdx = (idx - 1) >> 1
+        if (this.compare(this.elements[idx], this.elements[parentIdx]) > 0) {
+          this.#swap(idx, parentIdx)
+          idx = parentIdx
         } else {
           break
         }
@@ -51,22 +53,26 @@
     heapDown(idx) {
       while (true) {
         let leftIdx = idx * 2 + 1
-        let rightIdx = leftIdx + 1
         let maxIdx = idx
-        if (leftIdx < this.elements.length && this.elements[leftIdx] > this.elements[maxIdx]) {
+        if (leftIdx < this.elements.length && this.compare(this.elements[leftIdx], this.elements[maxIdx]) > 0) {
           maxIdx = leftIdx
         }
-        if (rightIdx < this.elements.length && this.elements[rightIdx] > this.elements[maxIdx]) {
+        let rightIdx = leftIdx + 1
+        if (leftIdx < this.elements.length && this.compare(this.elements[rightIdx], this.elements[maxIdx]) > 0) {
           maxIdx = rightIdx
         }
-        if (maxIdx !== idx) {
-          this.#swap(idx, maxIdx)
+        if (maxIdx != idx) {
+          this.#swap(maxIdx, idx)
           idx = maxIdx
         } else {
           return
         }
       }
     }
+    get size() {
+      return this.elements.length
+    }
+    // set size(val) {}
   }
 
   function swap(ary, i, j) {
@@ -85,15 +91,15 @@
       }
     }
   }
-  function heapDown(ary, idx, stop = ary.length) {
+  function heapDown(ary, compare, idx, stop = ary.length) {
     while (true) {
       let leftIdx = idx * 2 + 1
       let rightIdx = leftIdx + 1
       let maxIdx = idx
-      if (leftIdx < stop && ary[leftIdx] > ary[maxIdx]) {
+      if (leftIdx < stop && compare(ary[leftIdx], ary[maxIdx]) > 0) {
         maxIdx = leftIdx
       }
-      if (rightIdx < stop && ary[rightIdx] > ary[maxIdx]) {
+      if (rightIdx < stop && compare(ary[rightIdx], ary[maxIdx]) > 0) {
         maxIdx = rightIdx
       }
       if (maxIdx !== idx) {
@@ -107,7 +113,7 @@
   function heapify(ary) {
     let start = (ary.length - 1) >> 1
     for (let i = start; i >= 0; i--) {
-      heapDown(ary, i)
+      heapDown(ary, (a, b) => a - b, i)
     }
     return ary
   }
@@ -115,7 +121,7 @@
     heapify(ary)
     for (let i = ary.length - 1; i > 0; i--) {
       swap(ary, 0, i)
-      heapDown(ary, 0, i)
+      heapDown(ary, (a, b) => a - b, 0, i)
     }
     return ary
   }

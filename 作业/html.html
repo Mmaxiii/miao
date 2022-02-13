@@ -51,12 +51,57 @@
   <footer>footer</footer>
 </body>
 <script>
-  function fan(f) {
-    return function (...args) {
-      return !f(...args)
+  function MultiplyorUnitFailure(message) {
+    this.message = message
+    this.stack = (new Error).stack
+  }
+  function primitiveMultiply(a, b) {
+    if (Math.random() < 0.5) {
+      return a * b
+    } else {
+      throw new MultiplyorUnitFailure()
     }
   }
 
+  function multiple(a, b) {
+    for (; ;) {
+      try {
+        return primitiveMultiply(a, b)
+      } catch (e) {
+        if (e instanceof MultiplyorUnitFailure) {
+          console.log('调用失败，重新调用')
+        } else {
+          throw e
+        }
+      }
+    }
+  }
+
+
+
+  var box = {
+    locked: true,
+    unlock: function () {
+      this.locked = false
+    },
+    lock: function () {
+      this.locked = true
+    },
+    _content: [1, 2, 3],
+    get content() {
+      if (this.locked) throw new Error('Lecked!')
+      return this._content
+    }
+  }
+
+  function withBoxUnlocked(f) {
+    try {
+      box.unlock()
+      f(box.content)
+    } finally {
+      box.lock()
+    }
+  }
 </script>
 
 </html>

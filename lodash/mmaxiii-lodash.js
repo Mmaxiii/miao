@@ -1,3 +1,4 @@
+'use strict'
 
 var mmaxiii = function () {
 
@@ -740,7 +741,7 @@ var mmaxiii = function () {
     }
     return -1
   }
-  function findIndex(array, predicate) {
+  function findLastIndex(array, predicate) {
     predicate = iteratee(predicate)
     for (let i = array.length - 1; i >= 0; i--) {
       let item = array[i]
@@ -881,7 +882,9 @@ var mmaxiii = function () {
   function isRegExp(value) {
     return Object.prototype.toString.call(value) == '[object RegExp]'
   }
+  function random(...args) {
 
+  }
   return {
     iteratee,
     property,
@@ -956,6 +959,7 @@ var mmaxiii = function () {
     forOwn,
     find,
     findIndex,
+    findLastIndex,
     countBy,
     every,
     some,
@@ -974,4 +978,4 @@ var mmaxiii = function () {
     isRegExp,
   }
 
-}()
+}

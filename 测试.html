@@ -13,7 +13,124 @@
 </body>
 
 <script>
+  class MedianFinder {
+    constructor() {
+      this.queMax = new PriorityQueue((a, b) => a - b)
+      this.queMin = new PriorityQueue((a, b) => b - a)
+    }
+    addNum(num) {
+      if (this.queMin.size == 0 || num < this.queMin.peek()) {
+        this.queMin.push(num)
+        if (this.queMin.size > this.queMax.size + 1) {
+          this.queMax.push(this.queMin.pop())
+        }
+      } else {
+        this.queMax.push(num)
+        if (this.queMax.size > this.queMin.size) {
+          this.queMin.push(this.queMax.pop())
+        }
+      }
+    }
+    findMedian() {
+      if (this.queMin.size > this.queMax.size) {
+        return this.queMin.peek()
+      } else {
+        return (this.queMin.peek() + this.queMax.peek()) / 2
+      }
+    }
 
+  }
+
+
+  // var MedianFinder = function() {
+
+  // };
+
+  // /** 
+  //  * @param {number} num
+  //  * @return {void}
+  //  */
+  // MedianFinder.prototype.addNum = function(num) {
+
+  // };
+
+  // /**
+  //  * @return {number}
+  //  */
+  // MedianFinder.prototype.findMedian = function() {
+
+  // };
+
+  // /**
+  //  * Your MedianFinder object will be instantiated and called as such:
+  //  * var obj = new MedianFinder()
+  //  * obj.addNum(num)
+  //  * var param_2 = obj.findMedian()
+  //  */
+
+
+
+  //自定义堆,大顶堆、小顶堆通过compare控制
+  class PriorityQueue {
+    constructor(compare) {
+      this.elements = []
+      this.length = 0
+      this.compare = compare
+    }
+    #swap(i, j) {
+      let temp = this.elements[i]
+      this.elements[i] = this.elements[j]
+      this.elements[j] = temp
+    }
+    push(val) {
+      let idx = this.elements.push(val) - 1
+      this.heapUp(idx)
+      return this
+    }
+    pop() {
+      this.#swap(0, this.elements.length - 1)
+      let result = this.elements.pop()
+      this.heapDown(0)
+      return result
+    }
+    peek() {
+      return this.elements[0]
+    }
+    heapUp(idx) {
+      while (idx > 0) {
+        let parentIdx = (idx - 1) >> 1
+        if (this.compare(this.elements[idx], this.elements[parentIdx]) > 0) {
+          this.#swap(idx, parentIdx)
+          idx = parentIdx
+        } else {
+          break
+        }
+      }
+    }
+    heapDown(idx) {
+      while (true) {
+        let leftIdx = idx * 2 + 1
+        let maxIdx = idx
+        if (leftIdx < this.elements.length && this.compare(this.elements[leftIdx], this.elements[maxIdx]) > 0) {
+          maxIdx = leftIdx
+        }
+        let rightIdx = leftIdx + 1
+        if (leftIdx < this.elements.length && this.compare(this.elements[rightIdx], this.elements[maxIdx]) > 0) {
+          maxIdx = rightIdx
+        }
+        if (maxIdx != idx) {
+          this.#swap(maxIdx, idx)
+          idx = maxIdx
+        } else {
+          return
+        }
+      }
+    }
+    get size() {
+      return this.elements.length
+    }
+    set size(val) { }
+  }
   Object.prototype.toString.call(this)
   function group(arr, f) {
     return arr.reduce((result, it) => {
