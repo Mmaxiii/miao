@@ -1,7 +1,7 @@
-'use strict'
+
 
 var mmaxiii = function () {
-
+  'use strict'
   //判断函数
   function iteratee(predicate) {  // 将 predicate 转为函数
     if (typeof predicate === 'string') {
@@ -979,5 +979,4 @@ var mmaxiii = function () {
     isString,
     isRegExp,
   }
-
 }()
