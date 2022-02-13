@@ -1,6 +1,6 @@
 'use strict'
 
-var mmaxiiii = function () {
+var mmaxiii = function () {
 
   //判断函数
   function iteratee(predicate) {  // 将 predicate 转为函数
@@ -382,10 +382,12 @@ var mmaxiiii = function () {
     let result = []
 
     for (let key in coll) {
+      if (Array.isArray(coll)) key = +key
       result.push(pred(coll[key], key, coll))
     }
     return result
   }
+
   function flatMap(collection, predicate) {
     return flatMapDepth(collection, predicate, depth = 1)
   }
