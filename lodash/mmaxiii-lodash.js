@@ -1,6 +1,6 @@
 'use strict'
 
-var mmaxiii = function () {
+var mmaxiiii = function () {
 
   //判断函数
   function iteratee(predicate) {  // 将 predicate 转为函数
@@ -978,4 +978,4 @@ var mmaxiii = function () {
     isRegExp,
   }
 
-}
+}()
