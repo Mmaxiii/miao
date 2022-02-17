@@ -51,6 +51,169 @@
   <footer>footer</footer>
 </body>
 <script>
+
+  'use strict'
+  // 作业：
+  // 使用正则的exec函数自行实现与正则相关的所有其它函数：
+  String.prototype.match2 = function (reg) {
+    if (reg.global) {
+      let res = []
+
+      reg.lastIndex = 0  //排除lastIndex影响，不还原lastIndex，保持个原生一致
+      let match = null
+      while (match = reg.exec(this)) {
+        res.push(match[0])
+      }
+      return res
+    }
+    return reg.exec(this)
+  }
+  String.prototype.matchAll2 = function (reg) {
+    let res = []
+    let match = null
+    if (reg.global) {
+      while (match = reg.exec(this)) {
+        res.push(match)
+      }
+    } else {
+      throw '缺g'
+    }
+    return res
+  }
+  String.prototype.replace2 = function (reg, replacer) {
+    let res = ''
+    let match = null
+    let start = 0
+    reg.lastIndex = 0  // 置零，防止匹配遗漏
+    while (match = reg.exec(this)) {
+      let temp = null
+      if (typeof replacer == 'function') {
+        temp = replacer(...match, match.index, match.input)
+
+      } else if (typeof replacer == 'string') {
+
+        let atomReg = /\$(.)/g  //用正则解析$1-$9,$&
+
+        temp = replacer.replace2(atomReg, function (...args) {
+          if (args[1] == '&') {
+            return match[0] // match = reg.exec(this)
+          } else {
+            return match[args[1]] ?? args[0]
+          }
+        })
+      }
+
+      res += this.slice(start, match.index) + temp
+      start = reg.lastIndex
+
+      if (!reg.global) break
+    }
+    res += this.slice(start)
+    return res
+    // if (typeof replacer == 'function') {
+    //   while (match = reg.exec(this)) {
+    //     let temp = replacer(...match, match.index, match.input)
+    //     let n = match[0].length
+    //     res += this.slice(start, match.index) + temp
+    //     start = match.index + n
+    //   }
+    //   res += this.slice(start)
+    // } else if (typeof replacer == 'string') {
+    //   while (match = reg.exec(this)) {
+    //     let atomReg = /\$(.)/g
+    //     let temp = replacer
+    //     // console.log(match)
+    //     temp = replacer.replace2(atomReg, function (...args) {
+    //       if (args[1] == '&') {
+    //         return match[0]
+    //       } else {
+    //         return match[args[1]] ?? args[0]
+    //       }
+    //     })
+    //     let n = match[0].length
+    //     res += this.slice(start, match.index) + temp
+    //     start = match.index + n
+    //   }
+    //   res += this.slice(start)
+    // }
+    // return res
+
+  }
+  String.prototype.replaceAll2 = function (reg, replacer) {
+    if (reg.global) {
+      return this.replace2(reg, replacer)
+    } else {
+      throw '缺g'
+    }
+  }
+  String.prototype.split2 = function (reg) {
+    reg = new RegExp(reg, reg.global ? reg.flags : 'g')
+    let res = []
+    let matchs = this.matchAll2(reg)
+    let start = 0
+    for (let match of matchs) {
+      let n = match[0].length
+      res.push(this.slice(start, match.index))
+      for (let i = 1; i < match.length; i++) {
+        res.push(match[i])
+      }
+      start = match.index + n
+    }
+    res.push(this.slice(start))
+    return res
+  }
+  String.prototype.search2 = function (reg) {
+    let oldLastIndex = reg.lastIndex
+    reg.lastIndex = 0
+    let match = reg.exec(this)
+    reg.lastIndex = oldLastIndex
+    if (match == null) {
+      return -1
+    } else {
+      return match.index
+    }
+
+  }
+  RegExp.prototype.test2 = function (str) {
+    return this.exec(str) !== null
+  }
+
+
+
+
+
+
+  function wildcardMatch(wildcard, str) {
+    let reg = '^'
+    for (let i = 0; i < wildcard.length; i++) {
+      switch (wildcard[i]) {
+        case '?':
+          reg += '.'
+          break
+        case '*':
+          reg += '.+'
+          break
+        default:
+          reg += wildcard[i]
+          break
+      }
+
+    }
+    reg = new RegExp(reg)
+    return reg.test(str)
+  }
+
+
+  function With(...args) {
+    let f = args.pop()
+    try {
+      f(...args)
+    } finally {
+      for (let i = 0; i < args.length; i++) {
+        args[i].close()
+      }
+    }
+  }
   function MultiplyorUnitFailure(message) {
     this.message = message
     this.stack = (new Error).stack

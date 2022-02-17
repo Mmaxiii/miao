@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mini Regex101</title>
+  <style>
+    main {
+      width: 500px;
+    }
+
+    #reInput {
+      width: 100%;
+    }
+
+    .box {
+      position: relative;
+    }
+
+    #testStringInput,
+    #resultShow {
+      /* position: absolute; */
+      top: 0;
+      overflow: auto;
+      width: 100%;
+      height: 250px;
+      border: 1px solid;
+      padding: 0;
+      margin: 0;
+      line-height: 1.3em;
+      font-size: 20px;
+      white-space: pre-wrap;
+      overflow-wrap: break-word;
+      resize: none;
+      background-color: initial;
+    }
+
+    #testStringInput {
+      /* display: none; */
+    }
+
+    strong {
+      font-weight: normal;
+    }
+
+    strong:nth-child(odd) {
+      background-color: #D5EBFF;
+    }
+
+    strong:nth-child(even) {
+      background-color: #9FCFFF;
+    }
+
+    /* 有元组存在，strong不是空，无法高亮 */
+    strong:empty {
+      display: inline-block;
+      width: 2px;
+      height: 20px;
+      margin: 0 -1px;
+      line-height: 1.3em;
+      vertical-align: bottom;
+      background-color: red;
+    }
+
+    em {
+      font-style: normal;
+    }
+
+    em:nth-child(1) {
+      background-color: #1abc9c;
+    }
+
+    em:nth-child(2) {
+      background-color: #f1c40f;
+    }
+
+    em:nth-child(3) {
+      background-color: #27ae60;
+    }
+
+    em:nth-child(4) {
+      background-color: #95a5a6;
+    }
+
+    em:nth-child(5) {
+      background-color: #ecf0f1;
+    }
+  </style>
+</head>
+
+<body>
+  <main>
+    <header>
+      <div>REGULAR RXPRESSION</div>
+      <input type="text" id="reInput" oninput="run()" value="s(.).">
+      <div>
+        <label>g<input type="checkbox" checked id="reFlagG"></label>
+        <label>m<input type="checkbox" id="reFlagM"></label>
+        <label>i<input type="checkbox" id="reFlagI"></label>
+      </div>
+
+    </header>
+    <div class="text">
+      <div>TEST STRING</div>
+      <div class="box">
+        <textarea id="testStringInput" cols="30" rows="10" oninput="run()">asdfasdfasdfasdf</textarea>
+        <pre id="resultShow" contenteditable oninput="run()" value='aaa'></pre>
+      </div>
+    </div>
+  </main>
+  <script>
+    'use strict'
+    function run() {
+      let flags = getFlags()
+      let startIdx = 0
+      let testStr = testStringInput.value
+      // let testStr = resultShow.innerText
+      let re
+      if (reInput.value == '') {
+        resultShow.innerHTML = testStr + '\n'
+        return
+      }
+      try {
+        re = new RegExp(reInput.value, flags + 'd')
+      } catch (e) {
+        if (e instanceof SyntaxError) {
+          resultShow.innerHTML = testStr + '\n'
+          return
+        } else {
+          throw e
+        }
+      }
+      let resHTML = ''
+      let match
+      let matchCount = 0
+      while (match = re.exec(testStr)) {
+        matchCount++
+        resHTML += testStr.slice(startIdx, match.index)
+        resHTML += `<strong title='Match ${matchCount}'>${getGroups(match, matchCount)}</strong>`
+        startIdx = re.lastIndex
+
+        if (match[0] == '') {
+          re.lastIndex++
+        }
+        if (!re.global) {
+          startIdx = match.index + match[0].length
+          break
+        }
+      }
+      resHTML += testStr.slice(startIdx)
+      resultShow.innerHTML = resHTML + '\n'
+
+    }
+    run()
+    function getGroups(match, matchCount) {
+      let res = ''
+      if (match.length <= 1) {
+        return match[0]
+      }
+      let matchStr = match.shift()
+      let startIdx = 0
+      let diff = match.indices[0][0]
+      for (let i = 1; i <= match.length; i++) {
+        let matchRange = match.indices[i]
+        res += matchStr.slice(startIdx, matchRange[0] - diff)
+        res += `<em title='Match ${matchCount}\nGroup:${i}\nPos${matchRange[0], matchRange[1]}'>${matchStr.slice(matchRange[0] - diff, matchRange[1] - diff)}</em>`
+        startIdx = matchRange[1] - diff
+      }
+      res += matchStr.slice(startIdx)
+      return res
+    }
+    function getFlags() {
+      let res = ''
+      if (reFlagG.checked) {
+        res += 'g'
+      }
+      if (reFlagM.checked) {
+        res += 'm'
+      }
+      if (reFlagI.checked) {
+        res += 'i'
+      }
+      return res
+    }
+  </script>
+</body>
+
+</html>

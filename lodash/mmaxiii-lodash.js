@@ -389,7 +389,7 @@ var mmaxiii = function () {
   }
 
   function flatMap(collection, predicate) {
-    return flatMapDepth(collection, predicate, depth = 1)
+    return flatMapDepth(collection, predicate)
   }
   function flatMapDepth(collection, predicate, depth = 1) {
     return flattenDepth(map(collection, predicate), depth)
@@ -659,7 +659,7 @@ var mmaxiii = function () {
     return result
   }
   function unionBy(...args) {
-    predicate = iteratee(args.pop())
+    let predicate = iteratee(args.pop())
     let judger = new Set()
     let result = []
     forEach(args, item => {
@@ -730,6 +730,16 @@ var mmaxiii = function () {
       let item = collection[key]
       if (predicate(item)) {
         return item
+      }
+    }
+  }
+
+  function findKey(object, predicate) {
+    predicate = iteratee(predicate)
+    for (let key in object) {
+      let item = object[key]
+      if (predicate(item)) {
+        return key
       }
     }
   }
@@ -885,7 +895,67 @@ var mmaxiii = function () {
     return Object.prototype.toString.call(value) == '[object RegExp]'
   }
   function random(...args) {
+    if (args.length == 3) {
+      if (args[2] === true) {
+        return Math.random() * (args[1] - args[0]) + args[0]  // 浮点数只能 [ )
+      } else {
+        return Math.floor(Math.random() * (args[1] - args[0] + 1)) + args[0]
+      }
+    } else if (args.length == 2) {
+      if (args[1] === true) {
+        let num = Math.random() * args[0]
+        return num
+      } else if (!Number.isInteger(args[0]) || !Number.isInteger(args[1])) {
+        return Math.random() * (args[1] - args[0]) + args[0]
+      } else {
+        return Math.floor(Math.random() * (args[1] - args[0] + 1)) + args[0]
+      }
+    } else if (args.length == 1) {
+      if (args[0] === true) {
+        return Math.random()
+      } else if (args[0] === false) {
+        return Math.floor(Math.random() + 0.5)
+      } else {
+        if (!Number.isInteger(args[0])) {
+          return Math.random() * args[0]
+        } else {
+          return Math.floor(Math.random() * (args[0] + 1))
+        }
+      }
+    } else {
+      return Math.random()
+    }
+  }
 
+  function assign(object, ...args) {
+    for (let i = 0; i < args.length; i++) {
+      let item = args[i]
+      for (let key in item) {
+        if (item.hasOwnProperty(key)) {
+          object[key] = item[key]
+        }
+      }
+    }
+    return object
+  }
+  function assignIn(object, ...args) {
+    for (let i = 0; i < args.length; i++) {
+      let item = args[i]
+      for (let key in item) {
+        object[key] = item[key]
+      }
+    }
+    return object
+  }
+  function defaults(object, ...args) {
+    forEach(args, item => {
+      for (let key in item) {
+        if (!(item[key] in object)) {
+          object[key] = item[key]
+        }
+      }
+    })
+    return object
   }
   return {
     iteratee,
@@ -960,6 +1030,7 @@ var mmaxiii = function () {
     round,
     forOwn,
     find,
+    findKey,
     findIndex,
     findLastIndex,
     countBy,
@@ -978,5 +1049,9 @@ var mmaxiii = function () {
     isObject,
     isString,
     isRegExp,
+    random,
+    assign,
+    assignIn,
+    defaults,
   }
 }()
