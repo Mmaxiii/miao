@@ -722,8 +722,9 @@ var mmaxiii = function () {
   function forOwn(obj, iterator) {
     let hasOwn = Object.prototype.hasOwnProperty
     for (let key in obj) {
+      let sign = true
       if (hasOwn.call(obj, key)) {
-        let sign = iterator(obj[key], key)
+        sign = iterator(obj[key], key)
       }
       if (sign === false) break
     }
@@ -731,9 +732,10 @@ var mmaxiii = function () {
   }
   function forOwnRight(obj, iterator) {
     let owns = []
+    let sign = true
     forOwn(obj, (value, key) => owns.push(key))
     for (let i = owns.length - 1; i >= 0; i--) {
-      let sign = iterator(obj[owns[i]], owns[i])
+      sign = iterator(obj[owns[i]], owns[i])
       if (sign === false) break
     }
     return obj
@@ -1058,7 +1060,67 @@ var mmaxiii = function () {
     })
     return collection
   }
+  function pick(object, path, result = {}) {
+    if (isString(path)) {
+      let keys = toPath(path)
+      let key = keys.shift()
+      if (keys.length == 0) {
+        result[key] = object[key]
+      } else {
+        //递归获取路径上的键值对
+        result[key] = pick(object[key], keys.join('.'))
+      }
+    } else {
+      forEach(path, it => {
+        pick(object, it, result)
+      })
+    }
+    return result
+  }
+  function omit(object, path, result = {}) {
+    if (isString(path)) {
+      let keys = toPath(path)
+      let key = keys.shift()
+      if (keys.length == 0) {
+        for (let k in object) {
+          if (k != key) {
+            result[k] = object[k]
+          }
+        }
+      } else {
+        for (let k in object) {
+          if (k != key) {
+            result[k] = object[k]
+          } else {
+            result[key] = omit(object[key], keys.join('.'))
+          }
+        }
+      }
+    } else {
+      for (let k in object) {
+        let reg = new RegExp(`^${k}\.|$`)
+        let has = false
+        let key
+        for (key of path) {
+          if (reg.test(key)) {
+            has = true
+
+            break
+          }
+        }
+        if (has) {
+          omit(object, key, result)
+        } else {
+          result[k] = object[k]
+        }
+      }
+
+    }
+    return result
+  }
   return {
+    pick,
+    omit,
     merge,
     mapValues,
     mapKeys,
