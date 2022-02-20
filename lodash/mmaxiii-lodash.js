@@ -95,6 +95,10 @@ var mmaxiii = function () {
       }
     }, obj)
   }
+  function has(object, path) {
+    return get(object, path) !== undefined
+
+  }
   /**
   * @param {String} path  路径字符串
   * @returns {Array} 路径数组
@@ -719,10 +723,27 @@ var mmaxiii = function () {
     let hasOwn = Object.prototype.hasOwnProperty
     for (let key in obj) {
       if (hasOwn.call(obj, key)) {
-        iterator(obj[key], key)
+        let sign = iterator(obj[key], key)
       }
+      if (sign === false) break
     }
     return obj
+  }
+  function forOwnRight(obj, iterator) {
+    let owns = []
+    forOwn(obj, (value, key) => owns.push(key))
+    for (let i = owns.length - 1; i >= 0; i--) {
+      let sign = iterator(obj[owns[i]], owns[i])
+      if (sign === false) break
+    }
+    return obj
+  }
+  function functions(object) {
+    let owns = []
+    forOwn(object, (value, key) => {
+      if (isFunction(value)) owns.push(key)
+    })
+    return owns
   }
   function find(collection, predicate) {
     predicate = iteratee(predicate)
@@ -894,6 +915,9 @@ var mmaxiii = function () {
   function isRegExp(value) {
     return Object.prototype.toString.call(value) == '[object RegExp]'
   }
+  function isFunction(value) {
+    return Object.prototype.toString.call(value) == '[object Function]'
+  }
   function random(...args) {
     if (args.length == 3) {
       if (args[2] === true) {
@@ -957,7 +981,91 @@ var mmaxiii = function () {
     })
     return object
   }
+  function forIn(object, func = it => it) {
+    for (let key in object) {
+      let sign = func(object[key], key)
+      if (sign === false) break
+    }
+    return object
+  }
+  function forInRight(object, func) {
+    let keys = []
+    for (let key in object) {
+      keys.push(key)
+    }
+    for (let i = keys.length - 1; i >= 0; i--) {
+      let sign = func(object[keys[i]], keys[i])
+      if (sign === false) break
+    }
+    return object
+  }
+  function invert(object) {
+    return reduce(object, (result, value, key) => {
+      result[value] = key
+      return result
+    }, {})
+  }
+  function invoke(object, path, ...args) {
+    // get到func后用apply调用
+    let keys = toPath(path)
+    let func = get(object, keys)
+    keys.pop()
+    let newThis = get(object, keys)
+    return func.apply(newThis, args)
+  }
+  function keys(object) {
+    let keys = []
+    forOwn(object, (value, key) => keys.push(key))
+    return keys
+  }
+  function mapValues(object, predicate) {
+    predicate = iteratee(predicate)
+    return reduce(object, (result, value, key, object) => {
+      result[key] = predicate(value, key, object)
+      return result
+    }, {})
+  }
+  function mapKeys(object, predicate) {
+    predicate = iteratee(predicate)
+    return reduce(object, (result, value, key, object) => {
+      let newKey = predicate(value, key, object)
+      result[newKey] = value
+      return result
+    }, {})
+  }
+  function assign(object, ...args) {
+    for (let i = 0; i < args.length; i++) {
+      let item = args[i]
+      for (let key in item) {
+        if (item.hasOwnProperty(key)) {
+          object[key] = item[key]
+        }
+      }
+    }
+    return object
+  }
+  function merge(collection, ...args) {
+    forEach(args, (it) => {
+      for (let key in it) {
+        if (isArray(collection[key]) && isArray(it[key])) {
+          merge(collection[key], it[key])
+        } else if (isObject(collection[key]) && isObject(it[key]) && !isArray(collection[key]) && !isArray(it[key])) {
+          merge(collection[key], it[key])
+        } else {
+          collection[key] = it[key]
+        }
+      }
+    })
+    return collection
+  }
   return {
+    merge,
+    mapValues,
+    mapKeys,
+    invoke,
+    invert,
+    forIn,
+    forInRight,
     iteratee,
     property,
     matches,
@@ -965,6 +1073,7 @@ var mmaxiii = function () {
     isEqual,
     matchesProperty,
     get,
+    has,
     toPath,
     bind,
     chunk,
@@ -1029,6 +1138,8 @@ var mmaxiii = function () {
     min,
     round,
     forOwn,
+    forOwnRight,
+    functions,
     find,
     findKey,
     findIndex,
@@ -1049,6 +1160,7 @@ var mmaxiii = function () {
     isObject,
     isString,
     isRegExp,
+    isFunction,
     random,
     assign,
     assignIn,
