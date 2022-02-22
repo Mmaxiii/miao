@@ -229,7 +229,27 @@ var mmaxiii = function () {
     }
     return res
   }
-
+  function toPairs(object) {
+    if (isMap(object) || isSet(object)) {
+      return [...object.entries()]
+    }
+    let res = []
+    forEach(object, (value, key) => {
+      if (object.hasOwnProperty(key)) {
+        res.push([key, value])
+      }
+    })
+    return res
+  }
+  function values(object) {
+    let result = []
+    for (let key in object) {
+      if (object.hasOwnProperty(key)) {
+        result.push(object[key])
+      }
+    }
+    return result
+  }
   function head(array) {
     return array[0]
   }
@@ -920,6 +940,12 @@ var mmaxiii = function () {
   function isFunction(value) {
     return Object.prototype.toString.call(value) == '[object Function]'
   }
+  function isMap(value) {
+    return Object.prototype.toString.call(value) == '[object Map]'
+  }
+  function isSet(value) {
+    return Object.prototype.toString.call(value) == '[object Set]'
+  }
   function random(...args) {
     if (args.length == 3) {
       if (args[2] === true) {
@@ -1141,7 +1167,50 @@ var mmaxiii = function () {
     }
     return object
   }
+  function escape(str) {
+    let map = { '<': '&lt;', '>': '&gt;', '"': '&quot;', '&': '&amp;', "'": '&apos;' }
+    let result = ''
+    for (let i = 0; i < str.length; i++) {
+      if (str[i] in map) {
+        result += map[str[i]]
+      } else {
+        result += str[i]
+      }
+    }
+    return result
+  }
+  function padStart(str, length, char = ' ') {
+    let result = ''
+    let changeIdx = length - str.length
+    for (let i = 0; i < changeIdx; i++) {
+      let charIdx = i % char.length
+      result += char[charIdx]
+    }
+    result += str
+    return result
+  }
+  function padEnd(str, length, char = ' ') {
+    let result = ''
+    let changeIdx = length - str.length
+    result += str
+    for (let i = 0; i < changeIdx; i++) {
+      let charIdx = i % char.length
+      result += char[charIdx]
+    }
+    return result
+  }
+  function pad(str, length, char = ' ') {
+    let result = str
+    let startLength = result.length + (length - result.length >> 1)
+    result = padStart(result, startLength, char)
+    result = padEnd(result, length, char)
+    return result
+  }
   return {
+    padStart,
+    padEnd,
+    pad,
+    escape,
     set,
     result,
     pick,
@@ -1174,6 +1243,8 @@ var mmaxiii = function () {
     flattenDeep,
     flattenDepth,
     fromPairs,
+    toPairs,
+    values,
     head,
     indexOf,
     initial,
@@ -1248,6 +1319,8 @@ var mmaxiii = function () {
     isString,
     isRegExp,
     isFunction,
+    isMap,
+    isSet,
     random,
     assign,
     assignIn,
