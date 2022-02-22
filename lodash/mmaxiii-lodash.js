@@ -1144,31 +1144,34 @@ var mmaxiii = function () {
   function result(...args) {
     let result = get(...args)
     if (isFunction(result)) {
-      return result.apply(this)
-    } else {
-      return result
+      result = result.apply(this)
     }
+    return result === undefined ? args[args.length - 1] : result
   }
   function set(object, path, value) {
-    if (isString(path)) {
+    if (isString(path)) {  // 处理路径是str的情况
       path = toPath(path)
     }
-    let result = object
+    let result = object  // 用来迭代路径
     for (let i = 0; i < path.length; i++) {
       let key = path[i]
       if (i == path.length - 1) {
-        result[key] = value
+        result[key] = value  // 最后一层不需要向下走，单独处理
       } else {
-        if (!(key in object)) {
-          result[key] = {}
+        if (!(key in result)) {
+          if (!isNaN(Number(path[i + 1]))) { // i + 1 位是数字，表示这一层是数组
+            result[key] = []
+          } else {
+            result[key] = {}
+          }
         }
-        result = result[key]
+        result = result[key] // 向下走一层
       }
     }
     return object
   }
   function escape(str) {
-    let map = { '<': '&lt;', '>': '&gt;', '"': '&quot;', '&': '&amp;', "'": '&apos;' }
+    let map = { '<': '&lt;', '>': '&gt;', '"': '&quot;', '&': '&amp;', "'": '&#39;' }
     let result = ''
     for (let i = 0; i < str.length; i++) {
       if (str[i] in map) {
@@ -1176,6 +1179,26 @@ var mmaxiii = function () {
       } else {
         result += str[i]
       }
+    }
+    return result
+  }
+  function unescape(str) {
+    let map = { '&lt;': '<', '&gt;': '>', '&quot;': '"', '&amp;': '&', '&#39;': "'" }
+    let result = ''
+    for (let i = 0; i < str.length; i++) {
+      if (str[i] === '&') {
+        let k = i + 1
+        while (str[k] !== ';' && k - i < 6) {
+          k++
+        }
+        let temp = str.slice(i, k + 1)
+        if (temp in map) {
+          result += map[temp]
+          i = k
+          continue
+        }
+      }
+      result += str[i]
     }
     return result
   }
@@ -1211,6 +1234,7 @@ var mmaxiii = function () {
     padEnd,
     pad,
     escape,
+    unescape,
     set,
     result,
     pick,
