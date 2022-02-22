@@ -64,7 +64,7 @@
 
     #testStringInput,
     #resultShow {
-      position: absolute;
+      /* position: absolute; */
       top: 0;
       box-sizing: border-box;
       overflow: auto;
@@ -105,36 +105,53 @@
       margin: 0 -1px;
       line-height: 1.3em;
       vertical-align: bottom;
-      background-color: red;
+      background-color: red !important;
+
     }
 
     em {
       font-style: normal;
     }
 
-    em:nth-child(1),
+
+
     .mRow:nth-child(2) ::after {
-      background-color: #1abc9c;
+      background-color: #C4E8AC;
     }
 
-    em:nth-child(2),
+
     .mRow:nth-child(3) ::after {
-      background-color: #f1c40f;
+      background-color: #F3D4A4;
     }
 
-    em:nth-child(3),
+
     .mRow:nth-child(4) ::after {
-      background-color: #27ae60;
+      background-color: #C8C8FF;
     }
 
-    em:nth-child(4),
+
     .mRow:nth-child(5) ::after {
-      background-color: #95a5a6;
+      background-color: #F2CFFF;
     }
 
-    em:nth-child(5),
     .mRow:nth-child(6) ::after {
-      background-color: #ecf0f1;
+      background-color: #F5BDB8;
+    }
+
+    .mRow:nth-child(7) ::after {
+      background-color: #C8E7D6;
+    }
+
+    .mRow:nth-child(8) ::after {
+      background-color: #C4E8AC;
+    }
+
+    .mRow:nth-child(9) ::after {
+      background-color: #F6D7A6;
+    }
+
+    .mRow:nth-child(10) ::after {
+      background-color: #C0C0F5;
     }
 
     #spendTime {
@@ -154,10 +171,20 @@
 
     }
 
-
-
     .mInfo {
       margin: 10px;
+    }
+
+    #inputSub {
+      width: 100%;
+
+      box-sizing: border-box;
+    }
+
+    #showSub {
+      height: 200px;
+      border: 1px solid;
+
     }
 
     .mRow {
@@ -197,19 +224,19 @@
       <div class="head">
         <div>REGULAR RXPRESSION</div>
         <div id="spendTime">ss</div>
-        <input type="text" id="reInput" oninput="run()" value="|()">
+        <input type="text" id="reInput" oninput="run()">
         <div>
-          <label>g<input type="checkbox" checked id="reFlagG"></label>
-          <label>m<input type="checkbox" id="reFlagM"></label>
-          <label>i<input type="checkbox" id="reFlagI"></label>
+          <label>g<input onclick="run()" type="checkbox" checked id="reFlagG"></label>
+          <label>m<input onclick="run()" type="checkbox" id="reFlagM"></label>
+          <label>i<input onclick="run()" type="checkbox" id="reFlagI"></label>
         </div>
 
       </div>
       <div class="text">
         <div>TEST STRING</div>
         <div class="box">
-          <textarea id="testStringInput" cols="30" rows="10" oninput="run()">asdfasdfasdfasdf</textarea>
-          <pre id="resultShow" contenteditable oninput="run()" value='aaa'></pre>
+          <!-- <textarea id="testStringInput" cols="30" rows="10" oninput="run()">asdfasdfasdfasdf</textarea> -->
+          <pre id="testStringInput" contenteditable oninput="run()" value='aaa'></pre>
         </div>
         <div>SUBSTITUTION</div>
         <input type="text" id="inputSub" oninput="replace()">
@@ -226,21 +253,29 @@
 </html>
 <script>
   'use strict'
+  let groupColor = {
+    1: '#C4E8AC',
+    2: '#F3D4A4',
+    3: '#C8C8FF',
+    4: '#F2CFFF',
+    5: '#F5BDB8',
+    6: '#C8E7D6',
+    7: '#C4E8AC',
+    8: '#F6D7A6',
+    9: '#C0C0F5'
+  }
   function run() {
     let startTime = new Date()
     let flags = getFlags()
     let startIdx = 0
-    let testStr = testStringInput.value
+    let testStr = testStringInput.innerText
     let re
-    if (reInput.value == '') {
-      resultShow.innerHTML = testStr + '\n'
-      return
-    }
+
     try {
       re = new RegExp(reInput.value, flags + 'd')
     } catch (e) {
       if (e instanceof SyntaxError) {
-        resultShow.innerHTML = testStr + '\n'
+        testStringInput.innerHTML = testStr
         return
       } else {
         throw e
@@ -257,7 +292,6 @@
       resHTML += `<strong title='Match ${matchCount}'>${heightLineGroups(match, matchCount)}</strong>`
       info += `<div class="mInfo">${modifyInfo(match, matchCount)}</div>`
       startIdx = re.lastIndex
-
       if (match[0] == '') {
         re.lastIndex++
       }
@@ -267,7 +301,7 @@
       }
     }
     resHTML += testStr.slice(startIdx)
-    resultShow.innerHTML = resHTML + '\n'
+    testStringInput.innerHTML = resHTML
     let endTime = new Date()
     inputTime(endTime - startTime, matchCount)
     replace()
@@ -275,7 +309,6 @@
   }
 
   function heightLineGroups(match, matchCount) {
-
     if (match.length == 1) {
       return match[0]
     }
@@ -293,7 +326,7 @@
     for (let i = 1; i < match.length; i++) {
       let range = matchRanges[i]
       if (range) {
-        labels[range[0]] += `<em title='Match ${matchCount}\nGroup:${i}\nPos${range[0], range[1]}'>`
+        labels[range[0]] += `<em style="background:${groupColor[i]};" title='Match ${matchCount}\nGroup:${i}\nPos${range[0], range[1]}'>`
         labels[range[1]] += '</em>'
       }
     }
@@ -305,23 +338,22 @@
       res += matchStr[i]
     }
     res += labels[labels.length - 1]
-    console.log(res)
     return res
   }
 
   function inputTime(time, matchCount) {
-    spendTime.innerHTML = `${matchCount} match (${time})ms`
+    spendTime.innerHTML = `${matchCount} match (${time}ms)`
   }
 
   function replace() {
     let flags = getFlags()
-    let testStr = testStringInput.value
+    let testStr = testStringInput.innerText
     let re
     try {
       re = new RegExp(reInput.value, flags + 'd')
     } catch (e) {
       if (e instanceof SyntaxError) {
-        resultShow.innerHTML = testStr + '\n'
+        testStringInput.innerText = testStr + '\n'
         return
       } else {
         throw e
@@ -335,17 +367,16 @@
     let resHTML = ''
     for (let i = 0; i < match.length; i++) {
       if (match[i]) {
-
         let header = `Match ${matchCount}`
         if (i > 0) {
           header = `Group ${i}`
         }
         resHTML += `<div class="mRow"><span>${header}</span><span>${match.indices[i][0]}-${match.indices[i][1]}</span><span>${match[i]}</span></div>`
-
       }
     }
     return resHTML
   }
+
   function getFlags() {
     let res = ''
     if (reFlagG.checked) {

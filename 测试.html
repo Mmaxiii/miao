@@ -13,6 +13,40 @@
 </body>
 
 <script>
+  function elt(tagName, attrs, ...children) {
+    let el = document.createElement(tagName)
+    if (attrs && typeof attrs === 'object') {
+      for (let key in attrs) {
+        el.setAttribute(key, attrs[key])
+      }
+    }
+    for (let child of children) {
+      if (typeof child === 'string') {
+        child = document.createTextNode(child)
+      }
+      el.appendChild(child)
+    }
+    return el
+  }
+  Array.prototype.slice2 = function (start = 0, end = this.length) {
+    let res = []
+    for (let i = start; i < end; i++) {
+      res.push(this[i])
+    }
+    return res
+  }
+  function getElementById(id, node) {
+    if (node.id === id) {
+      return node
+    }
+    for (let i = 0; i < node.chidlren.length; i++) {
+      let res = getElementById(node.children[i])
+      if (res) {
+        return res
+      }
+    }
+    return null
+  }
   class MedianFinder {
     constructor() {
       this.queMax = new PriorityQueue((a, b) => a - b)

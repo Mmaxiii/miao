@@ -976,7 +976,7 @@ var mmaxiii = function () {
   function defaults(object, ...args) {
     forEach(args, item => {
       for (let key in item) {
-        if (!(item[key] in object)) {
+        if (!(key in object)) {
           object[key] = item[key]
         }
       }
@@ -1077,18 +1077,16 @@ var mmaxiii = function () {
     }
     return result
   }
-  function omit(object, path, result = {}) {
+  function omit(object, path, result = {}) {  // 要重写
     if (isString(path)) {
       let keys = toPath(path)
       let key = keys.shift()
-      if (keys.length == 0) {
-        for (let k in object) {
+      for (let k in object) {
+        if (keys.length == 0) {
           if (k != key) {
             result[k] = object[k]
           }
-        }
-      } else {
-        for (let k in object) {
+        } else {
           if (k != key) {
             result[k] = object[k]
           } else {
@@ -1098,13 +1096,13 @@ var mmaxiii = function () {
       }
     } else {
       for (let k in object) {
+        if (k in path) continue
         let reg = new RegExp(`^${k}\.|$`)
         let has = false
         let key
         for (key of path) {
           if (reg.test(key)) {
             has = true
-
             break
           }
         }
@@ -1114,11 +1112,38 @@ var mmaxiii = function () {
           result[k] = object[k]
         }
       }
-
     }
     return result
   }
+  function result(...args) {
+    let result = get(...args)
+    if (isFunction(result)) {
+      return result.apply(this)
+    } else {
+      return result
+    }
+  }
+  function set(object, path, value) {
+    if (isString(path)) {
+      path = toPath(path)
+    }
+    let result = object
+    for (let i = 0; i < path.length; i++) {
+      let key = path[i]
+      if (i == path.length - 1) {
+        result[key] = value
+      } else {
+        if (!(key in object)) {
+          result[key] = {}
+        }
+        result = result[key]
+      }
+    }
+    return object
+  }
   return {
+    set,
+    result,
     pick,
     omit,
     merge,

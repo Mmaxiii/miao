@@ -12,102 +12,265 @@
 <body>
 
   <script>
-    function parseObj(str) {
-      let result = {}
-      let key = ''
-      let val = ''
-      let start
-      for (let i = 0; i < str.length; i++) {
-        if (str[i] == '"') {
-          start = i + 1
-          i = getRange(str, start, str[i]) // 找到当前数据类型的结束位置
-          key = str.slice(start, i)
-        } else if (str[i] == ':') {
-          i++
-          let start
-          if (str[i] == '[') {
-            start = i
-            i = getRange(str, start + 1, str[i])
-          } else if (str[i] == '{') {
-            let objCount = 1
-            start = i
-            i = getRange(str, start + 1, str[i])
-          } else {
-            start = i
-            while (str[i] != ',' && str[i] != '}' && i < str.length) {
-              i++
-            }
-          }
-          val = parse(str.slice(start, i))
-          result[key] = val
-        }
-      }
-      return result
-    }
+    // function parseObj(str) {
+    //   let result = {}
+    //   let key = ''
+    //   let val = ''
+    //   let start
+    //   for (let i = 0; i < str.length; i++) {
+    //     if (str[i] == '"') {
+    //       start = i + 1
+    //       i = getRange(str, start, str[i]) // 找到当前数据类型的结束位置
+    //       key = str.slice(start, i)
+    //     } else if (str[i] == ':') {
+    //       i++
+    //       let start
+    //       if (str[i] == '[') {
+    //         start = i
+    //         i = getRange(str, start + 1, str[i])
+    //       } else if (str[i] == '{') {
+    //         let objCount = 1
+    //         start = i
+    //         i = getRange(str, start + 1, str[i])
+    //       } else {
+    //         start = i
+    //         while (str[i] != ',' && str[i] != '}' && i < str.length) {
+    //           i++
+    //         }
+    //       }
+    //       val = parse(str.slice(start, i))
+    //       result[key] = val
+    //     }
+    //   }
+    //   return result
+    // }
+
+    // function parse(str) {
+    //   let result = ''
+    //   if (str[0] == '{') {
+    //     result = parseObj(str.slice(1, str.length - 1))
+    //   } else if (str[0] == '[') {
+    //     result = parseAry(str.slice(1, str.length - 1))
+    //   } else if (str[0] == '"') {
+    //     result = str.slice(1, str.length - 1)
+    //   } else {
+    //     if (str[str.length - 1] == ',') str = str.slice(0, str.length - 1)
+    //     result = Number(str)
+    //   }
+    //   return result
+    // }
+    // function parseAry(str) {
+    //   let result = []
+    //   let val = ''
+    //   for (let i = 0; i < str.length; i++) {
+    //     if (str[i] == '{') {
+    //       let objCount = 1
+    //       let start = i
+    //       i = getRange(str, start + 1, str[i])
+    //       result.push(parse(str.slice(start, i)))
+    //     } else if (str[i] == '[') {
+    //       let aryCount = 1
+    //       let start = i
+    //       i = getRange(str, start + 1, str[i])
+    //       result.push(parse(str.slice(start, i)))
+    //     } else if (str[i] == ',') {
+    //       result.push(parse(val))
+    //       val = ''
+    //     } else {
+    //       val += str[i]
+    //     }
+    //   }
+    //   if (str[str.length - 1] != '}' && str[str.length - 1] != ']') result.push(parse(val))
+    //   return result
+    // }
+    // function getRange(str, start, typeStart) {
+    //   let toMore
+    //   let toLess
+    //   let end = start
+    //   if (typeStart == '"') {
+    //     while (str[end] != '"') {
+    //       end++
+    //     }
+    //   } else {
+    //     let count = 1
+    //     if (typeStart == '[') {
+    //       toMore = '['
+    //       toLess = ']'
+    //     } else if (typeStart == '{') {
+    //       toMore = '{'
+    //       toLess = '}'
+    //     }
+    //     while (count != 0) {
+    //       if (str[end] == toMore) count++
+    //       if (str[end] == toLess) count--
+    //       end++
+    //     }
+    //   }
+    //   return end
+    // }
+
+
 
     function parse(str) {
-      let result = ''
-      if (str[0] == '{') {
-        result = parseObj(str.slice(1, str.length - 1))
-      } else if (str[0] == '[') {
-        result = parseAry(str.slice(1, str.length - 1))
-      } else if (str[0] == '"') {
-        result = str.slice(1, str.length - 1)
-      } else {
-        if (str[str.length - 1] == ',') str = str.slice(0, str.length - 1)
-        result = Number(str)
+      let i = 0
+      return paseValue()
+      function parseValue() {
+        if (str[i] == '"') return parseString()
+        if (str[i] == 't') return parseTrue()
+        if (str[i] == 'f') return parseFalse()
+        if (str[i] == 'n') return parseNull()
+        if (str[i] >= '0' && str[i] <= '9') return parseNumber()
+        if (str[i] == '[') return parseArray()
+        if (str[i] == '{') return parseObject
       }
-      return result
-    }
-    function parseAry(str) {
-      let result = []
-      let val = ''
-      for (let i = 0; i < str.length; i++) {
-        if (str[i] == '{') {
-          let objCount = 1
-          let start = i
-          i = getRange(str, start + 1, str[i])
-          result.push(parse(str.slice(start, i)))
-        } else if (str[i] == '[') {
-          let aryCount = 1
-          let start = i
-          i = getRange(str, start + 1, str[i])
-          result.push(parse(str.slice(start, i)))
-        } else if (str[i] == ',') {
-          result.push(parse(val))
-          val = ''
-        } else {
-          val += str[i]
+      function parseObject() {
+        let result = {}
+        ++i // 跳过 {
+        if (str[i] == '}') {
+          i++ // 跳过}
+          return result
         }
-      }
-      if (str[str.length - 1] != '}' && str[str.length - 1] != ']') result.push(parse(val))
-      return result
-    }
-    function getRange(str, start, typeStart) {
-      let toMore
-      let toLess
-      let end = start
-      if (typeStart == '"') {
-        while (str[end] != '"') {
-          end++
-        }
-      } else {
-        let count = 1
-        if (typeStart == '[') {
-          toMore = '['
-          toLess = ']'
-        } else if (typeStart == '{') {
-          toMore = '{'
-          toLess = '}'
-        }
-        while (count != 0) {
-          if (str[end] == toMore) count++
-          if (str[end] == toLess) count--
-          end++
+        while (true) {
+          let key = parseValue()
+          i++ // 跳过：
+          let value = parseValue()
+          result[key] = value
+          if (str[i] == ',') {
+            i++ // 跳过，
+            continue
+          }
+          if (str[i] == '}') {
+            i++ // 跳过}
+            return result
+          }
         }
       }
-      return end
+      function parseArray() {
+        let result = []
+        ++i
+        if (str[i] == ']') {
+          i++
+          return result
+        }
+        while (true) {
+          let value = parseValue()
+          result.push(value)
+          if (str[i] == ',') {
+            i++
+            continue
+          }
+          if (str[i] == ']') {
+            i++
+            return ary
+          }
+        }
+      }
+      function parseString() {
+        let result = ''
+        let start = ++i // ++i跳过第一个引号
+        while (str[i] != '"') {
+          i++
+        }
+
+        result = str.slice(start, i)
+        i++ // 跳过第二个引号
+        return result
+      }
+
+      function parseNumber() {
+        let result = ''
+        let start = i
+        while (str[i] >= '0' && str[i] <= '9') {
+          i++
+        }
+        result = str.slice(start, i)
+
+        return parseInt(result)
+      }
+      function parseTrue() {
+        i += 4
+        return true
+      }
+      function parseFalse() {
+        i += 5
+        return false
+      }
+      function parseNull() {
+        i += 4
+        return null
+      }
+
     }
+
+
+    function parse2(str) {
+      let i = 0
+      return parseExperssion()
+      function parseExperssion() {
+        if (str[i] === 'f' || str[i] === 't') return parseValue()
+        return parseFcall()
+      }
+      function parseFcall() {
+        let result = {
+          fname: str[i],
+          parameters: []
+        }
+        i++
+        if (str[i] == '(') {
+          i++     // 跳过（
+        }
+        while (str[i] !== ')') {
+          if (str[i] === ',') {
+            i++// 跳过，
+          }
+          result.parameters.push(parseExperssion())
+        }
+        i++ // 跳过 ）
+        return result
+      }
+      function parseValue() {
+        if (str[i] == 't') {
+          i++
+          return true
+        }
+        if (str[i] == 'f') {
+          i++
+          return false
+        }
+      }
+    }
+    function getRes(syntaxTree) {
+      if (syntaxTree.fname == '!') {
+        return !getRes(syntaxTree.parameters[0])
+      }
+      if (syntaxTree.fname == '&') {
+        for (let parameter of syntaxTree.parameters) {
+          if (getRes(parameter) == false) return false
+        }
+        return true
+      }
+      if (syntaxTree.fname == '|') {
+        for (let parameter of syntaxTree.parameters) {
+          if (getRes(parameter) == true) return true
+        }
+        return false
+      }
+      return syntaxTree
+    }
+
+    function toJS(syntaxTree) {
+      if (syntaxTree.fname == '!') {
+        return `!(${toJS(syntaxTree.parameters[0])})`
+      }
+      if (syntaxTree.fname == '&') {
+        return syntaxTree.parameters.map(it => `(${toJS(it)})`).join('&&')
+      }
+      if (syntaxTree.fname == '|') {
+        return syntaxTree.parameters.map(it => `(${toJS(it)})`).join('||')
+      }
+      return syntaxTree
+    }
+
   </script>
 </body>
 
