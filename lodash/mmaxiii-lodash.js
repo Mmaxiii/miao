@@ -16,8 +16,10 @@ var mmaxiii = function () {
     return predicate  // 不是以上类型，就返回本身（函数）
   }
   function property(str) {  //传入字符串key，返回 key对应的 val (可以看做布尔值 val == true，没找到对应val就返回undefined，undefined == false)
-
     return bind(get, null, mmaxiii, str) //返回一个绑定了一个值的函数
+  }
+  function propertyOf(object) {
+    return bind(get, null, object, mmaxiii)
   }
   function matches(obj) { // 传入对象，返回布尔值
     return function (it) {
@@ -582,7 +584,9 @@ var mmaxiii = function () {
       for (let i = 0; i < value.length; i++) {
         res.push(cloneDeep(value[i]))
       }
-    } else if (typeof value === 'object') {
+    } else if (isRegExp(value)) {
+      res = value
+    } else if (isObject(value)) {
       res = {}
       for (let key in value) {
         res[key] = cloneDeep(value[key])
@@ -929,7 +933,7 @@ var mmaxiii = function () {
     return Object.prototype.toString.call(value) == '[object HTMLBodyElement]'
   }
   function isObject(value) {
-    return Object.prototype.toString.call(value) == '[object Object]'
+    return typeof value === 'object' && value !== null
   }
   function isString(value) {
     return Object.prototype.toString.call(value) == '[object String]'
@@ -1143,10 +1147,13 @@ var mmaxiii = function () {
   }
   function result(...args) {
     let result = get(...args)
+    if (result === undefined) {
+      result = args[args.length - 1]
+    }
     if (isFunction(result)) {
       result = result.apply(this)
     }
-    return result === undefined ? args[args.length - 1] : result
+    return result
   }
   function set(object, path, value) {
     if (isString(path)) {  // 处理路径是str的情况
@@ -1229,7 +1236,78 @@ var mmaxiii = function () {
     result = padEnd(result, length, char)
     return result
   }
+  function times(n, iteratee = identity) {
+    let result = []
+    for (let i = 0; i < n; i++) {
+      result.push(iteratee(i))
+    }
+    return result
+  }
+  function identity(it) {
+    return it
+  }
+  function bindAll(object, methodNames) {
+    for (let method of methodNames) {
+      object[method].bind(object)
+    }
+    return object
+  }
+  function uniqueId(prefix = '') {
+    if (uniqueId.uid === undefined) {
+      uniqueId.uid = 1
+    } else {
+      uniqueId.uid++
+    }
+    return prefix + uniqueId.uid
+  }
+  function concat(...args) {
+    let result = []
+    args.forEach(it => {
+      it.forEach(value => {
+        result.push(value)
+      })
+    })
+    return result
+  }
+  function negate(predicate) {
+    return function (...args) {
+      return !predicate(...args)
+    }
+  }
+  function once(func) {
+    let used = false
+    return function (...args) {
+      let result
+      if (used === false) {
+        result = func(...args)
+        console.log(this)
+        used = true
+      }
+      return result
+    }
+  }
+  function spread(func) {
+    return function (...args) {
+      return func.apply(this, args)
+    }
+  }
+  function constant(value) {
+    return function () {
+      return value
+    }
+  }
   return {
+
+    constant,
+    spread,
+    once,
+    negate,
+    concat,
+    uniqueId,
+    bindAll,
+    keys,
+    identity,
+    times,
     padStart,
     padEnd,
     pad,
@@ -1248,6 +1326,7 @@ var mmaxiii = function () {
     forInRight,
     iteratee,
     property,
+    propertyOf,
     matches,
     isMatch,
     isEqual,

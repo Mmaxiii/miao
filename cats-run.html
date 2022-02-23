@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    .sun {
+      position: absolute;
+      top: 400px;
+      left: 400px;
+      width: 200px;
+      height: 200px;
+      line-height: 200pxpx;
+      text-align: center;
+      border-radius: 100px;
+      background-color: #ff5e57;
+    }
+
+    .earth {
+      position: absolute;
+      top: 0;
+      left: 300px;
+      width: 50px;
+      height: 50px;
+      line-height: 50px;
+      border-radius: 25px;
+      background-color: #4bcffa;
+    }
+
+    .moon {
+      position: absolute;
+      top: 0;
+      left: 100px;
+      width: 20px;
+      height: 20px;
+      line-height: 20px;
+      border-radius: 10px;
+      background-color: #95a5a6;
+    }
+
+    span {
+      position: fixed;
+      top: 400px;
+      left: 500px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="sun">
+
+    <div class="earth">
+
+      <div class="moon"></div>
+    </div>
+  </div>
+</body>
+
+</html>
+<script>
+  // debugger;
+  let earth = document.querySelector('.earth')
+  let moon = document.querySelector('.moon')
+  let lastTime1 = null
+  let angle1 = 0
+  var cat = document.querySelector('span')
+  requestAnimationFrame(function animate(time) {
+    if (lastTime1) {
+      angle1 += (time - lastTime1) * 0.0001
+    }
+    lastTime1 = time
+    earth.style.top = Math.sin(angle1) * 200 + 75 + 'px'
+    earth.style.left = Math.cos(angle1) * 200 + 75 + 'px'
+    requestAnimationFrame(animate)
+  })
+  let lastTime2 = null
+  let angle2 = 0
+  requestAnimationFrame(function animate(time) {
+    if (lastTime2) {
+      angle2 += (time - lastTime2) * 0.001
+    }
+    lastTime2 = time
+    moon.style.top = Math.sin(angle2) * 50 + 15 + 'px'
+    moon.style.left = Math.cos(angle2) * 50 + 15 + 'px'
+    requestAnimationFrame(animate)
+  })
+
+  // var lastTime = null
+  // var angle = 0
+
+
+  // requestAnimationFrame(function animate(time) {
+  //   debugger;
+  //   // console.log(time)
+  //   if (lastTime !== null) {
+  //     angle += (time - lastTime) * 0.001
+  //   }
+  //   lastTime = time
+  //   // angle += 0.0016
+  //   // time = Date.now()
+  //   var x = Math.cos(angle) * 100 + 200
+  //   var y = Math.sin(angle) * 100 + 200
+  //   cat.style.top = y + 'px'
+  //   cat.style.left = x + 'px'
+  //   requestAnimationFrame(animate)
+  // })
+
+
+
+</script>

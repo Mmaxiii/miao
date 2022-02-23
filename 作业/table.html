@@ -21,64 +21,105 @@
     { name: 'wang', zong: 95, yuwen: 80, shuxue: 90 },
     { name: 'leei', zong: 120, yuwen: 85, shuxue: 90 },
     { name: 'zhao', zong: 120, yuwen: 85, shuxue: 60 },
-    { name: 'dong', zong: 105, yuwen: 80, shuxue: 90 },
+    { name: 'dong', zong: 105, yuwen: 90, shuxue: '', hsh: 2 },
   ]
-  let header = { '(index)': '(index)' }
-  arr.forEach(it => {
-    for (let key in it) {
-      if (!(key in header)) header[key] = key
-    }
-  })
-
-  function aryToTable(ary) {
-    let result = ''
-    result += `
-        <div class='row'>
-          ${cellByHeader(header, header, '(index)')}
-        </div >
-        `
-
-    for (let i = 0; i < ary.length; i++) {
-      result += `
-        <div class='row'>
-          ${cellByHeader(ary[i], header, i)}
-        </div >
-        `
-    }
-    return result
-  }
-
-  function cellByHeader(people, header, idx) {
-    let result = ''
-    for (let key in header) {
-      if (key == '(index)') {
-        result += `<div>${idx}</div>`
-      } else {
-        let content = people[key]
-        let temp
-        if (typeof content == 'number') {
-          temp = `<div class='number'>${content ?? ''}</div >`
-        } else if (typeof content == 'string' && typeof idx == 'number') {
-          temp = `<div class='str'>${"'" + content + "'" ?? ''}</div >`
-        } else {
-          temp = `<div>${content ?? ''}</div >`
-        }
-        result += temp
+  function buildTable(data) {
+    let table = document.createElement('table')
+    let header = {}
+    data.forEach(it => {
+      for (let key in it) {
+        if (!(key in header)) header[key] = key
       }
-    }
-    return result
+    })
+    table.appendChild(buildTr(header, header))
+    let index = 0
+    data.forEach(it => {
+      table.appendChild(buildTr(it, header, index))
+      index++
+    })
+    return table
   }
-  document.write(aryToTable(arr))
+  document.body.appendChild(buildTable(arr))
+
+  function buildTr(row, order, index) {
+    let tr = document.createElement('tr')
+    let td = document.createElement('td')
+    if (index !== undefined) {
+      td.append(index)
+    } else {
+      td.append('(index)')
+    }
+    tr.appendChild(td)
+    for (let key in order) {
+      let td = document.createElement('td')
+      if (key in row) {
+        td.appendChild(document.createTextNode(row[key]))
+      }
+      tr.appendChild(td)
+    }
+    return tr
+  }
+
+  // let header = { '(index)': '(index)' }
+  // arr.forEach(it => {
+  //   for (let key in it) {
+  //     if (!(key in header)) header[key] = key
+  //   }
+  // })
+
+  // function aryToTable(ary) {
+  //   let result = ''
+  //   result += `
+  //       <div class='row'>
+  //         ${cellByHeader(header, header, '(index)')}
+  //       </div >
+  //       `
+
+  //   for (let i = 0; i < ary.length; i++) {
+  //     result += `
+  //       <div class='row'>
+  //         ${cellByHeader(ary[i], header, i)}
+  //       </div >
+  //       `
+  //   }
+  //   return result
+  // }
+
+  // function cellByHeader(people, header, idx) {
+  //   let result = ''
+  //   for (let key in header) {
+  //     if (key == '(index)') {
+  //       result += `<div>${idx}</div>`
+  //     } else {
+  //       let content = people[key]
+  //       let temp
+  //       if (typeof content == 'number') {
+  //         temp = `<div class='number'>${content ?? ''}</div >`
+  //       } else if (typeof content == 'string' && typeof idx == 'number') {
+  //         temp = `<div class='str'>${"'" + content + "'" ?? ''}</div >`
+  //       } else {
+  //         temp = `<div>${content ?? ''}</div >`
+  //       }
+  //       result += temp
+  //     }
+  //   }
+  //   return result
+  // }
+  // document.write(aryToTable(arr))
 </script>
 
 <style>
-  .row {
+  table {
+    width: 1000px;
+  }
+
+  tr {
     display: flex;
     height: 100px;
     width: 100%;
   }
 
-  .row div {
+  td {
     flex: 1;
     text-align: center;
     line-height: 100px;

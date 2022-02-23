@@ -9,10 +9,26 @@
 </head>
 
 <body>
-  [1,n,2,n,3,4,5,6,n,n,8,n,7]
+  <div>asdf <span>sadf</span></div>
 </body>
 
 <script>
+  function cloneNode(node) {
+    let newNode
+    if (node.nodeType == document.TEXT_NODE) {
+      return document.createTextNode(node.nodeValue)
+    } else {
+      newNode = document.createElement(node.tagName)
+      let attrs = node.getAttributeNames()
+      for (let attr of attrs) {
+        newNode.setAttribute(attr, node.getAttribute(attr))
+      }
+      for (let child of node.childNodes) {
+        newNode.appendChild(cloneNode(child))
+      }
+      return newNode
+    }
+  }
   function elt(tagName, attrs, ...children) {
     let el = document.createElement(tagName)
     if (attrs && typeof attrs === 'object') {
