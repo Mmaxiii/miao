@@ -13,6 +13,25 @@
 </body>
 
 <script>
+  function normalize(el) {
+    let text = ''
+    let children = Array.from(el.childNodes)
+    for (let child of children) {
+      if (child.nodeType == document.TEXT_NODE) {
+        text += child.nodeValue
+        text.push(child)
+      } else if (child.nodeType !== document.TEXT_NODE && text.length != 0) {
+
+
+      }
+    }
+  }
+  function getOuterHTML(node) {
+
+  }
+  function getTagName() {
+
+  }
   function cloneNode(node) {
     let newNode
     if (node.nodeType == document.TEXT_NODE) {
@@ -704,30 +723,28 @@
     name: 'haha',
     age: 15,
   }
-  function stringify(obj, x, space) {
-
-    if (!obj) return null
-
+  function stringify(obj, space) {
+    if (Object.prototype.toString.call(obj) === '[object Null]') return null
     if (Array.isArray(obj)) {
-      res = '['
-
+      let res = '['
+      for (let i = 0; i < obj.length - 1; i++) {
+        res += stringify(obj[i]) + ','
+      }
+      res += stringify(obj[obj.length - 1]) + ']'
+      return res
+    } else if (typeof obj == 'string') {
+      return '\"' + obj + '\"'
+    } else if (typeof obj == 'number' || typeof obj == 'undefined') {
+      return obj
     } else {
       let keyValPairs = []
-
       for (let key in obj) {
-        let pair = '\"' + key + '\"' + ': '
-        if (typeof obj[key] == 'string') {
-          pair += '\"' + obj[key] + '\"'
-        } else {
-          pair += obj[key]
-        }
+        let pair = '\"' + key + '\"' + ':'
+        pair += stringify(obj[key])
         keyValPairs.push(pair)
       }
-
       let result = ''
-
       for (let i = 0; i < keyValPairs.length; i++) {
-
         if (i == keyValPairs.length - 1) {
           result += ' '.repeat(space) + keyValPairs[i]
         } else {
@@ -735,12 +752,13 @@
           if (space) result += "\n"
         }
       }
-
       if (space) return '{' + "\n" + result + "\n" + '}'
       return '{' + result + '}'
     }
 
+
   }
+
 
 
 

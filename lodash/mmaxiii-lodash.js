@@ -933,7 +933,7 @@ var mmaxiii = function () {
     return Object.prototype.toString.call(value) == '[object HTMLBodyElement]'
   }
   function isObject(value) {
-    return typeof value === 'object' && value !== null
+    return typeof value === 'object' && value !== null || isFunction(value)
   }
   function isString(value) {
     return Object.prototype.toString.call(value) == '[object String]'
@@ -949,6 +949,9 @@ var mmaxiii = function () {
   }
   function isSet(value) {
     return Object.prototype.toString.call(value) == '[object Set]'
+  }
+  function isUndefined(value) {
+    return Object.prototype.toString.call(value) == '[object Undefined]'
   }
   function random(...args) {
     if (args.length == 3) {
@@ -1263,9 +1266,11 @@ var mmaxiii = function () {
   function concat(...args) {
     let result = []
     args.forEach(it => {
-      it.forEach(value => {
-        result.push(value)
-      })
+      if (isArray(it)) {
+        result.push(...it)
+      } else {
+        result.push(it)
+      }
     })
     return result
   }
@@ -1276,8 +1281,8 @@ var mmaxiii = function () {
   }
   function once(func) {
     let used = false
+    let result
     return function (...args) {
-      let result
       if (used === false) {
         result = func(...args)
         console.log(this)
@@ -1287,8 +1292,8 @@ var mmaxiii = function () {
     }
   }
   function spread(func) {
-    return function (...args) {
-      return func.apply(this, args)
+    return function (arr) {
+      return func.apply(this, arr)
     }
   }
   function constant(value) {
@@ -1296,8 +1301,187 @@ var mmaxiii = function () {
       return value
     }
   }
-  return {
+  function curry(func) {
+    return function (...args) {
+      if (args.length < n) {
+        return curry(func.bind(null, ...args), n - args.length)
+      } else {
+        return func(...args)
+      }
+    }
+    // let len = func.length // 获取形参数量
+    // let existArgs = []
+    // return function curried(...args) {
+    //   let j = 0
+    //   for (let i = 0; i < existArgs.length; i++) {
+    //     if (existArgs[i] === 'mmaxiii') {
+    //       if (args[j] !== 'mmaxiii') {
+    //         existArgs[i] = args[j++]
+    //       }
+    //     }
+    //   }
+    //   existArgs.push(args.slice(j))
+    //   if (!existArgs.slice(0, len).includes('mmaxiii') && existArgs.length >= len) {
+    //     return func(...existArgs)
+    //   } else {
+    //     return curried
+    //   }
+    // }
+  }
+  function memoize(func, resolver) {
+    memoize.cache = new Map()
+    return function (value) {
+      if (memoize.cache.has(value)) {
+        return memoize.cache.get(value)
+      } else {
+        let result = func(value)
+        if (resolver !== undefined) {
+          value = resolver(value)
+        }
+        memoize.cache.set(value, result)
+        return result
+      }
+    }
+  }
+  function defer(func, ...args) {
 
+    return setTimeout(function () { func(...args) }, 1)
+  }
+  function delay(func, wait, ...args) {
+
+    return setTimeout(function () { func(...args) }, wait)
+  }
+
+  function parseJson(str) {
+    let i = 0
+    return paseValue()
+    function parseValue() {
+      if (str[i] == '"') return parseString()
+      if (str[i] == 't') return parseTrue()
+      if (str[i] == 'f') return parseFalse()
+      if (str[i] == 'n') return parseNull()
+      if (str[i] >= '0' && str[i] <= '9') return parseNumber()
+      if (str[i] == '[') return parseArray()
+      if (str[i] == '{') return parseObject
+    }
+    function parseObject() {
+      let result = {}
+      ++i // 跳过 {
+      if (str[i] == '}') {
+        i++ // 跳过}
+        return result
+      }
+      while (true) {
+        let key = parseValue()
+        i++ // 跳过：
+        let value = parseValue()
+        result[key] = value
+        if (str[i] == ',') {
+          i++ // 跳过，
+          continue
+        }
+        if (str[i] == '}') {
+          i++ // 跳过}
+          return result
+        }
+      }
+    }
+    function parseArray() {
+      let result = []
+      ++i
+      if (str[i] == ']') {
+        i++
+        return result
+      }
+      while (true) {
+        let value = parseValue()
+        result.push(value)
+        if (str[i] == ',') {
+          i++
+          continue
+        }
+        if (str[i] == ']') {
+          i++
+          return ary
+        }
+      }
+    }
+    function parseString() {
+      let result = ''
+      let start = ++i // ++i跳过第一个引号
+      while (str[i] != '"') {
+        i++
+      }
+
+      result = str.slice(start, i)
+      i++ // 跳过第二个引号
+      return result
+    }
+
+    function parseNumber() {
+      let result = ''
+      let start = i
+      while (str[i] >= '0' && str[i] <= '9') {
+        i++
+      }
+      result = str.slice(start, i)
+
+      return parseInt(result)
+    }
+    function parseTrue() {
+      i += 4
+      return true
+    }
+    function parseFalse() {
+      i += 5
+      return false
+    }
+    function parseNull() {
+      i += 4
+      return null
+    }
+
+  }
+  function stringifyJson(obj, space) {
+    if (Array.isArray(obj)) {
+      let res = '['
+      for (let i = 0; i < obj.length - 1; i++) {
+        res += stringifyJson(obj[i]) + ','
+      }
+      res += stringifyJson(obj[obj.length - 1]) + ']'
+      return res
+    } else if (isString(obj)) {
+      return '\"' + obj + '\"'
+    } else if (isNil(obj) || isNumber(obj)) {
+      return obj
+    } else {
+      let keyValPairs = []
+      for (let key in obj) {
+        let pair = '\"' + key + '\"' + ':'
+        pair += stringifyJson(obj[key])
+        keyValPairs.push(pair)
+      }
+      let result = ''
+      for (let i = 0; i < keyValPairs.length; i++) {
+        if (i == keyValPairs.length - 1) {
+          result += ' '.repeat(space) + keyValPairs[i]
+        } else {
+          result += ' '.repeat(space) + keyValPairs[i] + ','
+          if (space) result += "\n"
+        }
+      }
+      if (space) return '{' + "\n" + result + "\n" + '}'
+      return '{' + result + '}'
+    }
+  }
+
+
+  return {
+    parseJson,
+    stringifyJson,
+    memoize,
+    curry,
+    isUndefined,
     constant,
     spread,
     once,
