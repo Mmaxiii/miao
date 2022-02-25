@@ -1354,7 +1354,7 @@ var mmaxiii = function () {
 
   function parseJson(str) {
     let i = 0
-    return paseValue()
+    return parseValue()
     function parseValue() {
       if (str[i] == '"') return parseString()
       if (str[i] == 't') return parseTrue()
@@ -1452,9 +1452,7 @@ var mmaxiii = function () {
       return res
     } else if (isString(obj)) {
       return '\"' + obj + '\"'
-    } else if (isNil(obj) || isNumber(obj)) {
-      return obj
-    } else {
+    } else if (isObject(obj)) {
       let keyValPairs = []
       for (let key in obj) {
         let pair = '\"' + key + '\"' + ':'
@@ -1472,9 +1470,10 @@ var mmaxiii = function () {
       }
       if (space) return '{' + "\n" + result + "\n" + '}'
       return '{' + result + '}'
+    } else {
+      return obj
     }
   }
-
 
   return {
     parseJson,
