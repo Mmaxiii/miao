@@ -5,543 +5,60 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Mini Regex101</title>
+  <title>Document</title>
   <style>
-    html,
-    body {
-      margin: 0;
-      padding: 0;
-      height: 100%;
-    }
-
-    body {
-      display: flex;
-      flex-flow: column;
-    }
-
-    header {
-      height: 45px;
-      background-color: #2C5C97;
-      flex-shrink: 0;
-    }
-
-    .content {
-      display: flex;
-      flex-grow: 1;
-    }
-
-    xnav {
-      width: 100px;
-      background-color: #acf;
-    }
-
-    aside {
-      width: 350px;
-      background-color: #FDFDFD;
-    }
-
-    main {
-      flex-grow: 1;
-      padding: 0 10px;
-      background-color: #E5E5E5;
-    }
-
-    .head {
-      position: relative;
-    }
-
-    #reInput {
-      width: 100%;
-      box-sizing: border-box;
-      border: 1px solid;
-    }
-
-    .box {
-      position: relative;
-      height: 250px;
-    }
-
-    #testStringInput,
-    #resultShow {
-      /* position: absolute; */
-      top: 0;
-      box-sizing: border-box;
-      overflow: auto;
-      width: 100%;
-      height: 250px;
-      border: 1px solid;
-      padding: 0;
-      margin: 0;
-      line-height: 1.3em;
-      font-size: 20px;
-      white-space: pre-wrap;
-      overflow-wrap: break-word;
-      resize: none;
-      background-color: initial;
-    }
-
-
-    strong {
-      font-weight: normal;
-    }
-
-    strong:nth-child(odd),
-    .mInfo:nth-child(odd) ::after {
-      background-color: #D5EBFF;
-    }
-
-    strong:nth-child(even),
-    .mInfo:nth-child(even) ::after {
-      background-color: #9FCFFF;
-    }
-
-    /* 有元组存在，strong不是空，无法高亮 */
-    strong:empty,
-    strong em:empty {
-      display: inline-block;
-      width: 2px;
-      height: 20px;
-      margin: 0 -1px;
-      line-height: 1.3em;
-      vertical-align: bottom;
-      background-color: red !important;
-
-    }
-
-    em {
-      font-style: normal;
-    }
-
-
-
-    .mRow:nth-child(2) ::after {
-      background-color: #C4E8AC;
-    }
-
-
-    .mRow:nth-child(3) ::after {
-      background-color: #F3D4A4;
-    }
-
-
-    .mRow:nth-child(4) ::after {
-      background-color: #C8C8FF;
-    }
-
-
-    .mRow:nth-child(5) ::after {
-      background-color: #F2CFFF;
-    }
-
-    .mRow:nth-child(6) ::after {
-      background-color: #F5BDB8;
-    }
-
-    .mRow:nth-child(7) ::after {
-      background-color: #C8E7D6;
-    }
-
-    .mRow:nth-child(8) ::after {
-      background-color: #C4E8AC;
-    }
-
-    .mRow:nth-child(9) ::after {
-      background-color: #F6D7A6;
-    }
-
-    .mRow:nth-child(10) ::after {
-      background-color: #C0C0F5;
-    }
-
-    #spendTime {
-      position: absolute;
-      top: 0;
-      right: 0;
-      padding: 3px 10px;
-      margin-top: 5px;
-      font-size: 12px;
-      border-radius: 2px;
-      color: #fff;
-      background-color: #16a085;
-    }
-
-    #matchInfo {
-      font-size: 12px;
-
-    }
-
-    .mInfo {
-      margin: 10px;
-    }
-
-    #inputSub {
-      width: 100%;
-
-      box-sizing: border-box;
-    }
-
-    #showSub {
-      height: 200px;
-      border: 1px solid;
-
-    }
-
-    .mRow {
-      margin: 5px;
-    }
-
-    .mRow span:first-child {
-      position: relative;
-      display: inline-block;
-      margin-right: 10px;
-      /* width: 65px; */
-    }
-
-    .mRow span:nth-child(2) {
-
-      display: inline-block;
-      width: 50px;
-    }
-
-    .mRow span:first-child::after {
-      content: '';
-      position: absolute;
-      bottom: -3px;
-      left: 0;
-      width: 100%;
-      height: 4px;
-      /* background-color: red; */
-    }
-
-    label.button {
-      display: inline-block;
-      background-color: #9FBB49;
-      height: 45px;
-      line-height: 45px;
-    }
-
-    #rail+div {
-      position: fixed;
-      visibility: hidden;
-      /* display: none; */
-      /* top: 0; */
-      width: 0;
-      height: 0;
-      z-index: 1000;
-
-    }
-
-    #rail {
-      visibility: hidden;
-    }
-
-    #rail:checked+div {
-      visibility: visible;
-      /* display: block; */
-      min-width: 100%;
-      min-height: 100%;
-      overflow: auto;
-      background-color: rgba(255, 255, 255, .9);
-    }
-
     svg {
-      /* border: 1px solid; */
+      border: 1px solid;
       min-width: 50%;
       min-height: 200px
     }
 
-    aside h3 {
-      font-weight: normal;
-      padding: 10px;
-      margin: 0;
-    }
-
-    .explain {
-      height: 300px;
-      background-color: #FDFDFD;
-      overflow: auto;
-    }
-
-    .explain div {
-      padding-left: 20px;
-      margin-top: 10px;
-      font-size: 0.9em;
+    input {
+      width: 50%;
+      padding: 0;
     }
 
     .error {
       color: red;
-    }
-
-    .capture-group {
-      background-color: beige;
-    }
-
-    .char-class {
-      background-color: greenyellow;
-    }
-
-    .quantifier {
-      background-color: #9b59b6;
-    }
-
-    .sep {
-      background-color: aqua
+      font-size: 14px;
     }
   </style>
 </head>
 
 <body>
-  <header>
-    <label for="rail" class="button">生成铁路图</label>
-    <input type="checkbox" id="rail">
-    <div class="rail">
-      <div class="error"></div>
-      <svg></svg>
-    </div>
-
-  </header>
-
-  <div class="content">
-    <nav></nav>
-    <main>
-      <div class="head">
-        <div>REGULAR RXPRESSION</div>
-        <div id="spendTime">ss</div>
-        <!-- <input type="text" id="reInput"> -->
-        <div id="reInput" contenteditable> </div>
-        <div class="inputs">
-          <label>g<input type="checkbox" checked id="reFlagG"></label>
-          <label>m<input type="checkbox" id="reFlagM"></label>
-          <label>i<input type="checkbox" id="reFlagI"></label>
-        </div>
-
-
-      </div>
-      <div class="text">
-        <div>TEST STRING</div>
-        <div class="box">
-          <!-- <textarea id="testStringInput" cols="30" rows="10" oninput="run()">asdfasdfasdfasdf</textarea> -->
-          <pre id="testStringInput" contenteditable></pre>
-        </div>
-        <div>SUBSTITUTION</div>
-        <input type="text" id="inputSub" oninput="replace()">
-        <div id="showSub"></div>
-      </div>
-    </main>
-    <aside>
-      <div class="explaination">
-        <h3>EXPLAINATION</h3>
-        <div class="explain"></div>
-      </div>
-      <h3>MATCH INFORMATION</h3>
-      <div id="matchInfo"></div>
-    </aside>
-  </div>
+  <div><input type="text"><button onclick="draw()">生成铁路图</button><button onclick="reset()">重置</button></div>
+  <div class="error"></div>
+  <svg></svg>
+  <div class="in" contenteditable>aa</div>
+  <pre id="testStringInput" contenteditable></pre>
 </body>
 
 </html>
 <script>
+
   'use strict'
-
-  // 添加事件
-  let div = document.querySelector('.inputs')
-  let inputs = div.querySelectorAll('input')
-  inputs.forEach(it => {
-    it.addEventListener('click', run)
-  })
-  let pre = document.querySelector('#testStringInput')
-  let regInput = document.querySelector('#reInput')
-  pre.addEventListener('input', run)
-  regInput.addEventListener('input', run)
-  console.dir(regInput.innerText)
-  let header = document.querySelector('header')
-  let drawRail = header.querySelector('.button')
-  drawRail.addEventListener('click', draw)
-
-
-  // 函数部分
-  let groupColor = {
-    1: '#C4E8AC',
-    2: '#F3D4A4',
-    3: '#C8C8FF',
-    4: '#F2CFFF',
-    5: '#F5BDB8',
-    6: '#C8E7D6',
-    7: '#C4E8AC',
-    8: '#F6D7A6',
-    9: '#C0C0F5'
-  }
-
-  function run() {
-    let startTime = new Date()
-    let flags = getFlags()
-    let startIdx = 0
-    let testStr = testStringInput.innerText
-    let re
-
-    try {
-      // re = new RegExp(reInput.value, flags + 'd')
-      re = new RegExp(reInput.innerText, flags + 'd')
-    } catch (e) {
-      if (e instanceof SyntaxError) {
-        testStringInput.innerHTML = testStr
-        return
-      } else {
-        throw e
-      }
-    }
-    let resHTML = ''
-    let match
-    let matchCount = 0
-    let info = ''
-
-    while (match = re.exec(testStr)) {
-      matchCount++
-      resHTML += testStr.slice(startIdx, match.index)
-      resHTML += `<strong title='Match ${matchCount}'>${heightLineGroups(match, matchCount)}</strong>`
-      info += `<div class="mInfo">${modifyInfo(match, matchCount)}</div>`
-      startIdx = re.lastIndex
-      if (match[0] == '') {
-        re.lastIndex++
-      }
-      if (!re.global) {
-        startIdx = match.index + match[0].length
-        break
-      }
-    }
-    resHTML += testStr.slice(startIdx)
-    testStringInput.innerHTML = resHTML
-    let endTime = new Date()
-    inputTime(endTime - startTime, matchCount)  // 计算match时间
-
-    // 执行replace
-    replace()
-    matchInfo.innerHTML = info
-
-    // 执行explain
-    // let syntaxTree = parseRegExp(regInput.value)  // 解析正则语法树
-    let syntaxTree = parseRegExp(regInput.innerText)  // 解析正则语法树
-
-    let explainHTML = explainRegExp(syntaxTree)
-    let explain = document.querySelector('.explain')
-    explain.innerHTML = explainHTML
-
-    // 执行highLight
-    let highLight = highLightRegExp(syntaxTree)
-    regInput.innerHTML = highLight
-  }
-
-  function heightLineGroups(match, matchCount) {
-    if (match.length == 1) {
-      return match[0]
-    }
-    let startIdx = 0
-    let matchRanges = match.indices.map(it => {
-      if (it) {
-        let start = it[0] - match.index
-        let end = it[1] - match.index
-        return [start, end]
-      }
-    })
-    //找到 em 标签位置
-    let matchStr = match[0]
-    let labels = Array(matchStr.length + 1).fill('')
-    for (let i = 1; i < match.length; i++) {
-      let range = matchRanges[i]
-      if (range) {
-        labels[range[0]] += `<em style="background:${groupColor[i]};" title='Match ${matchCount}\nGroup:${i}\nPos${range[0], range[1]}'>`
-        labels[range[1]] += '</em>'
-      }
-    }
-
-    //拼接 em 标签及其内容
-    let res = ''
-    for (let i = 0; i < matchStr.length; i++) {
-      res += labels[i]
-      res += matchStr[i]
-    }
-    res += labels[labels.length - 1]
-    return res
-  }
-
-  function inputTime(time, matchCount) {
-    spendTime.innerHTML = `${matchCount} match (${time}ms)`
-  }
-
-  function replace() {
-    let flags = getFlags()
-    let testStr = testStringInput.innerText
-    let re
-    try {
-      // re = new RegExp(reInput.value, flags + 'd')
-      re = new RegExp(reInput.innerText, flags + 'd')
-    } catch (e) {
-      if (e instanceof SyntaxError) {
-        testStringInput.innerText = testStr + '\n'
-        return
-      } else {
-        throw e
-      }
-    }
-    let replacement = inputSub.value
-    showSub.innerText = testStr.replace(re, replacement)
-
-  }
-  function modifyInfo(match, matchCount) {
-    let resHTML = ''
-    for (let i = 0; i < match.length; i++) {
-      if (match[i]) {
-        let header = `Match ${matchCount}`
-        if (i > 0) {
-          header = `Group ${i}`
-        }
-        resHTML += `<div class="mRow"><span>${header}</span><span>${match.indices[i][0]}-${match.indices[i][1]}</span><span>${match[i]}</span></div>`
-      }
-    }
-    return resHTML
-  }
-
-  function getFlags() {
-    let res = ''
-    if (reFlagG.checked) {
-      res += 'g'
-    }
-    if (reFlagM.checked) {
-      res += 'm'
-    }
-    if (reFlagI.checked) {
-      res += 'i'
-    }
-    return res
-  }
-  // run()
-
-
-  // 正则解析器及铁路图
-
-
-
+  let inp = document.querySelector('input')
   function draw() {
     let er = document.querySelector('.error')
     er.textContent = ''
     let svg = document.querySelector('svg')
     svg.innerHTML = ''
-    svg.setAttribute('width', 0)
-    svg.setAttribute('height', 0)
-    let reInput = document.querySelector('#reInput')
-    // let reInputVal = reInput.value
-    let reInputVal = reInput.innerText
-    let syntaxTree = parseRegExp(reInputVal)  // 解析正则语法树
+    let reInput = document.querySelector('input').value
+    let syntaxTree = parseRexExp(reInput)
     let graph = createRexExpGraph(syntaxTree)
     svg.setAttribute('width', graph.width)
     svg.setAttribute('height', graph.height)
   }
-
+  function reset() {
+    let svg = document.querySelector('svg')
+    svg.innerHTML = ''
+    svg.setAttribute('width', 0)
+    svg.setAttribute('height', 0)
+    document.querySelector('input').value = ''
+  }
 
   let str = '[ae-s\\d]'   // 正则
   let i = 0   // 指针指向str
-
-
   // 所有的parse...函数都会控制指针指向,执行完成之后指向被解析部分的后一位
 
   // 根据str[i] 分配解析函数
@@ -606,7 +123,7 @@
       node.revert = true
       i++  // 跳过 ^
     }
-    while (str[i] !== ']' && i < str.length) {
+    while (str[i] !== ']') {
       let char = parseChar()  // 解析每个字符
       if (str[i] === '-' && str[i - 1] !== '^' && str[i - 1] !== '[' && str[i + 1] !== ']') { // 检查-前后位置
         // node.elements.pop()  这里不能pop，上一步解析char会直接进到这里
@@ -694,7 +211,7 @@
       let el = parseOnePart()
       if (el.type === 'Quantifier') {
         let temp = node.elements.pop()
-
+        // console.dir(el)
         el.element = temp
         el.start = temp.start
         el.raw = str.slice(el.start, el.end)
@@ -718,8 +235,8 @@
     }
     return nodes
   }
+  let groupIndex = 1  // 控制分组序号
 
-  let groupIndex = 1
   function parseCaptureGroup() {
     let node = {
       type: 'CaptureGroup',
@@ -791,18 +308,17 @@
     return groupName
   }
 
-  function parseRegExp(input) {
+  function parseRexExp(input) {
     try {
       new RegExp(input)
     } catch (e) {
-
       let er = document.querySelector('.error')
-      er.textContent = '正则表达式错误，请重新输入'
+      er.textContent = e.message
       throw e
     }
     i = 0
     str = input
-
+    groupIndex = 1
     let node = {
       type: 'RegExp',
       strat: i,
@@ -811,7 +327,6 @@
       value: str,
     }
     return node
-
   }
 
   // 画正则铁路图程序
@@ -963,10 +478,13 @@
         if (i == els.length - 1 || els[i + 1].type !== 'Char') {
           let char = createCharGraph(merge)
           let y = (height - char.height) / 2
+
           char.g.setAttribute('transform', `translate(${x},${y})`)
+
           // for (let j = i - merge.value.length; j < i; j++) {
           //   newWidth = newWidth - els[i].width - gp
           // }
+
           newWidth += char.width + gp  // 将合并后的字符串宽度加回来
 
           rect.setAttribute('width', newWidth)
@@ -1282,8 +800,6 @@
     }
   }
 
-  // 写explain
-
   function explainRegExp(node) {
     if (node.type === 'Char') {
       return `<div class='chartext'>${node.value},匹配一个字符${node.value}</div>`
@@ -1331,4 +847,24 @@
       return `<span class='regexp'>${node.branches.map(highLightRegExp).join('<span class="sep">|</span>')}</span>`
     }
   }
+  let a = parseRexExp('sd|[fd]+(ww)')
+  let text = highLightRegExp(a)
+  document.write(text)
 </script>
+<style>
+  .capture-group {
+    background-color: beige;
+  }
+
+  .char-class {
+    background-color: greenyellow;
+  }
+
+  .quantifier {
+    background-color: #9b59b6;
+  }
+
+  .sep {
+    background-color: aqua
+  }
+</style>

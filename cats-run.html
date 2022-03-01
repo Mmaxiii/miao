@@ -68,6 +68,7 @@
   let angle1 = 0
   var cat = document.querySelector('span')
   requestAnimationFrame(function animate(time) {
+    console.log(time)
     if (lastTime1) {
       angle1 += (time - lastTime1) * 0.0001
     }

@@ -1110,7 +1110,7 @@ var mmaxiii = function () {
     }
     return result
   }
-  function omit(object, path, result = {}) {  // 要重写
+  function omit(object, path, result = {}) {
     if (isString(path)) {
       let keys = toPath(path)
       let key = keys.shift()
@@ -1127,26 +1127,33 @@ var mmaxiii = function () {
           }
         }
       }
+      return result
     } else {
       for (let k in object) {
-        if (k in path) continue
-        let reg = new RegExp(`^${k}\.|$`)
-        let has = false
+        if (path.includes(k)) continue
+        let reg = new RegExp(`^${k}(?=\.|$)`) // 用正则匹配键名
+        let has = false  // 是否匹配成功
         let key
+        let fkey // 第一层的键
+        let fkeyIdx
+        let match
         for (key of path) {
-          if (reg.test(key)) {
+          if (match = reg.exec(key)) {
             has = true
+            fkey = match[0]
+            fkeyIdx = match[0].length + match.index
             break
           }
         }
         if (has) {
-          omit(object, key, result)
+          key = key.slice(fkeyIdx)
+          result[fkey] = omit(object[fkey], key)
         } else {
           result[k] = object[k]
         }
       }
+      return result
     }
-    return result
   }
   function result(...args) {
     let result = get(...args)
@@ -1362,7 +1369,7 @@ var mmaxiii = function () {
       if (str[i] == 'n') return parseNull()
       if (str[i] >= '0' && str[i] <= '9') return parseNumber()
       if (str[i] == '[') return parseArray()
-      if (str[i] == '{') return parseObject
+      if (str[i] == '{') return parseObject()
     }
     function parseObject() {
       let result = {}
@@ -1402,7 +1409,7 @@ var mmaxiii = function () {
         }
         if (str[i] == ']') {
           i++
-          return ary
+          return result
         }
       }
     }

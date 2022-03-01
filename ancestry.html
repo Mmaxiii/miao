@@ -280,6 +280,15 @@
 </script>
 
 <script>
+  let arr = [{
+    id: 1,
+    parent: 0,
+    name: 'foo',
+  }
+  ]
+  a = JSON.stringify(arr)
+  debugger;
+  parse(a)
   function gui(ary) {
     if (ary.length < 2) return ary.slice()
 

@@ -1,0 +1,668 @@
+<!DOCTYPE html>
+<!-- saved from url=(0033)file:///E:/miao/regexp-graph.html -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    svg {
+      border: 1px solid;
+
+    }
+  </style>
+</head>
+
+<body>
+  <svg width="1000" height="1000"><g><rect width="222.796875" height="308" fill="none"></rect><g transform="translate(10,0)"><rect fill="none" height="308" width="202.796875" rx="3"></rect><g transform="translate(20,10)"><rect fill="none" height="288" width="162.796875" rx="3"></rect><g transform="translate(10,10)"><rect fill="none" height="268" width="142.796875" rx="3"></rect><path d="
+      M 20 134
+      H 0 134
+      M 122.796875 134
+      H 142.796875 134
+      " stroke="black" stroke-width="2" fill="none"></path><g transform="translate(20,20)"><rect width="102.796875" height="228" fill="none"></rect><g transform="translate(0,20)"><rect fill="none" height="188" width="102.796875" rx="3"></rect><g transform="translate(20,10)"><rect fill="none" height="168" width="62.796875" rx="3"></rect><g transform="translate(10,10)"><rect fill="#CBCBBA" height="148" width="42.796875" rx="3"></rect><g transform="translate(10.87109375,10)"><rect height="36" width="21.0546875" fill="#DAE9E5" rx="3"></rect><text dominant-baseline="text-before-edge" x="5" y="5">a</text></g><g transform="translate(10.87109375,56)"><rect height="36" width="21.0546875" fill="#DAE9E5" rx="3"></rect><text dominant-baseline="text-before-edge" x="5" y="5">a</text></g><g transform="translate(10,102)"><rect height="36" width="22.796875" fill="#DAE9E5" rx="3"></rect><text dominant-baseline="text-before-edge" x="5" y="5">d</text></g></g><path d="
+        M 10 84
+        h -10
+        " stroke="black" stroke-width="2"></path><path d="
+      M 62.796875 84
+      h -10
+      " stroke="black" stroke-width="2"></path></g><path d="
+        M 20 94
+        C 10 94 20 94 0 94 
+
+        M 82.796875 94
+        C 92.796875 94 82.796875 94 102.796875 94 
+        " stroke="black" stroke-width="2" fill="none"></path></g><rect x="0" y="20" width="102.796875" height="188" rx="3" stroke="#908C83" stroke-width="2" stroke-dasharray="5 3" fill="none"></rect><text dominant-baseline="text-before-edge" font-size="12">Groups  1</text></g><path d="
+      M 20 134
+      a 10 10 0 0 0 -10 10
+      V 248
+      a 10 10 0 0 0 10 10
+      h 102.796875
+      a 10 10 0 0 0 10 -10
+      V 144
+      a 10 10 0 0 0 -10 -10
+      m 17 10
+      " stroke="black" stroke-width="2" fill="none"></path></g><path d="
+        M 10 144
+        h -10
+        " stroke="black" stroke-width="2"></path><path d="
+      M 162.796875 144
+      h -10
+      " stroke="black" stroke-width="2"></path></g><path d="
+        M 20 154
+        C 10 154 20 154 0 154 
+
+        M 182.796875 154
+        C 192.796875 154 182.796875 154 202.796875 154 
+        " stroke="black" stroke-width="2" fill="none"></path></g><circle cx="5" cy="154" r="5" fill="#6B6659" stroke="black" stroke-width="2"></circle><circle cx="217.796875" cy="154" r="5" fill="#6B6659" stroke="black" stroke-width="2"></circle></g></svg>
+
+
+
+<script>
+
+  'use strict'
+  let str = '[ae-s\\d]'   // 正则
+  let i = 0   // 指针指向str
+  // 所有的parse...函数都会控制指针指向,执行完成之后指向被解析部分的后一位
+
+  // 根据str[i] 分配解析函数
+  function parseOnePart() {
+    if (str[i] === '(') {
+      return parseCaptureGroup()  // 解析捕获分组
+    }
+    if (str[i] === '[') {
+      return parseCharClass()  // 解析字符集
+    }
+    if (str[i] === '\\') {
+      return parseEscape()      // 解析转义
+    }
+    if (str[i] === '+' || str[i] === '*' || str[i] === '?' || str[i] === '{') {
+      return parseQuantifier()      // 解析量词
+    }
+
+    return parseChar()     // 解析字符
+
+  }
+
+  function parseChar() {
+    if (str[i] === '\\') return parseEscape()  // 其他parse函数循环时，会遇到转义的情况，这里统一处理
+    let node = {
+      type: 'Char',
+      start: i,
+      end: i + 1,
+      raw: str[i],
+      value: str[i]
+    }
+    i++
+    return node
+  }
+
+  function parseEscape() {
+    let start = i  // 记录起始位置
+    i++  // 跳过 \
+    let node = {
+      type: 'Escape',
+      start,
+      end: i + 1,
+      raw: str.slice(start, i + 1),
+      value: ''
+    }
+    // node.value = str[i]
+    node.value = str.slice(start, i + 1)
+    i++ // 跳过 value
+    return node
+  }
+
+  function parseCharClass() {
+    let node = {
+      type: 'CharClass',
+      start: i,
+      end: '',
+      raw: '',
+      revert: false,  // 是否取反
+      elements: []   // 字符集内容
+    }
+    i++ // 跳过 [
+    if (str[i] === '^') {
+      node.revert = true
+      i++  // 跳过 ^
+    }
+    while (str[i] !== ']') {
+      let char = parseChar()  // 解析每个字符
+      if (str[i] === '-' && str[i - 1] !== '^' && str[i - 1] !== '[' && str[i + 1] !== ']') { // 检查-前后位置
+        // node.elements.pop()  这里不能pop，上一步解析char会直接进到这里
+        char = parseCharRange()
+      }
+      node.elements.push(char)  // 加入字符集
+    }
+    i++ // 跳过 ]
+    node.end = i
+    node.raw = str.slice(node.start, node.end)
+    return node
+  }
+
+  function parseCharRange() {
+    i-- // 跳回-的前一位
+    let node = {
+      type: 'CharRange',
+      start: i,
+      end: 0,
+      startChar: '',
+      endChar: '',
+      raw: ''
+    }
+    node.startChar = parseChar()// 自动跳过 -的前一位
+    i++ // 跳过 -
+    node.endChar = parseChar()// 自动跳过 -的后一位
+    node.end = i
+    node.raw = str.slice(node.start, node.end)
+    return node
+  }
+
+  function parseQuantifier() {
+    let node = {
+      type: 'Quantifier',
+      start: 0,
+      end: 0,
+      raw: '',
+      min: 0,  // 最少次数
+      max: Infinity,  // 最多次数
+      element: '',   // 重复元素
+      greedy: true,  // 是否贪婪
+    }
+    if (str[i] === '?') {
+      node.max = 1
+      i++  // 跳过 ？
+    } else if (str[i] === '*') {
+      i++  // 跳过 *
+    } else if (str[i] === '+') {
+      node.min = 1
+      i++  // 跳过 +
+    } else {  // {}的情况
+      i++  // 跳过 {
+      node.min = parseInt()
+      i++  // 跳过 ，
+      node.max = parseInt()
+      i++ // 跳过 }
+    }
+    if (str[i] === '?') {
+      node.greedy = false
+      i++ // 跳过 ？
+    }
+    node.end = i
+    return node
+  }
+  function parseInt() {
+    let num = ''
+    if (str[i] === '}') {
+      return Infinity
+    }
+    while (str[i] !== ',' && str[i] !== '}') {
+      num += str[i]
+      i++
+    }
+    return Number(num)
+  }
+  function parseBranch() {
+    let node = {
+      type: 'Branch',
+      start: i,
+      end: 0,
+      raw: '',
+      elements: []
+    }
+    while (str[i] !== '|' && str[i] !== ')' && i < str.length) {
+      let el = parseOnePart()
+      if (el.type === 'Quantifier') {
+        let temp = node.elements.pop()
+        // console.dir(el)
+        el.element = temp
+        el.start = temp.start
+        el.raw = str.slice(el.start, el.end)
+      }
+      node.elements.push(el)
+    }
+    node.end = i
+    node.raw = str.slice(node.start, node.end)
+
+    return node
+  }
+
+  function parseBranches() {
+    let nodes = []
+    while (str[i] !== ')' && i < str.length) {  // 控制两种终止情况，1、整个正则解析完成 2、捕获分组解析完成
+      let el = parseBranch()
+      if (str[i] === '|') {
+        i++ // 跳过 | 
+      }
+      nodes.push(el)
+    }
+    return nodes
+  }
+  let groupIndex = 1  // 控制分组序号
+
+  function parseCaptureGroup() {
+    let node = {
+      type: 'CaptureGroup',
+      start: i,
+      end: 0,
+      raw: '',
+      branches: [],  // 组内分支
+      index: 0,
+      name: '',  // 分组名称
+      assertion: false,  // 是否是零宽断言
+      lookahead: true,// 预测(true)还是回顾(false)
+      positive: true  // 正判断(true)还是负判断(false)
+    }
+    i++ // 跳过（
+
+    // 先判断零宽断言等
+    if (str[i] === "?") {
+      i++ // 跳过 ？
+      if (str[i] == ':') {   // 不计数分组
+        i++ // 跳过 :
+        node.assertion = false
+      } else if (str[i] === '<') {  //判断是否是回顾断言
+        node.index = groupIndex++
+        node.lookahead = false
+        node.assertion = true
+        i++ // 跳过 <
+        // 判断回顾的正负
+        if (str[i] === '=') {
+          i++ //跳过 =
+        } else if (str[i] === '!') {
+          node.positive = false
+          i++ // 跳过 ！
+        } else { // 不是= or ！ 就是记名分组
+          node.index = node.index = groupIndex++
+          node.name = parseGroupName()
+          i++ // 跳过 >
+        }
+      }
+      // 判断预测的 正负
+      else if (str[i] === '=') {
+        i++ //跳过 =
+      } else if (str[i] === '!') {
+        node.positive = false
+        i++ // 跳过 ！
+      }
+    } else {
+      node.index = node.index = groupIndex++
+    }
+
+    node.branches = parseBranches()
+    i++ // 跳过 ）
+    node.end = i
+    node.raw = str.slice(node.start, node.end)
+    return node
+
+  }
+
+  function parseGroupName() {
+    let groupName = ''
+    let start = i
+    while (str[i] !== '>') {
+      groupName += str[i]
+      i++
+      if (i > str.length) {  // 说明没有名字
+        i = start
+        break
+      }
+    }
+    return groupName
+  }
+
+  function parseRexExp(input) {
+    i = 0
+    str = input
+    groupIndex = 1
+    let node = {
+      type: 'RexExp',
+      branches: parseBranches()
+    }
+    return node
+  }
+
+  // 画正则铁路图程序
+  function createGraph(node) {
+    if (node.type === 'Char') {
+      return createCharGraph(node)
+    }
+    if (node.type === 'Escape') {
+      return createEscapeGraph(node)
+    }
+    if (node.type === 'CharClass') {
+      return createCharClassGraph(node)
+    }
+    if (node.type === 'Quantifier') {
+      return createQuantifierGraph(node)
+    }
+    if (node.type === 'Branch') {
+      return createBranchGraph(node)
+    }
+    if (node.type === 'CaptureGroup') {
+      return createCaptureGroupGraph(node)
+    }
+    return createBranchesGraph(node)
+  }
+  let svg = document.querySelector('svg')
+  function elt(tagName, attrs = {}, ...children) {
+    let el = document.createElementNS("http://www.w3.org/2000/svg", tagName)
+    for (let key in attrs) {
+      let value = attrs[key]
+      el.setAttribute(key, value)
+    }
+    for (let child of children) {
+      if (typeof child === 'string') {
+        child = document.createTextNode(child)
+      }
+      el.appendChild(child)
+    }
+    svg.appendChild(el)   // 这里将el插入svg是为了优化creatCharGraph里面的代码，省去反复appendChild的代码（只有先将标签画出来，才能得到尺寸，并且后插入的标签会掩盖之前的）
+    return el
+  }
+  let gp = 10 // graphPadding
+  function createCharGraph(node) {
+    let el = elt('text', {
+      'dominant-baseline': 'text-before-edge',
+      x: gp / 2,
+      y: gp / 2,
+    }, node.value)  // 根据Char的value创建一个svg text标签
+    let elBox = el.getBBox()
+    let height = elBox.height + gp
+    let width = elBox.width + gp
+    let rect = elt('rect', {
+      height,
+      width,
+      fill: '#DAE9E5',
+      rx: 3
+    })
+    let g = elt('g', {}, rect, el)
+    let box = g.getBBox()
+    return {
+      g,
+      height: box.height,
+      width: box.width
+    }
+  }
+
+  function createEscapeGraph(node) {
+    return createCharGraph(node)
+  }
+  function add(a, b) {
+    return a + b
+  }
+  function max(a, b) {
+    return Math.max(a, b)
+  }
+  function createCharClassGraph(node) {
+    let els = node.elements.map(createGraph)  // 将字符集内所有字符画出，并收集返回的对象
+    let height = els.map(it => it.height + gp).reduce(add) + gp
+    let width = els.map(it => it.width).reduce(max) + 2 * gp  // width 是所有元素中最宽的一个
+    let rect = elt('rect', {
+      fill: '#CBCBBA',
+      height,
+      width,
+      rx: 3
+    })
+    let g = elt('g', {}, rect)
+    let y = gp
+    els.forEach(it => {
+      let x = (width - it.width) / 2
+      it.g.setAttribute('transform', `translate(${x},${y})`)
+      y += it.height + gp
+      g.appendChild(it.g)
+    })
+    let box = g.getBBox()
+    return {
+      g,
+      width: box.width,
+      height: box.height,
+    }
+  }
+
+  function createBranchGraph(branch) {
+    let els = branch.elements.map(createGraph)
+    let height = els.map(it => it.height).reduce(max) + 2 * gp  // height 是所有元素中最宽的一个
+    let width = els.map(it => it.width + gp).reduce(add) + gp
+    let rect = elt('rect', {
+      fill: 'none',
+      height,
+      width,
+      rx: 3
+    })
+    let g = elt('g')
+    g.appendChild(rect)
+
+    let x = gp
+    els.forEach(it => {
+      let y = (height - it.height) / 2
+      it.g.setAttribute('transform', `translate(${x},${y})`)
+      let line = elt('path', {
+        d: `
+        M ${x} ${height / 2}
+        h ${-gp}
+        `,
+        stroke: "black",
+        'stroke-width': 2,
+      })
+      x += it.width + gp
+      g.appendChild(it.g)
+      g.appendChild(line)
+    })
+    let line = elt('path', {  //最后一个横杠单独处理
+      d: `
+      M ${width} ${height / 2}
+      h ${-gp}
+      `,
+      stroke: "black",
+      'stroke-width': 2,
+    })
+    g.appendChild(line)
+
+    let box = g.getBBox()
+    return {
+      g,
+      width: box.width,
+      height: box.height,
+    }
+  }
+
+  function createBranchesGraph(branches) {
+    let graphs = branches.map(createGraph)
+    let height = graphs.map(it => it.height + gp).reduce(add) + gp
+    let width = graphs.map(it => it.width).reduce(max) + 4 * gp  // width 是所有元素中最宽的一个
+    let rect = elt('rect', {
+      fill: 'none',
+      height,
+      width,
+      rx: 3
+    })
+    let g = elt('g', {}, rect)
+
+    let y = gp
+    for (let graph of graphs) {
+      let x = (width - graph.width) / 2
+      graph.g.setAttribute('transform', `translate(${x},${y})`)
+      let line = elt('path', {
+        d: `
+        M ${x} ${y + graph.height / 2}
+        C ${x - gp} ${y + graph.height / 2} ${2 * gp} ${height / 2} ${0} ${height / 2} 
+
+        M ${x + graph.width} ${y + graph.height / 2}
+        C ${x + graph.width + gp} ${y + graph.height / 2} ${width - 2 * gp} ${height / 2} ${width} ${height / 2} 
+        `,
+        stroke: "black",
+        'stroke-width': 2,
+        fill: 'none',
+      })
+      y += graph.height + gp
+      g.appendChild(graph.g)
+      g.appendChild(line)
+    }
+    let box = g.getBBox()
+    return {
+      g,
+      width: box.width,
+      height: box.height
+    }
+  }
+
+  function createCaptureGroupGraph(node) {
+    let branchesGraph = createBranchesGraph(node.branches) // 这里要将node.branches传进去
+
+    let fill = elt('rect', {
+      width: branchesGraph.width,
+      height: branchesGraph.height + 4 * gp,
+      fill: 'none',
+    })
+    // 画虚线框
+    let rect = elt('rect', {
+      x: 0,
+      y: 2 * gp,
+      width: branchesGraph.width,
+      height: branchesGraph.height,
+      rx: 3,
+      stroke: "#908C83",
+      'stroke-width': 2,
+      'stroke-dasharray': "5 3",
+      fill: 'none',
+    })
+    let g = elt('g')
+    g.appendChild(fill)
+    branchesGraph.g.setAttribute('transform', `translate(${0},${2 * gp})`)
+    g.appendChild(branchesGraph.g)
+    g.appendChild(rect)
+    // 给捕获分组加文字描述
+    let text = elt('text', {
+      'dominant-baseline': 'text-before-edge',
+      'font-size': '12',
+    }, `Groups ${node.name} ${node.index}`)
+    console.dir(text)
+    // debugger;
+    g.appendChild(text)
+    let box = g.getBBox()
+    return {
+      g,
+      width: box.width,
+      height: box.height
+    }
+  }
+
+  function createQuantifierGraph(node) {
+    let el = createGraph(node.element)
+    let width = el.width + 4 * gp
+    let height = el.height + 4 * gp
+    let rect = elt('rect', {
+      fill: 'none',
+      height,
+      width,
+      rx: 3
+    })
+    let line = elt('path', {
+      d: `
+      M ${2 * gp} ${height / 2}
+      H ${0} ${height / 2}
+      M ${width - 2 * gp} ${height / 2}
+      H ${width} ${height / 2}
+      `,
+      stroke: "black",
+      'stroke-width': 2,
+      fill: 'none',
+    })
+    let g = elt('g')
+    g.appendChild(rect)
+    g.appendChild(line)
+    el.g.setAttribute('transform', `translate(${2 * gp},${2 * gp})`)
+    g.appendChild(el.g)
+
+
+    if (node.max > 1) {
+      let repeatLine = elt('path', {
+        d: `
+      M ${2 * gp} ${height / 2}
+      a ${gp} ${gp} 0 0 0 ${-gp} ${gp}
+      V ${height - 2 * gp}
+      a ${gp} ${gp} 0 0 0 ${gp} ${gp}
+      h ${el.width}
+      a ${gp} ${gp} 0 0 0 ${gp} ${-gp}
+      V ${height / 2 + gp}
+      a ${gp} ${gp} 0 0 0 ${-gp} ${-gp}
+      m ${gp * 1.7} ${gp}
+      `,
+        // l ${-0.7 * gp} ${gp}
+        // l ${- 0.7 * gp} ${-gp}
+        stroke: "black",
+        'stroke-width': 2,
+        fill: 'none',
+      })
+      g.appendChild(repeatLine)
+
+    }
+    if (node.min === 0) {
+      let skipLine = elt('path', {
+        d: `
+      M 0 ${height / 2}
+      a ${gp} ${gp} 0 0 0 ${gp} ${-gp}
+      V ${2 * gp}
+      a ${gp} ${gp} 0 0 1 ${gp} ${-gp}
+      h ${el.width}
+      a ${gp} ${gp} 0 0 1 ${gp} ${gp}
+      V ${height / 2 - gp}
+      a ${gp} ${gp} 0 0 0 ${gp} ${gp}
+      `,
+        stroke: "black",
+        'stroke-width': 2,
+        fill: 'none',
+      })
+      g.appendChild(skipLine)
+    }
+
+
+    let box = g.getBBox()
+    return {
+      g,
+      width: box.width,
+      height: box.height
+    }
+  }
+  function createRexExpGraph(node) {
+    let el = createBranchesGraph(node.branches)
+    let width = el.width + 2 * gp
+    let height = el.height
+    let rect = elt('rect', {
+      width,
+      height,
+      fill: 'none'
+    })
+    let g = elt('g')
+    g.appendChild(rect)
+    el.g.setAttribute('transform', `translate(${gp},${0})`)
+    g.appendChild(el.g)
+    // let line = elt('path', {
+    //   d:`
+    //   M ${2* gp} ${height / 2}
+    //   h ${-gp}
+    //   M ${width - 2 * gp} ${height / 2}
+    //   h ${gp} 
+    //   `
+    // })
+    let leftCircle = elt('circle', {
+      cx: gp * 0.5,
+      cy: height / 2,
+      r: gp / 2,
+      fill: '#6B6659',
+      stroke: 'black',
+      'stroke-width': 2
+    })
+    let rightCircle = elt('circle', {
+      cx: width - gp * 0.5,
+      cy: height / 2,
+      r: gp / 2,
+      fill: '#6B6659',
+      stroke: 'black',
+      'stroke-width': 2
+    })
+    g.appendChild(leftCircle)
+    g.appendChild(rightCircle)
+  }
+</script></body></html>
