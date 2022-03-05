@@ -6,6 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Mini Regex101</title>
+  <link rel="stylesheet" href="font/iconfont.css">
   <style>
     html,
     body {
@@ -36,6 +37,7 @@
     }
 
     aside {
+      flex-shrink: 0;
       width: 350px;
       background-color: #FDFDFD;
     }
@@ -51,20 +53,20 @@
     }
 
     #reInput {
-      width: 100%;
+
+      height: 30px;
+      margin-right: 125px;
       box-sizing: border-box;
       border: 1px solid;
     }
 
+    /* 
     .box {
-      position: relative;
-      height: 250px;
-    }
 
-    #testStringInput,
-    #resultShow {
-      /* position: absolute; */
-      top: 0;
+      height: 250px;
+    } */
+
+    #testStringInput {
       box-sizing: border-box;
       overflow: auto;
       width: 100%;
@@ -75,9 +77,6 @@
       line-height: 1.3em;
       font-size: 20px;
       white-space: pre-wrap;
-      overflow-wrap: break-word;
-      resize: none;
-      background-color: initial;
     }
 
 
@@ -213,12 +212,12 @@
       /* background-color: red; */
     }
 
-    label.button {
+    /* label.button {
       display: inline-block;
       background-color: #9FBB49;
       height: 45px;
       line-height: 45px;
-    }
+    } */
 
     #rail+div {
       position: fixed;
@@ -231,13 +230,51 @@
 
     }
 
-    #rail {
+    .railway {
+      position: absolute;
+      box-sizing: border-box;
+      top: 26px;
+      right: 0;
+      width: 120px;
+      height: 30px;
+      text-align: center;
+      line-height: 30px;
+      font-size: 18px;
+      color: #fff;
+      border: 1px solid;
+      border-radius: 2px;
+      background-color: #2C5C97;
+    }
+
+    .rail {
+      display: flex;
+      position: fixed;
+      top: 0;
+      left: 0;
       visibility: hidden;
     }
 
-    #rail:checked+div {
+    .rail .closed {
+      position: absolute;
+      top: 5px;
+      right: 5px;
+      width: 30px;
+      height: 30px;
+      line-height: 30px;
+      text-align: center;
+      font-size: 22px;
+
+      border-radius: 15px;
+      border: 1px solid;
+
+    }
+
+    .rail .closed:hover {
+      background-color: #ff6348;
+    }
+
+    .railshow {
       visibility: visible;
-      /* display: block; */
       min-width: 100%;
       min-height: 100%;
       overflow: auto;
@@ -245,9 +282,8 @@
     }
 
     svg {
-      /* border: 1px solid; */
-      min-width: 50%;
-      min-height: 200px
+
+      margin: auto;
     }
 
     aside h3 {
@@ -269,6 +305,10 @@
     }
 
     .error {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
       color: red;
     }
 
@@ -292,13 +332,6 @@
 
 <body>
   <header>
-    <label for="rail" class="button">生成铁路图</label>
-    <input type="checkbox" id="rail">
-    <div class="rail">
-      <div class="error"></div>
-      <svg></svg>
-    </div>
-
   </header>
 
   <div class="content">
@@ -307,20 +340,23 @@
       <div class="head">
         <div>REGULAR RXPRESSION</div>
         <div id="spendTime">ss</div>
-        <!-- <input type="text" id="reInput"> -->
         <div id="reInput" contenteditable> </div>
+        <div class="railway">生成铁路图</div>
         <div class="inputs">
           <label>g<input type="checkbox" checked id="reFlagG"></label>
           <label>m<input type="checkbox" id="reFlagM"></label>
           <label>i<input type="checkbox" id="reFlagI"></label>
         </div>
+        <div class="rail">
+          <div class="error"></div>
+          <div class="closed  iconfont icon-close-bold"></div>
+          <svg></svg>
 
-
+        </div>
       </div>
       <div class="text">
         <div>TEST STRING</div>
         <div class="box">
-          <!-- <textarea id="testStringInput" cols="30" rows="10" oninput="run()">asdfasdfasdfasdf</textarea> -->
           <pre id="testStringInput" contenteditable></pre>
         </div>
         <div>SUBSTITUTION</div>
@@ -354,10 +390,18 @@
   pre.addEventListener('input', run)
   regInput.addEventListener('input', run)
   console.dir(regInput.innerText)
-  let header = document.querySelector('header')
-  let drawRail = header.querySelector('.button')
-  drawRail.addEventListener('click', draw)
 
+
+  // 生成铁路图
+  const railway = document.querySelector('.railway')
+  railway.addEventListener('click', draw)
+
+  const rail = document.querySelector('.rail')
+  const closed = document.querySelector('.closed')
+  closed.addEventListener('click', function (e) {
+    console.log(1)
+    rail.classList.remove('railshow')
+  })
 
   // 函数部分
   let groupColor = {
@@ -380,7 +424,7 @@
     let re
 
     try {
-      // re = new RegExp(reInput.value, flags + 'd')
+
       re = new RegExp(reInput.innerText, flags + 'd')
     } catch (e) {
       if (e instanceof SyntaxError) {
@@ -514,14 +558,12 @@
     }
     return res
   }
-  // run()
 
 
   // 正则解析器及铁路图
 
-
-
   function draw() {
+    rail.classList.add('railshow')
     let er = document.querySelector('.error')
     er.textContent = ''
     let svg = document.querySelector('svg')
@@ -529,12 +571,14 @@
     svg.setAttribute('width', 0)
     svg.setAttribute('height', 0)
     let reInput = document.querySelector('#reInput')
-    // let reInputVal = reInput.value
+
     let reInputVal = reInput.innerText
     let syntaxTree = parseRegExp(reInputVal)  // 解析正则语法树
     let graph = createRexExpGraph(syntaxTree)
     svg.setAttribute('width', graph.width)
     svg.setAttribute('height', graph.height)
+
+
   }
 
 
@@ -795,7 +839,6 @@
     try {
       new RegExp(input)
     } catch (e) {
-
       let er = document.querySelector('.error')
       er.textContent = '正则表达式错误，请重新输入'
       throw e

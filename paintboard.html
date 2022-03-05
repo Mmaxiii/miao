@@ -6,6 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
+  <link rel="stylesheet" href="font/iconfont.css">
   <style>
     body,
     html {
@@ -182,7 +183,7 @@
 
     }
   </style>
-  <link rel="stylesheet" href="font/iconfont.css">
+
 </head>
 
 <body>
@@ -297,9 +298,13 @@
     }
     if (e.target.matches('.back') && svg.children.length) {
       svg.removeChild(svg.lastChild)
+      if (svg.children.length == 0) {
+        painted = false
+      }
     }
     if (e.target.matches('.delete')) {
       svg.innerHTML = ''
+      painted = false
     }
 
     if (e.target.matches('.save')) {
@@ -485,10 +490,6 @@
     }
   })
 
-  window.addEventListener('click', function (e) {
-
-  })
-
   window.addEventListener('beforeunload', function (e) {
     if (painted) {
       e.preventDefault();
@@ -497,11 +498,9 @@
   })
   // 划线函数
   function onMove(e) {
-    if (svg.children.length == 0) {
-      painted = false
-    } else {
-      painted = true
-    }
+
+    painted = true
+
 
     const pos = mouse(svg)
 
