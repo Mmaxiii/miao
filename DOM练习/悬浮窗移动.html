@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    div {
+      position: absolute;
+
+      background-color: #acf;
+      border: 2px solid;
+      min-width: 200px;
+      min-height: 200px;
+    }
+
+    .win-title {
+      display: block;
+      height: 40px;
+      background-color: limegreen;
+      cursor: move;
+    }
+
+    .win-resize {
+      display: inline-block;
+      position: absolute;
+      bottom: -2px;
+      right: -2px;
+      width: 4px;
+      height: 4px;
+
+      background-color: red;
+      cursor: nwse-resize;
+    }
+  </style>
+</head>
+
+<body>
+  <div style="top:50px;left:50px;width:200px;height:200px;" class="note">
+    <span class="win-title">111</span>
+    <span class="win-resize"></span>
+  </div>
+  <div style="top:100px;left:100px;width:200px;height:200px;" class="note">
+    <span class="win-title">222</span>
+    <span class="win-resize"></span>
+  </div>
+
+</body>
+
+</html>
+<script>
+  'use strict'
+  const div = document.querySelector('div')
+  let startX
+  let startY
+  let maxIdx = 0  // 控制悬浮窗上下位置
+  let targetNode
+  let targetNodeX
+  let targetNodeY
+  let state
+  let nodeWidth
+  let nodeHeight
+  window.addEventListener('mousedown', function (e) {  // 绑定到window上可以移动多个元素
+    targetNode = e.target.closest('.note')
+    targetNode.style.zIndex = maxIdx++  // 保证当前移动元素比其他元素的z-index多1
+
+    if (!e.target.matches('.note') && targetNode) {
+      state = 'move'
+      const pos = targetNode.getBoundingClientRect()
+      targetNodeX = pos.x
+      targetNodeY = pos.y
+      if (e.which == 1) {
+        window.addEventListener('mousemove', onMove)
+
+        startX = e.pageX  // 得到鼠标点击的位置
+        startY = e.pageY
+      }
+    }
+    if (e.target.className == 'win-resize') {
+      state = 'resize'
+      nodeWidth = targetNode.clientWidth
+      nodeHeight = targetNode.clientHeight
+    }
+    e.preventDefault()  // 阻止默认事件
+  })
+
+  function onMove(e) {
+
+    if (e.which === 0) {
+      window.removeEventListener('mousemove', onMove)
+      return
+    }
+
+    if (state == 'move') {
+      const posX = e.pageX
+      const posY = e.pageY
+      const dx = posX - startX
+      const dy = posY - startY
+
+      let newX = targetNodeX + dx
+      let newY = targetNodeY + dy
+
+
+      if (newX <= 0) {
+        newX = 0
+      }
+      if (newX >= innerWidth - targetNode.offsetWidth) {
+        newX = innerWidth - targetNode.offsetWidth
+      }
+
+      if (newY <= 0) {
+        newY = 0
+      }
+      if (newY >= innerHeight - targetNode.offsetHeight) {
+        newY = innerHeight - targetNode.offsetHeight
+      }
+      targetNode.style.top = newY + 'px'
+      targetNode.style.left = newX + 'px'
+    }
+
+    if (state == 'resize') {
+      const posX = e.pageX
+      const posY = e.pageY
+      const dx = posX - startX
+      const dy = posY - startY
+
+      targetNode.style.width = nodeWidth + dx + 'px'
+      targetNode.style.height = nodeHeight + dy + 'px'
+    }
+  }
+</script>

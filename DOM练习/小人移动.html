@@ -25,7 +25,8 @@
 
   'use strict'
   const span = document.querySelector('span')
-  let v = 3
+  let baseV = 3
+  let v = baseV
   let vx = 0
   let vy = 0
   let leftDown = false
@@ -36,30 +37,26 @@
   window.addEventListener('keydown', function (e) {
 
     if (e.code.startsWith('Shift')) {
-      vx = 2 * vx
-      vy = 2 * vy
+      v = 2 * baseV
     }
     if (e.code == 'ArrowLeft') {
       leftDown = true
-      vx = -v
+      vx = -1
     }
 
     if (e.code == 'ArrowRight') {
       rightDown = true
-      vx = v
-
+      vx = 1
     }
 
     if (e.code == 'ArrowUp') {
       upDown = true
-      vy = -v
-
+      vy = -1
     }
 
     if (e.code == 'ArrowDown') {
       downDown = true
-      vy = v
-      // span.style.left = parseInt(span.style.left) + vx + 'px'
+      vy = 1
     }
   })
 
@@ -68,13 +65,12 @@
   window.addEventListener('keyup', function (e) {
 
     if (e.code.startsWith('Shift')) {
-      vx = vx / 2
-      vy = vy / 2
+      v = baseV
     }
     if (e.code == 'ArrowLeft') {
       leftDown = false
       if (rightDown) {
-        vx = v
+        vx = 1
       } else {
         vx = 0
       }
@@ -84,30 +80,33 @@
     if (e.code == 'ArrowRight') {
       rightDown = false
       if (leftDown) {
-        vx = -v
+        vx = -1
       } else {
         vx = 0
       }
+
     }
 
     if (e.code == 'ArrowUp') {
       upDown = false
       if (downDown) {
-        vy = v
+        vy = 1
       } else {
         vy = 0
       }
+
 
     }
 
     if (e.code == 'ArrowDown') {
       downDown = false
       if (upDown) {
-        vy = v
+        vy = 1
       } else {
         vy = 0
       }
-      // span.style.left = parseInt(span.style.left) + vx + 'px'
+
+
     }
   })
 
@@ -120,8 +119,27 @@
     } else {
       deffTime = time - lastTime
     }
-    span.style.left = parseInt(span.style.left) + vx + 'px'
-    span.style.top = parseInt(span.style.top) + vy + 'px'
+    span.style.left = parseInt(span.style.left) + v * vx + 'px'
+    span.style.top = parseInt(span.style.top) + v * vy + 'px'
     requestAnimationFrame(ani)
   })
+
+
+
+  // if (newX <= 0) {
+  //     newX = 0
+  //   }
+  //   if (newX >= innerWidth - pos.width) {
+  //     newX = innerWidth - moveNode.offsetWidth
+  //   }
+
+  //   if (newY <= 0) {
+  //     newY = 0
+  //   }
+  //   if (newY >= innerHeight - pos.height) {
+  //     newY = innerHeight - moveNode.offsetHeight
+  //   }
+  //   moveNode.style.top = newY + 'px'
+  //   moveNode.style.left = newX + 'px'
+  // }
 </script>

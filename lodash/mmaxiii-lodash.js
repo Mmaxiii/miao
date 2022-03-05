@@ -577,19 +577,29 @@ var mmaxiii = function () {
     return res
   }
 
-  function cloneDeep(value) {
+  function cloneDeep(value, set = new Set()) {
     let res = null
     if (Array.isArray(value)) {
       res = []
       for (let i = 0; i < value.length; i++) {
-        res.push(cloneDeep(value[i]))
+        if (set.has(value[i])) {  // 带环情况处理
+          res.push(value[i])
+        } else {
+          set.add(value[i])
+          res.push(cloneDeep(value[i]), set)
+        }
       }
     } else if (isRegExp(value)) {
       res = value
     } else if (isObject(value)) {
       res = {}
       for (let key in value) {
-        res[key] = cloneDeep(value[key])
+        if (set.has(value[key])) { // 带环情况处理
+          res[key] = value[key]
+        } else {
+          set.add(value[key])
+          res[key] = cloneDeep(value[key], set)
+        }
       }
     } else {
       res = value

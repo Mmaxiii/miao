@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    svg {
+      display: block;
+      width: 1000px;
+      height: 500px;
+
+    }
+
+    .board {
+      position: absolute;
+      top: 100px;
+      left: 100px;
+      display: inline-block;
+      border: 2px solid;
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <div class="graphsSelect">
+      <button tool="line" title="线">线</button>
+      <button tool="circle" title="按Shift画圆">圆</button>
+      <button tool="rect" title="按Shift画正方形">框</button>
+      <button tool="bezier" title="三阶贝塞尔曲线">曲</button>
+      <button tool="bline" title="按空格自动闭合 按Enter不闭合结束">折</button>
+    </div>
+  </header>
+  <div class="board">
+    <svg></svg>
+  </div>
+
+</body>
+
+</html>
+<script>
+  'use strict'
+  const graphsSelect = document.querySelector('.graphsSelect')
+  const svg = document.querySelector('svg')
+  let tool
+
+  graphsSelect.addEventListener('click', function (e) {
+    tool = e.srcElement.getAttribute('tool')
+  })
+
+  let node
+  let startX
+  let startY
+  let shiftDown = false
+  let bezierCount = 0  // 记录bezier画到第几个点
+  const bezierPoints = Array(8)  // 记录 bezier点的坐标
+  const blinePoints = []  // 记录折线起始点，用length作为折线结束判断条件
+
+  svg.addEventListener('mousedown', function (e) {
+    if (e.which == 1) {
+      const pos = mouse(svg)
+      startX = pos.x
+      startY = pos.y
+      if (tool == 'line') {
+        node = elt('path',
+          { // e.layerX 代表到元素的border-box的距离   e.offsetX代表到元素的content-box的距离
+            d: `
+            M ${pos.x} ${pos.y}
+            L ${pos.x} ${pos.y}
+            `,
+            stroke: "black",
+            'stroke-width': 2,
+            'stroke-linecap': "round",
+            fill: 'none',
+          })
+      }
+
+      if (tool == 'circle') {
+        node = elt('ellipse',
+          {
+            cx: `${pos.x}`,
+            cy: `${pos.y}`,
+            rx: 0,
+            ry: 0,
+            stroke: "black",
+            'stroke-width': 2,
+            fill: 'none',
+          })
+      }
+
+      if (tool == 'rect') {
+        node = elt('rect',
+          {
+            x: `${pos.x}`,
+            y: `${pos.y}`,
+            width: 0,
+            height: 0,
+            stroke: "black",
+            'stroke-width': 2,
+            fill: 'none',
+          })
+      }
+
+      if (tool == 'bezier') {
+        if (bezierCount > 3) {  // 4个bezier点都选择完成，画下一条bezier曲线
+          bezierCount = 0
+        }
+
+        if (bezierCount === 0) {
+          node = elt('path',
+            {
+              d: `
+            M ${pos.x} ${pos.y}
+            C ${pos.x} ${pos.y} ${pos.x} ${pos.y} ${pos.x} ${pos.y}
+          `,
+              stroke: "black",
+              'stroke-width': 2,
+              fill: 'none',
+            })
+          bezierPoints[0] = pos.x
+          bezierPoints[1] = pos.y
+          bezierCount++  // 处理完起始点，让mousemove处理终点
+        }
+
+        // 只点击的情况也要改变 bezier点的坐标
+        if (bezierCount < 4) {
+          let d
+          if (bezierCount == 1) {  // 确定bezier终点
+            d = `
+            M ${startX} ${startY}
+            C ${startX} ${startY} ${startX} ${startY} ${pos.x} ${pos.y}
+          `
+            bezierPoints[6] = pos.x
+            bezierPoints[7] = pos.y
+          }
+          if (bezierCount == 2) {  // 确定bezier第二个点
+            d = `
+            M ${bezierPoints[0]} ${bezierPoints[1]}
+            C ${pos.x} ${pos.y} ${pos.x} ${pos.y} ${bezierPoints[6]} ${bezierPoints[7]}
+          `
+            bezierPoints[2] = pos.x
+            bezierPoints[3] = pos.y
+          }
+          if (bezierCount == 3) {  // 确定bezier第二个点
+            d = `
+            M ${bezierPoints[0]} ${bezierPoints[1]}
+            C ${bezierPoints[2]} ${bezierPoints[3]} ${pos.x} ${pos.y} ${bezierPoints[6]} ${bezierPoints[7]}
+          `
+            bezierPoints[4] = pos.x
+            bezierPoints[5] = pos.y
+          }
+          node.setAttribute('d', d)
+        }
+
+      }
+
+      if (tool == 'bline') {
+        if (blinePoints.length == 0) {
+          node = elt('path',
+            {
+              d: `
+              M ${pos.x} ${pos.y}
+            `,
+              stroke: "black",
+              'stroke-width': 2,
+              'stroke-linecap': "round",
+              fill: 'none',
+            })
+          blinePoints[0] = pos.x
+          blinePoints[1] = pos.y
+
+        } else {
+
+          const distance = (pos.x - blinePoints[0]) ** 2 + (pos.y - blinePoints[1]) ** 2
+
+          if (distance < 200) {// 起点附近自动闭合
+            let d = node.getAttribute('d')
+            d += `Z`
+            node.setAttribute('d', d)
+            blinePoints.length = 0
+            return
+          } else {  // 单纯点击也可划线
+
+            let d = node.getAttribute('d')
+            d += `L ${pos.x} ${pos.y} `
+            node.setAttribute('d', d)
+          }
+        }
+      }
+
+      svg.appendChild(node)
+      window.addEventListener('mousemove', onMove)
+      e.preventDefault()
+    }
+  })
+
+
+  window.addEventListener('keydown', function (e) {
+    console.dir(e)
+    if (e.code.startsWith('Shift')) {
+      shiftDown = true
+    }
+    if (tool == 'bline' && e.key === " ") {
+      let d = node.getAttribute('d')
+      d += `Z`
+      node.setAttribute('d', d)
+      blinePoints.length = 0
+    }
+    if (tool == 'bline' && e.key === "Enter") {
+      blinePoints.length = 0
+    }
+  })
+
+  window.addEventListener('keyup', function (e) {
+    shiftDown = false
+  })
+
+
+  window.addEventListener('mouseup', function (e) {
+
+  })
+
+
+  // 划线函数
+  function onMove(e) {
+
+    const pos = mouse(svg)
+    if (e.which == 0) {
+
+      window.removeEventListener('mousemove', onMove)
+
+      if (tool == 'bezier' && bezierCount < 4) { // 当前bezier点处理完成，bezierCount++处理下个点
+        bezierCount++
+      }
+
+      return
+    }
+
+    if (tool == 'line') {
+      let d = node.getAttribute('d')
+      d += `L ${pos.x} ${pos.y}`
+      node.setAttribute('d', d)
+    }
+
+    if (tool == 'circle') {
+      let cx, cy, rx, ry
+      if (shiftDown) {
+        rx = ry = Math.min(Math.abs(pos.x - startX) / 2, Math.abs(pos.y - startY) / 2)
+        let vectorX = 1
+        let vectorY = 1
+        if (pos.x < startX) vectorX = -1
+        if (pos.y < startY) vectorY = -1
+        cx = vectorX * rx + startX
+        cy = vectorY * ry + startY
+      } else {
+        cx = (pos.x + startX) / 2
+        cy = (pos.y + startY) / 2
+        rx = Math.abs(pos.x - startX) / 2
+        ry = Math.abs(pos.y - startY) / 2
+      }
+
+      node.setAttribute('cx', cx)
+      node.setAttribute('cy', cy)
+      node.setAttribute('rx', rx)
+      node.setAttribute('ry', ry)
+
+    }
+
+    if (tool == 'rect') {
+      let width, height
+      if (shiftDown) {
+        height = width = Math.min(Math.abs(pos.y - startY), Math.abs(pos.x - startX))
+      } else {
+        height = Math.abs(pos.y - startY)
+        width = Math.abs(pos.x - startX)
+      }
+
+      let x = startX
+      let y = startY
+      if (pos.x < startX) {
+        x = startX - width
+      }
+      if (pos.y < startY) {
+        y = startY - height
+      }
+
+      node.setAttribute('width', width)
+      node.setAttribute('height', height)
+      node.setAttribute('x', x)
+      node.setAttribute('y', y)
+    }
+
+    if (tool == 'bezier') {
+      let d
+      if (bezierCount == 1) {  // 确定bezier终点
+
+        d = `
+            M ${startX} ${startY}
+            C ${startX} ${startY} ${startX} ${startY} ${pos.x} ${pos.y}
+          `
+
+        bezierPoints[6] = pos.x
+        bezierPoints[7] = pos.y
+      }
+      if (bezierCount == 2) {  // 确定bezier第二个点
+
+        d = `
+            M ${bezierPoints[0]} ${bezierPoints[1]}
+            C ${pos.x} ${pos.y} ${pos.x} ${pos.y} ${bezierPoints[6]} ${bezierPoints[7]}
+          `
+
+        bezierPoints[2] = pos.x
+        bezierPoints[3] = pos.y
+      }
+      if (bezierCount == 3) {  // 确定bezier第二个点
+
+        d = `
+            M ${bezierPoints[0]} ${bezierPoints[1]}
+            C ${bezierPoints[2]} ${bezierPoints[3]} ${pos.x} ${pos.y} ${bezierPoints[6]} ${bezierPoints[7]}
+          `
+        bezierPoints[4] = pos.x
+        bezierPoints[5] = pos.y
+      }
+      node.setAttribute('d', d)
+    }
+
+    if (tool == 'bline') {
+
+      let d = node.getAttribute('d')
+      const end = d.lastIndexOf('L')
+      d = d.slice(0, end)
+      d += `L ${pos.x} ${pos.y} `
+      node.setAttribute('d', d)
+
+    }
+  }
+
+  // 获取鼠标相对于svg元素的位置
+  // 为啥不用e.layerX or e.offsetX？ ——无法处理超出svg元素的情况
+  function mouse(node) {
+    const pos = node.getBoundingClientRect()
+    const x = window.event.clientX - pos.x
+    const y = window.event.clientY - pos.y
+    return { x, y }
+  }
+  // 用来创建svg元素
+  function elt(tagName, attrs = {}, ...children) {
+    const el = document.createElementNS("http://www.w3.org/2000/svg", tagName)
+    for (let key in attrs) {
+      const value = attrs[key]
+      el.setAttribute(key, value)
+    }
+    for (let child of children) {
+      if (typeof child === 'string') {
+        child = document.createTextNode(child)
+      }
+      el.appendChild(child)
+    }
+    return el
+  }
+</script>

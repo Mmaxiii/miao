@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    span {
+      position: absolute;
+      width: 50px;
+      height: 50px;
+      background-color: #acf;
+    }
+  </style>
+</head>
+
+<body>
+  <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Asperiores architecto doloremque impedit obcaecati
+    necessitatibus voluptatem vitae iste amet facilis ipsam saepe, quos provident laborum dolor veniam reprehenderit.
+    Beatae, quae quos.</p>
+</body>
+
+</html>
+<script>
+
+  'use strict'
+
+  const p = document.querySelector('p')
+  let lastTime = 0
+  let clickCount = 1   // 主要是用全局变量记录点击次数
+
+  window.addEventListener('click', function (e) {
+    const now = Date.now()
+    const diff = now - lastTime
+
+    if (diff < 400) {
+      if (clickCount == 1) {
+        console.log('dbl')
+      }
+      if (clickCount == 2) {
+        console.log('triple')
+      }
+    } else {
+      clickCount = 0
+    }
+    clickCount++
+    lastTime = now
+  })
+
+
+  // p.addEventListener('dblclick', function (e) {
+  //   console.log(e.type)
+    // lastTime = Date.now()
+  // })
+  // p.addEventListener('click', function (e) {
+  //   let time = Date.now()
+  //   if (time - lastTime < 200) { // 200ms内可完成三击
+  //     // 三击事件执行区域
+  //     console.log('tripleClick')
+  //   }
+  // })
+
+  // 自己实现 dblclick
+  // p.addEventListener('click', function (e) {
+  //   let time = Date.now()
+  //   let diff = time - lastTime
+  //   if (diff > 1000) {  // 暂停点击 1s 后，恢复双击功能
+  //     hasDouble = false
+  //   }
+  //   if (!hasDouble) {
+  //     if (diff < 200) {
+  //       // 双击事件执行区域
+  //       console.log('double click')
+  //       hasDouble = true
+  //     }
+  //   }
+  //   lastTime = time
+  // })
+</script>

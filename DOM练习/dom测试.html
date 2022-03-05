@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title></title>
+  <style>
+    body {
+      margin: 0;
+    }
+
+    div {
+      position: fixed;
+      left: 0;
+      top: 0;
+      height: 5px;
+      background-color: limegreen;
+    }
+  </style>
+</head>
+
+<body>
+
+
+  <img style="opacity:0; transition: 10s;" data-src="">
+
+</body>
+<script src='aaa.js' onload="xxx"></script>
+<script>
+
+  window.addEventListener('scroll', onScroll)
+  function onScroll(e) {
+    let imgs = document.querySelectorAll('img:not([src])')
+    for (let img of imgs) {
+      img.onload = function () {
+        this.style.opacity = 1
+      }
+
+      const box = img.getBoundingClientRect()
+      if (box.y < innerHeight / 2) {
+        img.src = img.dataset.src
+      }
+    }
+  }
+  onScroll(e)
+
+
+  class progressJs {
+    constructor() {
+      this.div = null
+    }
+    start() {
+      this.div = document.createElement('div')
+      document.body.appendChild(this.div)
+      this.div.classList.add('progress')
+      this.div.style.width = 0
+    }
+
+    increase(forward = 1) {
+      this.div.style.width = parseInt(this.div.style.width) + forward + '%'
+    }
+    set(percent) {
+      this.div.style.width = percent + '%'
+    }
+    end() {
+      this.div.style.width = '100%'
+      this.div.style.transition = 'opacity 1s ease .3s'
+      this.div.style.opacity = '0'
+    }
+  }
+</script>
+
+</html>

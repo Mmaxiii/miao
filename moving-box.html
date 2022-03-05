@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    span {
+      position: absolute;
+      width: 50px;
+      height: 50px;
+      background-color: #acf;
+    }
+  </style>
+</head>
+
+<body>
+  <span style="left:0;top:0"></span>
+</body>
+
+</html>
+<script>
+
+  'use strict'
+  const span = document.querySelector('span')
+  let baseV = 3
+  let v = baseV
+  let vx = 0
+  let vy = 0
+  let leftDown = false
+  let rightDown = false
+  let upDown = false
+  let downDown = false
+
+  window.addEventListener('keydown', function (e) {
+
+    if (e.code.startsWith('Shift')) {
+      v = 2 * baseV
+    }
+    if (e.code == 'ArrowLeft') {
+      leftDown = true
+      vx = -1
+    }
+
+    if (e.code == 'ArrowRight') {
+      rightDown = true
+      vx = 1
+    }
+
+    if (e.code == 'ArrowUp') {
+      upDown = true
+      vy = -1
+    }
+
+    if (e.code == 'ArrowDown') {
+      downDown = true
+      vy = 1
+    }
+  })
+
+
+
+  window.addEventListener('keyup', function (e) {
+
+    if (e.code.startsWith('Shift')) {
+      v = baseV
+    }
+    if (e.code == 'ArrowLeft') {
+      leftDown = false
+      if (rightDown) {
+        vx = 1
+      } else {
+        vx = 0
+      }
+
+    }
+
+    if (e.code == 'ArrowRight') {
+      rightDown = false
+      if (leftDown) {
+        vx = -1
+      } else {
+        vx = 0
+      }
+
+    }
+
+    if (e.code == 'ArrowUp') {
+      upDown = false
+      if (downDown) {
+        vy = 1
+      } else {
+        vy = 0
+      }
+
+
+    }
+
+    if (e.code == 'ArrowDown') {
+      downDown = false
+      if (upDown) {
+        vy = 1
+      } else {
+        vy = 0
+      }
+
+
+    }
+  })
+
+
+  let lastTime = null
+  requestAnimationFrame(function ani(time) {
+    let diffTime
+    if (lastTime == null) {
+      diffTime = time
+    } else {
+      deffTime = time - lastTime
+    }
+    span.style.left = parseInt(span.style.left) + v * vx + 'px'
+    span.style.top = parseInt(span.style.top) + v * vy + 'px'
+    requestAnimationFrame(ani)
+  })
+
+</script>
