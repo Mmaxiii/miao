@@ -205,7 +205,19 @@
       <div class="colors">
         <input type="color" class="fcolor">
         <input type="color" class="bgcolor" value="#ffffff">
-        <div class="color-options"></div>
+        <div class="color-options">
+          <!-- const palette = [ '#c0392b'] // 可选颜色 -->
+          <span class='option' data-num='#ffffff' style="background-color:#ffffff"></span>
+          <span class='option' data-num='#1e272e' style="background-color:#1e272e"></span>
+          <span class='option' data-num='#34e7e4' style="background-color:#34e7e4"></span>
+          <span class='option' data-num='#3498db' style="background-color:#3498db"></span>
+          <span class='option' data-num='#2ecc71' style="background-color:#2ecc71"></span>
+          <span class='option' data-num='#f8a5c2' style="background-color:#f8a5c2"></span>
+          <span class='option' data-num='#f1c40f' style="background-color:#f1c40f"></span>
+          <span class='option' data-num='#e67e22' style="background-color:#e67e22"></span>
+          <span class='option' data-num='#e74c3c' style="background-color:#e74c3c"></span>
+          <span class='option' data-num='#c0392b' style="background-color:#c0392b"></span>
+        </div>
       </div>
       <div class="other">
         <div class="back iconfont icon-huixuanjiantou-1"></div>
@@ -231,7 +243,7 @@
   const fcolor = document.querySelector('.fcolor')  // 颜色1
   const bgcolor = document.querySelector('.bgcolor')  // 颜色2
   const colorOptions = document.querySelector('.color-options')  // 调色选项
-  const palette = ['#ffffff', '#1e272e', '#34e7e4', '#3498db', '#2ecc71', '#f8a5c2', '#f1c40f', '#e67e22', '#e74c3c', '#c0392b'] // 可选颜色
+
   const lineWeight = document.querySelector('.line-weight [type=range]')  // 线号
   const other = document.querySelector('.other')  // 功能区
 
@@ -267,9 +279,9 @@
   })
 
   // 颜色区
-  for (let i = 0; i < palette.length; i++) {  // 创建颜色选项模块
-    colorOptions.innerHTML += `<span class='option' data-num=${i} style="background-color:${palette[i]}"></span>`
-  }
+  // for (let i = 0; i < palette.length; i++) {  // 创建颜色选项模块
+  //   colorOptions.innerHTML += `<span class='option' data-num=${i} style="background-color:${palette[i]}"></span>`
+  // }
 
   colors.addEventListener('click', function (e) {
     if (e.target.matches('input')) {
@@ -281,7 +293,7 @@
 
     if (e.target.matches('.option') && curColor) {
       // e.target.style.backgroundColor 读出来的是 rgb 颜色，无法给调色盘的value赋值，所以采用读数组的方法
-      curColor.value = palette[e.target.dataset.num]
+      curColor.value = e.target.dataset.num
     }
   })
 
