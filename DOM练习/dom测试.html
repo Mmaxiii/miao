@@ -7,28 +7,167 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title></title>
   <style>
-    body {
+    /* body {
       margin: 0;
     }
 
-    div {
+    .fire {
       position: fixed;
-      left: 0;
+      pointer-events: none;
+      width: 10px;
+      height: 10px;
+      background-color: #f1c40f;
+    }
+
+
+
+    /* 选项卡 */
+    /* .buttons {
+      display: inline-block;
+    }
+
+    .taps {
+      position: relative;
+    }
+
+    .taps .tap {
+      display: none;
+      position: absolute;
       top: 0;
-      height: 5px;
-      background-color: limegreen;
+      left: 0;
+      width: 500px;
+      height: 200px;
+      border: 1px solid;
+    } */
+
+
+    div {
+      border: 1px solid;
     }
   </style>
 </head>
 
 <body>
-
-
-  <img style="opacity:0; transition: 10s;" data-src="">
-
+  <!-- 
+  <input type="text">
+  <br>
+  <div class="buttons">
+    <button class="home"></button>
+    <button class="user"></button>
+    <button class="help"></button>
+  </div>
+  <div class="taps">
+    <div class="tap tap-home" data-name="home" data-tabname="主页">主页内容</div>
+    <div class="tap tap-user" data-name="user" data-tabname="用户">用户内容</div>
+    <div class="tap tap-help" data-name="help" data-tabname="帮助">帮助内容</div>
+  </div>
+  <img style="opacity:0; transition: 10s;" data-src=""> -->
+  <div contenteditable></div>
 </body>
-<script src='aaa.js' onload="xxx"></script>
+<!-- <script src='aaa.js' onload="xxx"></script> -->
 <script>
+  // // 选项卡
+  // const buttonBox = document.querySelector('.buttons')
+  // const buttons = buttonBox.querySelectorAll('button')
+  // const taps = document.querySelectorAll('.taps .tap')
+  // console.log(taps)
+  // for (let i = 0; i < taps.length; i++) {
+  //   buttons[i].textContent = taps[i].dataset.tabname
+  // }
+
+  // buttonBox.addEventListener('click', function (e) {
+  //   if (e.target.matches('button')) {
+  //     taps.forEach(it => it.style.display = 'none')
+  //     const dataName = e.target.className
+
+  //     document.querySelector(`[data-name=${dataName}]`).style.display = 'block'
+  //   }
+
+  // })
+  // buttons[0].click()
+  //  for(let button of buttons) {
+  //   button.textContent = 
+  // }
+
+  // // 三昧真火
+  // window.addEventListener('mousemove', throttle(createFire, 40))
+
+  // function createFire(e) {
+
+  //   const fire = document.createElement('span')
+  //   fire.classList.add('fire')
+  //   fire.style.top = e.clientY + 'px'
+  //   fire.style.left = e.clientX + 'px'
+  //   fire.style.transform = 'translate(-50%,-50%)'
+  //   document.body.appendChild(fire)
+  //   setTimeout(() => {
+  //     document.body.removeChild(fire)
+  //   }, 200)
+  // }
+
+
+
+
+
+  // q w x
+  const input = document.querySelector('input')
+  let preValue = ''
+  input.addEventListener('keydown', function (e) {
+    console.log(preValue)
+    if (e.code == 'KeyQ' || e.code == 'KeyW' || e.code == 'KeyX') {
+      input.value = preValue
+    } else {
+      preValue = input.value
+    }
+  })
+
+
+  input.addEventListener('keyup', function (e) {
+    if (e.code == 'KeyQ' || e.code == 'KeyW' || e.code == 'KeyX') {
+      input.value = preValue
+    }
+    let reg = /w|q|a/gi
+    if (reg.exec(input.value)) {
+      input.value = preValue
+    }
+  })
+  function debounce(func, time) {
+    let timerId
+    return function (e) {
+      clearTimeout(timerId)
+      timerId = setTimeout(func, time)
+    }
+  }
+
+  function throttle(func, time) {
+    let event
+    let timeout
+    let scheduled = false
+    return function (e) {
+      event = e  // 保存事件供setTimeout里面执行前一次事件
+      if (!scheduled) {
+        timeout = setTimeout(() => {
+
+          func(event)
+          scheduled = false
+        }, time)
+        scheduled = true
+      }
+    }
+  }
+  function throttle2(func, time) {
+
+    let lastTime = 0
+
+    return function (e) {
+      let curtime = Date.now()
+      if (curtime - lastTime > time) {
+        func(e)
+        lastTime = curtime
+      }
+    }
+  }
+
 
   window.addEventListener('scroll', onScroll)
   function onScroll(e) {
@@ -44,7 +183,7 @@
       }
     }
   }
-  onScroll(e)
+
 
 
   class progressJs {

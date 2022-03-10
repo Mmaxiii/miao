@@ -1,0 +1,21 @@
+<textarea name="" id="" cols="30" rows="10"></textarea>
+<div>结果</div>
+<button>运行</button>
+<script>
+
+  let text = document.querySelector('textarea')
+  let button = document.querySelector('button')
+  button.addEventListener('click', function (e) {
+    let code = text.value
+    let f
+    try {
+      f = new Function(code)
+      document.querySelector('div').textContent = f()
+    } catch (e) {
+      document.querySelector('div').textContent = '输入有误'
+      throw e
+    }
+  })
+
+
+</script>

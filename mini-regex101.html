@@ -161,8 +161,10 @@
       font-size: 12px;
       border-radius: 2px;
       color: #fff;
-      background-color: #16a085;
+      background-color: #95a5a6;
     }
+
+
 
     #matchInfo {
       font-size: 12px;
@@ -209,21 +211,14 @@
       left: 0;
       width: 100%;
       height: 4px;
-      /* background-color: red; */
+
     }
 
-    /* label.button {
-      display: inline-block;
-      background-color: #9FBB49;
-      height: 45px;
-      line-height: 45px;
-    } */
+
 
     #rail+div {
       position: fixed;
       visibility: hidden;
-      /* display: none; */
-      /* top: 0; */
       width: 0;
       height: 0;
       z-index: 1000;
@@ -247,11 +242,12 @@
     }
 
     .rail {
+      visibility: hidden;
       display: flex;
       position: fixed;
       top: 0;
       left: 0;
-      visibility: hidden;
+      z-index: 10000;
     }
 
     .rail .closed {
@@ -263,7 +259,6 @@
       line-height: 30px;
       text-align: center;
       font-size: 22px;
-
       border-radius: 15px;
       border: 1px solid;
 
@@ -299,7 +294,7 @@
     }
 
     .explain div {
-      padding-left: 20px;
+      padding-left: 15px;
       margin-top: 10px;
       font-size: 0.9em;
     }
@@ -327,6 +322,12 @@
     .sep {
       background-color: aqua
     }
+
+    .explainRegMatch {
+      background-color: #C3D6ED;
+      font-weight: bolder;
+
+    }
   </style>
 </head>
 
@@ -339,7 +340,7 @@
     <main>
       <div class="head">
         <div>REGULAR RXPRESSION</div>
-        <div id="spendTime">ss</div>
+        <div id="spendTime">no match</div>
         <div id="reInput" contenteditable> </div>
         <div class="railway">生成铁路图</div>
         <div class="inputs">
@@ -417,16 +418,16 @@
   }
 
   function run() {
-    let startTime = new Date()
+    let startTime = Date.now()
     let flags = getFlags()
     let startIdx = 0
     let testStr = testStringInput.innerText
     let re
 
     try {
-
       re = new RegExp(reInput.innerText, flags + 'd')
     } catch (e) {
+
       if (e instanceof SyntaxError) {
         testStringInput.innerHTML = testStr
         return
@@ -439,31 +440,107 @@
     let matchCount = 0
     let info = ''
 
-    while (match = re.exec(testStr)) {
-      matchCount++
-      resHTML += testStr.slice(startIdx, match.index)
-      resHTML += `<strong title='Match ${matchCount}'>${heightLineGroups(match, matchCount)}</strong>`
-      info += `<div class="mInfo">${modifyInfo(match, matchCount)}</div>`
-      startIdx = re.lastIndex
-      if (match[0] == '') {
-        re.lastIndex++
-      }
-      if (!re.global) {
-        startIdx = match.index + match[0].length
-        break
-      }
-    }
-    resHTML += testStr.slice(startIdx)
-    testStringInput.innerHTML = resHTML
-    let endTime = new Date()
-    inputTime(endTime - startTime, matchCount)  // 计算match时间
+    // while (match = re.exec(testStr)) {
+    //   matchCount++
+    //   resHTML += testStr.slice(startIdx, match.index)
+    //   resHTML += `<strong title='Match ${matchCount}'>${heightLineGroups(match, matchCount)}</strong>`
+    //   info += `<div class="mInfo">${modifyInfo(match, matchCount)}</div>`
+    //   startIdx = re.lastIndex
+    //   if (match[0] == '') {
+    //     re.lastIndex++
+    //   }
+    //   if (!re.global) {
+    //     startIdx = match.index + match[0].length
+    //     break
+    //   }
+    // }
+    // let startIdx = 0
 
-    // 执行replace
-    replace()
-    matchInfo.innerHTML = info
+
+
+
+
+    let blob = new Blob([
+      `addEventListener('message', function (e) {
+          const reg = e.data.reg
+          const str = e.data.str
+          const result = []
+          let match
+          while (match = reg.exec(str)) {
+            if (match[0] == '') { 
+              reg.lastIndex++
+            } else {
+              result.push(match)
+            }
+            if (!reg.global) {
+              break
+            }
+          }
+          postMessage(result)
+        })
+        `
+    ]
+      ,
+      { type: 'application/javascript' }
+    )
+    let url = URL.createObjectURL(blob)
+
+    matchAll(re, testStr, 2000)
+
+    function matchAll(reg, str, time) {
+      let worker = new Worker(url);  // 创建一个worker
+
+      worker.postMessage({ reg, str })  // 给worker发送消息
+
+      worker.addEventListener('message', function (e) {
+        console.log(1)
+
+        clearTimeout(timeoutId)  // 清除将要执行action2的 timer
+
+        let matches = e.data  // 接收worker传回信息
+
+        // 将testStr 加html高亮并拼接
+        for (let match of matches) {
+
+          matchCount++
+          resHTML += testStr.slice(startIdx, match.index)
+          resHTML += `<strong title='Match ${matchCount}'>${heightLineGroups(match, matchCount)}</strong>`
+
+          // 处理reg的 match information
+          info += `<div class="mInfo">${modifyInfo(match, matchCount)}</div>`
+          startIdx = match.index + match[0].length
+        }
+        resHTML += testStr.slice(startIdx)
+        testStringInput.innerHTML = resHTML
+
+        // 计算match时间
+        let endTime = Date.now()
+        if (matchCount != 0) {
+          // spendTime.classList.add('hasmatch')
+          spendTime.style.backgroundColor = '#16a085'
+          spendTime.innerHTML = `${matchCount} match (${endTime - startTime}ms)`
+        } else {
+          spendTime.innerHTML = 'no match'
+          spendTime.style.backgroundColor = '#95a5a6'
+        }
+
+        // 执行replace
+        replace()
+
+        // 将处理后的match information html加入对应元素
+        matchInfo.innerHTML = info
+      })
+
+
+      let timeoutId = setTimeout(() => {
+        // worker.terminate()
+        spendTime.innerHTML = 'time out'
+        spendTime.style.backgroundColor = '#e74c3c'
+      }, time)
+    }
 
     // 执行explain
-    // let syntaxTree = parseRegExp(regInput.value)  // 解析正则语法树
+
     let syntaxTree = parseRegExp(regInput.innerText)  // 解析正则语法树
 
     let explainHTML = explainRegExp(syntaxTree)
@@ -474,8 +551,19 @@
     let highLight = highLightRegExp(syntaxTree)
     regInput.innerHTML = highLight
   }
+  let lastRange
+  regInput.addEventListener('keydown', function (e) {
+    lastRange = document.getSelection().getRangeAt(0)
+    console.log(lastRange)
+  })
+  regInput.addEventListener('keyup', function (e) {
+    let selection = document.getSelection()
+    selection.addRange(lastRange)
+    console.log(selection.getRangeAt(0))
+  })
 
   function heightLineGroups(match, matchCount) {
+
     if (match.length == 1) {
       return match[0]
     }
@@ -488,6 +576,7 @@
       }
     })
     //找到 em 标签位置
+
     let matchStr = match[0]
     let labels = Array(matchStr.length + 1).fill('')
     for (let i = 1; i < match.length; i++) {
@@ -505,19 +594,18 @@
       res += matchStr[i]
     }
     res += labels[labels.length - 1]
+    console.log(res, 99)
+
     return res
   }
 
-  function inputTime(time, matchCount) {
-    spendTime.innerHTML = `${matchCount} match (${time}ms)`
-  }
 
   function replace() {
     let flags = getFlags()
     let testStr = testStringInput.innerText
     let re
     try {
-      // re = new RegExp(reInput.value, flags + 'd')
+
       re = new RegExp(reInput.innerText, flags + 'd')
     } catch (e) {
       if (e instanceof SyntaxError) {
@@ -531,6 +619,7 @@
     showSub.innerText = testStr.replace(re, replacement)
 
   }
+
   function modifyInfo(match, matchCount) {
     let resHTML = ''
     for (let i = 0; i < match.length; i++) {
@@ -715,6 +804,7 @@
     node.end = i
     return node
   }
+
   function parseInt() {
     let num = ''
     if (str[i] === '}') {
@@ -726,6 +816,7 @@
     }
     return Number(num)
   }
+
   function parseBranch() {
     let node = {
       type: 'Branch',
@@ -797,7 +888,7 @@
           node.positive = false
           i++ // 跳过 ！
         } else { // 不是= or ！ 就是记名分组
-          node.index = node.index = groupIndex++
+          node.index = groupIndex++
           node.name = parseGroupName()
           i++ // 跳过 >
         }
@@ -810,7 +901,7 @@
         i++ // 跳过 ！
       }
     } else {
-      node.index = node.index = groupIndex++
+      node.index = groupIndex++
     }
 
     node.branches = parseBranches()
@@ -843,6 +934,7 @@
       er.textContent = '正则表达式错误，请重新输入'
       throw e
     }
+    groupIndex = 1
     i = 0
     str = input
 
@@ -879,6 +971,7 @@
     }
     return createBranchesGraph(node)
   }
+
   let svg = document.querySelector('svg')
 
   function elt(tagName, attrs = {}, ...children) {
@@ -896,7 +989,9 @@
     svg.appendChild(el)   // 这里将el插入svg是为了优化creatCharGraph里面的代码，省去反复appendChild的代码（只有先将标签画出来，才能得到尺寸，并且后插入的标签会掩盖之前的）
     return el
   }
+
   let gp = 10 // graphPadding
+
   function createCharGraph(node) {
     let el = elt('text', {
       'dominant-baseline': 'text-before-edge',
@@ -932,12 +1027,15 @@
   function createEscapeGraph(node) {
     return createCharGraph(node)
   }
+
   function add(a, b) {
     return a + b
   }
+
   function max(a, b) {
     return Math.max(a, b)
   }
+
   function createCharClassGraph(node) {
     let elements = []
     let set = new Set()
@@ -1285,6 +1383,7 @@
       height: box.height
     }
   }
+
   function createRexExpGraph(node) {
     let el = createBranchesGraph(node.branches)
     let width = el.width + 4 * gp
@@ -1325,29 +1424,30 @@
     }
   }
 
+
   // 写explain
 
   function explainRegExp(node) {
     if (node.type === 'Char') {
-      return `<div class='chartext'>${node.value},匹配一个字符${node.value}</div>`
+      return `<div class='chartext'><span class='explainRegMatch'>${node.value}</span>,匹配一个字符${node.value}</div>`
     }
     if (node.type === 'Escape') {
-      return `<div>${node.raw},匹配字符${node.raw}转义后的结果</div>`
+      return `<div><span class='explainRegMatch'>${node.raw}</span>,匹配字符${node.raw}转义后的结果</div>`
     }
     if (node.type === 'CharClass') {
-      return `<div>${node.raw},代表一个字符集，匹配里面的任意字符${node.elements.map(explainRegExp).join('')}</div>`
+      return `<div><span class='explainRegMatch'>${node.raw}</span>,代表一个字符集，匹配里面的任意字符${node.elements.map(explainRegExp).join('')}</div>`
     }
     if (node.type === 'Branch') {
-      return `<div>${node.raw},匹配字符这一正则代表的分支${node.elements.map(explainRegExp).join('')}</div>`
+      return `<div><span class='explainRegMatch'>${node.raw}</span>,匹配字符这一正则代表的分支${node.elements.map(explainRegExp).join('')}</div>`
     }
     if (node.type === 'CaptureGroup') {
-      return `<div>${node.raw},匹配${node.raw}的捕获结果${node.branches.map(explainRegExp).join('')}</div>`
+      return `<div><span class='explainRegMatch'>${node.raw}</span>,匹配${node.raw}的捕获结果${node.branches.map(explainRegExp).join('')}</div>`
     }
     if (node.type === 'Quantifier') {
-      return `<div>${node.raw},${node.raw}匹配到的结果最低重复${node.min}次,最高${node.max}次${explainRegExp(node.element)}</div>`
+      return `<div><span class='explainRegMatch'>${node.raw}</span>,${node.raw}匹配到的结果最低重复 ${node.min} 次,最高 ${node.max} 次${explainRegExp(node.element)}</div>`
     }
     if (node.type === 'RegExp') {
-      return `<div>${node.value},完整的正则表达式${node.branches.map(explainRegExp).join('')}</div>`
+      return `<div><span class='explainRegMatch'>${node.value}</span>,完整的正则表达式${node.branches.map(explainRegExp).join('')}</div>`
     }
   }
 
@@ -1374,4 +1474,5 @@
       return `<span class='regexp'>${node.branches.map(highLightRegExp).join('<span class="sep">|</span>')}</span>`
     }
   }
+
 </script>

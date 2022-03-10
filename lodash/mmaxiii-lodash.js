@@ -330,8 +330,28 @@ var mmaxiii = function () {
     })
     return result
   }
+  function sortedUniq(ary) {
+
+    let res = []
+    for (let i = 0; i < ary.length; i++) {
+      if (res[res.length - 1] !== ary[i]) {
+        res.push(ary[i])
+      }
+    }
+    return res
+  }
+  function sortedUniqBy(ary, predicate) {
+    predicate = iteratee(predicate)
+    let res = []
+    for (let i = 0; i < ary.length; i++) {
+      if (predicate(res[res.length - 1]) !== predicate(ary[i])) {
+        res.push(ary[i])
+      }
+    }
+    return res
+  }
   function without(ary, ...args) {
-    let obj = formkey(args)
+    let obj = fromkey(args)
     let res = []
     for (let i = 0; i < ary.length; i++) {
       if (!(ary[i] in obj)) {
@@ -340,7 +360,7 @@ var mmaxiii = function () {
     }
     return res
   }
-  function formkey(ary) {
+  function fromkey(ary) {
     let res = {}
     for (let i = 0; i < ary.length; i++) {
       res[ary[i]] || (res[ary[i]] = 1)
@@ -636,6 +656,29 @@ var mmaxiii = function () {
     }
     return res
   }
+
+  function differenceWith(...args) {
+    let comparator = args[args.length - 1]
+    if (isFunction(comparator)) {
+      args.length = args.length - 1
+    } else {
+      comparator = it => it
+    }
+
+    let res = []
+
+    for (let i = 0; i < args[0].length; i++) {
+      for (let j = 0; j < args[1].length; j++) {
+        if (!comparator(args[0][i], args[1][j])) {
+          res.push(args[0][i])
+        }
+      }
+    }
+
+    return res
+  }
+
+
   function intersection(...args) {
     let obj = args[1].reduce((result, element) => {  //练习
       result[element] = 1
@@ -651,6 +694,42 @@ var mmaxiii = function () {
     return res
   }
 
+  function intersectionBy(...args) {
+
+    let predicate = args.pop()
+    predicate = iteratee(predicate)
+
+    let obj = args[1].reduce((result, element) => {
+      result[predicate(element)] = 1
+      return result
+    }, {})
+    let res = []
+    for (let i = 0; i < args[0].length; i++) {
+      let item = args[0][i]
+      if ((predicate(item) in obj)) {
+        res.push(item)
+      }
+    }
+    return res
+  }
+
+  function intersectionWith(...args) {
+
+    let comparator = args.pop()
+
+    let res = []
+    for (let val of args[0]) {
+      for (let i = 1; i < args.length; i++) {
+        for (let j = 0; j < args[i].length; j++) {
+          if (comparator(val, args[i][j])) {
+            res.push(val)
+          }
+        }
+      }
+    }
+
+    return res
+  }
   function pull(array, ...args) {
     let obj = {}
     for (let i = 0; i < args.length; i++) {
@@ -659,7 +738,50 @@ var mmaxiii = function () {
     let res = filter(array, element => {
       return !(element in obj)
     })
-    return res
+    array = res
+    return array
+  }
+  function pullAll(array, values) {
+    let obj = {}
+    for (let i = 0; i < values.length; i++) {
+      obj[values[i]] = 1
+    }
+    let res = filter(array, element => {
+      return !(element in obj)
+    })
+    array = res
+    return array
+  }
+  function pullAllBy(array, values, predicate) {
+
+    predicate = iteratee(predicate)
+    let obj = {}
+    for (let i = 0; i < values.length; i++) {
+      obj[predicate(values[i])] = 1
+    }
+    let res = filter(array, element => {
+      return !(predicate(element) in obj)
+    })
+    array = res
+    return array
+  }
+
+  function pullAllWith(array, values, comparator) {
+    let res = []
+    for (let item of array) {
+      let accord = false
+      for (let val of values) {
+        if (comparator(item, val)) {
+          accord = true
+          break
+        }
+      }
+      if (!accord) {
+        res.push(item)
+      }
+    }
+    array = res
+    return array
   }
   /**
    * 检测目标值在数组中要插入的位置
@@ -680,6 +802,72 @@ var mmaxiii = function () {
       }
     }
     return l + 1
+  }
+  function sortedIndexBy(array, value, predicate = it => it) {
+    predicate = iteratee(predicate)
+    let l = -1
+    let r = array.length
+    while (r - l > 1) {
+      let m = (r + l) >> 1
+      if (predicate(array[m]) < predicate(value)) {
+        l = m
+      } else {
+        r = m
+      }
+    }
+    return l + 1
+  }
+  function sortedIndexOf(array, value) {
+    let l = -1
+    let r = array.length
+    while (r - l > 1) {
+      let m = (r + l) >> 1
+      if (array[m] < value) {
+        l = m
+      } else {
+        r = m
+      }
+    }
+    return r
+  }
+  function sortedLastIndex(array, value) {
+    let l = -1
+    let r = array.length
+    while (l + 1 < r) {
+      let m = (r + l) >> 1
+      if (array[m] <= value) {
+        l = m
+      } else {
+        r = m
+      }
+    }
+    return r
+  }
+  function sortedLastIndexBy(array, value, predicate) {
+    let l = -1
+    let r = array.length
+    while (l + 1 < r) {
+      let m = (r + l) >> 1
+      if (predicate(array[m]) <= predicate(value)) {
+        l = m
+      } else {
+        r = m
+      }
+    }
+    return r
+  }
+  function sortedLastIndexof(array, value) {
+    let l = -1
+    let r = array.length
+    while (l + 1 < r) {
+      let m = (r + l) >> 1
+      if (array[m] <= value) {
+        l = m
+      } else {
+        r = m
+      }
+    }
+    return l
   }
 
   function union(...args) {
@@ -1492,7 +1680,60 @@ var mmaxiii = function () {
     }
   }
 
+  function nth(array, n = 0) {
+    n = (n + array.length) % array.length
+    if (n < 0 || n >= array.length) return undefined
+    return array[n]
+  }
+  function tail(array) {
+    return array.slice(1)
+  }
+  function take(array, n = 1) {
+    let res = []
+    for (let i = 0; i < n; i++) {
+      res.push(array[i])
+    }
+    return res
+  }
+  function takeRight(array, n = 1) {
+    let res = []
+    for (let i = array.length - n; i < array.length; i++) {
+      res.push(array[i])
+    }
+    return res
+  }
+  function takeRightWhile(array, predicate = it => it) {
+    predicate = iteratee(predicate)
+    let res = []
+    for (let i = 0; i < array.length; i++) {
+      if (predicate(array[i], i, array)) {
+        res.push(array[i])
+      } else {
+        res.length = 0
+      }
+    }
+
+    return res
+  }
+  function takeWhile(array, predicate) {
+    predicate = iteratee(predicate)
+    let res = []
+    for (let i = 0; i < array.length; i++) {
+      if (predicate(array[i], i, array)) {
+        res.push(array[i])
+      } else {
+        break
+      }
+    }
+    return res
+  }
   return {
+    take,
+    takeWhile,
+    takeRight,
+    takeRightWhile,
+    tail,
+    nth,
     parseJson,
     stringifyJson,
     memoize,
@@ -1558,8 +1799,10 @@ var mmaxiii = function () {
     swap,
     uniq,
     uniqBy,
+    sortedUniq,
+    sortedUniqBy,
     without,
-    formkey,
+    fromkey,
     zip,
     unzip,
     filter,
@@ -1589,9 +1832,20 @@ var mmaxiii = function () {
     cloneDeep,
     difference,
     differenceBy,
+    differenceWith,
     intersection,
+    intersectionBy,
+    intersectionWith,
     pull,
+    pullAll,
+    pullAllBy,
+    pullAllWith,
     sortedIndex,
+    sortedIndexBy,
+    sortedIndexOf,
+    sortedLastIndex,
+    sortedLastIndexBy,
+    sortedLastIndexOf,
     union,
     unionBy,
     xor,

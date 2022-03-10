@@ -1,0 +1,30 @@
+<div id="range-div" contenteditable>
+  我是添加了contenteditable属性的文本节点文字,咿呀咿呀呦,咿呀咿呀呦,咿呀咿呀呦,咿呀咿呀呦,咿呀咿呀,咿呀咿呀呦
+</div>
+<div onclick="cursorPitch()" class="btn">定位我丢失的光标</div>
+
+<script>
+  // 最后一次的range对象
+  var lastRange = null
+  // 编辑框dom
+  var rangeDivDom = document.querySelector('#range-div')
+  // 编辑框点击事件
+  rangeDivDom.onclick = function (e) {
+    var selection = document.getSelection()
+    // 保存最后的range对象
+    lastRange = selection.getRangeAt(0)
+  }
+  // 编辑框键盘按键松开事件
+  rangeDivDom.onkeyup = function (e) {
+    var selection = document.getSelection()
+    // 保存最后的range对象
+    lastRange = selection.getRangeAt(0)
+  }
+  // 定位光标
+  function cursorPitch() {
+    var selection = document.getSelection()
+    selection.removeAllRanges()
+    selection.addRange(lastRange)
+    console.dir(lastRange)
+  }
+</script>

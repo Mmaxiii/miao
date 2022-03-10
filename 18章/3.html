@@ -1,0 +1,190 @@
+<style>
+  button {
+    height: 30px;
+  }
+
+  .chessboard {
+    border: 1px solid;
+    padding: 3px;
+  }
+
+  .chessboard::after {
+    content: '';
+    display: block;
+    clear: both;
+  }
+
+  .chessboard span {
+    float: left;
+    box-sizing: border-box;
+    position: relative;
+    width: 10px;
+    height: 10px;
+    margin: 1px;
+    border: 1px solid #bdc3c7;
+  }
+
+  .alive {
+    background-color: #1abc9c;
+  }
+
+  .row,
+  .col,
+  .evolutiontime {
+    width: 40px;
+  }
+</style>
+
+<body>
+
+  <button class="resize">重置棋盘</button>
+  <span>行: </span><input type="text" class="row" value="60">
+  <span>列: </span><input type="text" class="col" value="100">
+  <select name="" id="">
+    <option value="few">少量随机</option>
+    <option value="middle">中等随机</option>
+    <option value="dense">密集随机</option>
+  </select>
+  <button class="next">NEXT</button>
+  <button class="evolution">自然演变</button>
+  <span>演变频率:</span> <input type="text" class="evolutiontime" value="100"><span>ms</span>
+
+  <div class="chessboard"></div>
+</body>
+<script>
+  let m   // 列
+  let n  // 行
+
+  const next = document.querySelector('.next')
+  const chessboard = document.querySelector('.chessboard')
+  const evolution = document.querySelector('.evolution')
+  const evolutionTime = document.querySelector('.evolutiontime')
+  const resize = document.querySelector('.resize')
+  let inputs
+
+  let chessboardAry
+
+  // 重置棋盘事件
+  resize.addEventListener('click', function () {
+    chessboard.innerHTML = ''  // 清空棋盘
+
+    m = Number(document.querySelector('.col').value)
+    n = Number(document.querySelector('.row').value)
+    let nums = m * n
+
+    chessboardAry = Array(n).fill(false)
+    for (let i = 0; i < n; i++) {
+      chessboardAry[i] = Array(m).fill(false)
+    }
+
+
+    // 确定棋盘宽度
+    chessboard.style.width = m * 12
+
+    // 插入cell
+    for (let i = 0; i < nums; i++) {
+      const span = document.createElement('span')
+      span.dataset.idx = i
+      chessboard.appendChild(span)
+    }
+
+    spans = chessboard.querySelectorAll('.chessboard span')
+
+    // // 初始化棋盘格
+    let initialNum
+
+    let selectValue = document.querySelector('select').value
+    if (selectValue == 'few') {
+      initialNum = nums * 0.3 >> 0
+    } else if (selectValue == 'middle') {
+      initialNum = nums * 0.45 >> 0
+    } else if (selectValue == 'dense') {
+      initialNum = nums * 0.6 >> 0
+    }
+    for (let i = 0; i < initialNum; i++) {
+      // 随机初始细胞数量
+      let checkedIdx = Math.random() * nums >> 0
+      let j = checkedIdx / m >> 0
+      let k = checkedIdx % m
+      if (chessboardAry[j][k] == true) {
+        i--   // 保证有 initialNum 个true
+      } else {
+        chessboardAry[j][k] = true
+        let chessboardIdx = j * m + k
+        spans[chessboardIdx].classList.add('alive')
+      }
+    }
+  })
+
+  debugger;
+
+  next.addEventListener('click', function () {
+    let newchessboardAry = Array(n).fill(false)
+    for (let i = 0; i < n; i++) {
+      newchessboardAry[i] = Array(m).fill(false)
+    }
+
+    for (let i = 0; i < n; i++) {
+      for (let j = 0; j < m; j++) {
+        let count = 0
+        // 判断8个邻居
+        if (i > 0 && chessboardAry[i - 1][j - 1]) count++
+        if (i > 0 && chessboardAry[i - 1][j]) count++
+        if (i > 0 && chessboardAry[i - 1][j + 1]) count++
+        if (chessboardAry[i][j - 1]) count++
+        if (chessboardAry[i][j + 1]) count++
+        if (i < n - 1 && chessboardAry[i + 1][j - 1]) count++
+        if (i < n - 1 && chessboardAry[i + 1][j]) count++
+        if (i < n - 1 && chessboardAry[i + 1][j + 1]) count++
+
+        let chessboardIdx = i * m + j
+
+        // 确定新棋盘状态
+        if ((count == 2 || count == 3) && chessboardAry[i][j]) {
+          newchessboardAry[i][j] = true
+          spans[chessboardIdx].classList.add('alive')
+        } else if (!chessboardAry[i][j] && count == 3) {
+          newchessboardAry[i][j] = true
+          spans[chessboardIdx].classList.add('alive')
+        } else {
+          newchessboardAry[i][j] = false
+          spans[chessboardIdx].classList.remove('alive')
+        }
+        count = 0
+      }
+    }
+    chessboardAry = newchessboardAry
+  })
+
+  // 自然演变事件
+  let timerId
+  let suspend = false
+  evolution.addEventListener('click', () => {
+    if (!suspend) {
+      suspend = true
+      evolution.style.backgroundColor = '#3498db'
+      evolution.style.color = '#fff'
+      timerId = setInterval(function () {
+        next.click()
+      }, evolutionTime.value)
+    } else {
+      clearInterval(timerId)
+      evolution.style.backgroundColor = ''
+      evolution.style.color = 'black'
+      suspend = false
+    }
+  })
+
+
+  // 自主添加cell
+  chessboard.addEventListener('click', function (e) {
+    debugger
+    if (e.target.matches('span')) {
+      let checkedIdx = e.target.dataset.idx
+      let j = checkedIdx / m >> 0
+      let k = checkedIdx % m
+      spans[checkedIdx].classList.toggle('alive')
+      chessboardAry[j][k] = !chessboardAry[j][k]
+    }
+  })
+</script>

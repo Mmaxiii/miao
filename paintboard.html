@@ -180,7 +180,6 @@
       display: block;
       width: 100%;
       height: 100%;
-
     }
   </style>
 
@@ -206,7 +205,6 @@
         <input type="color" class="fcolor">
         <input type="color" class="bgcolor" value="#ffffff">
         <div class="color-options">
-          <!-- const palette = [ '#c0392b'] // 可选颜色 -->
           <span class='option' data-num='#ffffff' style="background-color:#ffffff"></span>
           <span class='option' data-num='#1e272e' style="background-color:#1e272e"></span>
           <span class='option' data-num='#34e7e4' style="background-color:#34e7e4"></span>
@@ -225,6 +223,7 @@
         <div class="save iconfont icon-baocun"></div>
       </div>
     </div>
+    <!-- <div class="banner">广告招租</div> -->
   </header>
 
   <div class="board">
@@ -243,11 +242,10 @@
   const fcolor = document.querySelector('.fcolor')  // 颜色1
   const bgcolor = document.querySelector('.bgcolor')  // 颜色2
   const colorOptions = document.querySelector('.color-options')  // 调色选项
-
   const lineWeight = document.querySelector('.line-weight [type=range]')  // 线号
   const other = document.querySelector('.other')  // 功能区
 
-  let painted = false
+  let painted = false  // 用来记录画布状态
   let color1 = '#000000'
   let color2 = 'none'
   let curColor
@@ -278,11 +276,8 @@
     }
   })
 
-  // 颜色区
-  // for (let i = 0; i < palette.length; i++) {  // 创建颜色选项模块
-  //   colorOptions.innerHTML += `<span class='option' data-num=${i} style="background-color:${palette[i]}"></span>`
-  // }
 
+  // 颜色区
   colors.addEventListener('click', function (e) {
     if (e.target.matches('input')) {
       colors.querySelectorAll('input').forEach(it => it.style = '')
@@ -292,7 +287,7 @@
     }
 
     if (e.target.matches('.option') && curColor) {
-      // e.target.style.backgroundColor 读出来的是 rgb 颜色，无法给调色盘的value赋值，所以采用读数组的方法
+      // e.target.style.backgroundColor 读出来的是 rgb 颜色，所以用自定义data属性
       curColor.value = e.target.dataset.num
     }
   })
@@ -308,6 +303,8 @@
       bezierCount = 0
       node = null
     }
+
+
     if (e.target.matches('.back') && svg.children.length) {
       svg.removeChild(svg.lastChild)
       if (svg.children.length == 0) {
@@ -337,7 +334,6 @@
   let node
   let startX
   let startY
-
   let bezierCount = 0  // 记录bezier画到第几个点
   const bezierPoints = Array(8)  // 记录 bezier点的坐标
   const blinePoints = []  // 记录折线起始点，用length作为折线结束判断条件
@@ -352,7 +348,7 @@
       startY = pos.y
       if (tool == 'line') {
         node = elt('path',
-          { // e.layerX 代表到元素的border-box的距离   e.offsetX代表到元素的content-box的距离
+          {
             d: `
             M ${pos.x} ${pos.y}
             L ${pos.x} ${pos.y}
@@ -504,8 +500,7 @@
 
   window.addEventListener('beforeunload', function (e) {
     if (painted) {
-      e.preventDefault();
-      e.returnValue = '';
+      e.returnValue = '作品未保存，确定退出吗';
     }
   })
   // 划线函数
